@@ -1,19 +1,13 @@
 import React, { useState } from "react";
-import { MdOutlineClose } from "react-icons/md";
-import { HiOutlineMenu } from "react-icons/hi";
 import { CiSearch } from "react-icons/ci";
 import { RiExchangeFill } from "react-icons/ri";
 import { BsCart4 } from "react-icons/bs";
-import { RxAvatar } from "react-icons/rx";
 import { IoIosNotifications } from "react-icons/io";
 import { IoChatboxEllipsesOutline } from "react-icons/io5";
 import { Badge } from "@mui/material";
+import MyAvat from "../../assets/bear.png";
 
 const Navbar = () => {
-  const [openMenu, setOpenMenu] = useState(false);
-  const hadndleMenu = () => {
-    setOpenMenu(!openMenu);
-  };
   return (
     <nav className="flex fixed items-center bg-gradient-to-b from-orange-600 to-orange-400 h-[100px] px-10">
       <div className="flex items-center">
@@ -50,9 +44,9 @@ const Navbar = () => {
           </Badge>
         </div>
       </div>
-      <div className="font-semibold">
-        <p className="flex gap-2">
-          <RxAvatar size={"25px"} onClick={hadndleMenu} />
+      <div className="font-semibold ">
+        <p className="flex gap-2 items-center">
+          <img src={MyAvat} width={50} height={50} />
           VoMongLuan
         </p>
       </div>

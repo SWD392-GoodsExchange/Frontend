@@ -1,14 +1,21 @@
-import { Card } from "@mui/material";
-import React from "react";
+import { Card, DialogProps } from "@mui/material";
+import React, { useState } from "react";
 import Img from "../../assets/—Pngtree—credit card_5933595.png";
 import { FaRegBookmark } from "react-icons/fa";
 import { MdReportProblem } from "react-icons/md";
 import PandaAvt from "../../assets/panda.png";
 import { FaRegCircleCheck } from "react-icons/fa6";
-import { BiError } from "react-icons/bi";
 import { BsCalendarDate } from "react-icons/bs";
+import { FaRegCommentDots } from "react-icons/fa";
+import Comment from "../comment/CommentList";
 
 const Suggest = () => {
+  const [openComment, setOpenComment] = useState(false);
+  const [scroll, setScroll] = React.useState<DialogProps["scroll"]>("paper");
+  const handleOpenComment = (scrollType: DialogProps["scroll"]) => {
+    setOpenComment(true);
+    setScroll(scrollType);
+  };
   return (
     <Card className="font-sora my-3 flex flex-col items-center pb-3 hover:pt-4">
       <div className="flex gap-2 my-2">
@@ -38,7 +45,9 @@ const Suggest = () => {
         <img src={Img} />
       </div>
       <div className="container text-center w-64">
-        <p className="p-2 truncate whitespace-nowrap">The atm</p>
+        <p className="p-2 truncate whitespace-nowrap">
+          the atm 12345920120249300120
+        </p>
       </div>
 
       <div className="p-2 my-2 bg-yellow-500 text-center items-center rounded-2xl text-white hover:bg-yellow-700 cursor-text">
@@ -51,16 +60,30 @@ const Suggest = () => {
         Contact
       </button>
 
-      <div className="my-2 flex gap-2">
-        <FaRegBookmark
-          size={"25px"}
-          className="text-blue-500 cursor-pointer hover:text-blue-700"
-        />
-
-        <MdReportProblem
-          size={"25px"}
-          className="text-red-500 cursor-pointer hover:text-red-700"
-        />
+      <div className="my-2 px-2 flex gap-4 font-light text-13">
+        <p className="flex justify-center items-center">
+          <FaRegBookmark
+            size={"25px"}
+            className="text-blue-500 cursor-pointer hover:text-blue-700"
+          />
+          Bookmark
+        </p>
+        <p className="flex justify-center items-center">
+          <FaRegCommentDots
+            size={"25px"}
+            className="text-slate-500 cursor-pointer hover:text-slate-700"
+            onClick={() => handleOpenComment("paper")}
+          />
+          Comment
+        </p>
+        <Comment open={openComment} scroll={scroll} setOpen={setOpenComment} />
+        <p className="flex justify-center items-center">
+          <MdReportProblem
+            size={"25px"}
+            className="text-red-500 cursor-pointer hover:text-red-700"
+          />
+          Report
+        </p>
       </div>
     </Card>
   );
