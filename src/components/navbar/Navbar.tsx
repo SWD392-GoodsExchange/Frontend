@@ -7,6 +7,7 @@ import { BsCart4 } from "react-icons/bs";
 import { RxAvatar } from "react-icons/rx";
 import { IoIosNotifications } from "react-icons/io";
 import { IoChatboxEllipsesOutline } from "react-icons/io5";
+import { Badge } from "@mui/material";
 
 const Navbar = () => {
   const [openMenu, setOpenMenu] = useState(false);
@@ -32,20 +33,26 @@ const Navbar = () => {
           <CiSearch size={"22px"} color="white" />
         </button>
       </div>
-      <div className="mx-[100px] gap-4 flex items-center">
+      <div className="mx-[100px] gap-14 flex items-center">
         <div className="hover:bg-orange-700 p-2 rounded-md">
-          <BsCart4 size={"25px"} />
+          <Badge badgeContent={4} color="info">
+            <BsCart4 size={"25px"} />
+          </Badge>
         </div>
         <div className="hover:bg-orange-700 p-2 rounded-md">
-          <IoIosNotifications size={"25px"} />
+          <Badge badgeContent={5} color="info">
+            <IoIosNotifications size={"25px"} />
+          </Badge>
         </div>
         <div className="hover:bg-orange-700 p-2 rounded-md">
-          <IoChatboxEllipsesOutline size={"25px"} />
+          <Badge badgeContent={10} color="info">
+            <IoChatboxEllipsesOutline size={"25px"} />
+          </Badge>
         </div>
       </div>
-      <div className="px-10 font-semibold">
+      <div className="font-semibold">
         <p className="flex gap-2">
-          <RxAvatar size={"22px"} onClick={hadndleMenu} />
+          <RxAvatar size={"25px"} onClick={hadndleMenu} />
           VoMongLuan
         </p>
       </div>

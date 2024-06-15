@@ -4,10 +4,10 @@ import Suggest from "./Suggest";
 
 const SuggestList = () => {
   return (
-    <div className="mx-[300px] rounded-md my-4">
-      <Card>
+    <div className=" mx-[300px] rounded-md my-4 ">
+      <Card className="font-sora bg-gradient-to-b from-orange-200 to-orange-100">
         <p className="text-center text-20 font-semibold m-5">
-          <span className="text-orange-400">Suggest</span> Today
+          <span className="text-blue-500">Suggest</span> Today
         </p>
         <Divider variant="middle" />
 
