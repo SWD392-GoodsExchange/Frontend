@@ -1,12 +1,11 @@
-import { Grid } from "@mui/material";
 import "./App.css";
-import ManageMemberPage from "./pages/manageMemberPage";
+import HomePage from "./pages/HomePage";
 
 function App() {
   return (
-    <Grid sx={{ width: "1300px" }}>
-      <ManageMemberPage />;
-    </Grid>
+    <div className="font-sora overflow-x-hidden overflow-y-auto h-screen text-white bg-gradient-to-b from-gray-200 to-gray-100">
+      <HomePage />
+    </div>
   );
 }
 
