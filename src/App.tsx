@@ -1,7 +1,4 @@
 import "./App.css";
-import Category from "./components/category/Category";
-import Navbar from "./components/navbar/Navbar";
-import SuggestList from "./components/suggestList/SuggestList";
 import HomePage from "./pages/HomePage";
 
 function App() {
