@@ -22,13 +22,15 @@ import { Member } from "../../interfaces/memberResponse";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.MuiTableCell-head`]: {
-    backgroundColor: "lightblue", // Đổi màu cam tại đây
+    backgroundColor: "lightblue",
     color: theme.palette.common.black,
     fontWeight: "bold",
+    textAlign: "center", // Center align header cells
   },
   [`&.MuiTableCell-body`]: {
     fontSize: 14,
     padding: "8px",
+    textAlign: "center", // Center align body cells
   },
 }));
 
@@ -36,7 +38,6 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   "&:nth-of-type(odd)": {
     backgroundColor: theme.palette.action.hover,
   },
-  // hide last border
   "&:last-child td, &:last-child th": {
     border: 0,
   },
@@ -45,7 +46,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 const ManageMember = () => {
   const [members, setMembers] = useState<Member[]>([
     {
-      FeID: "FE4",
+      FeID: "FE1",
       RoleID: 1,
       Username: "Le Quang Dung",
       Password: "12345",
@@ -55,10 +56,10 @@ const ManageMember = () => {
       Email: "dungngo23@gmail.com",
       Phone: "0798002647",
       CreatedTime: "12/01/2019",
-      Status: "Processing",
+      Status: "Active",
     },
     {
-      FeID: "FE5",
+      FeID: "FE2",
       RoleID: 2,
       Username: "Le Quang Luan",
       Password: "12345",
@@ -68,9 +69,164 @@ const ManageMember = () => {
       Email: "luanle@gmail.com",
       Phone: "0798002647",
       CreatedTime: "12/01/2019",
-      Status: "Processing",
+      Status: "Active",
     },
-    // Add more members as needed
+    {
+      FeID: "FE4",
+      RoleID: 1,
+      Username: "Le Quang Kien",
+      Password: "12345",
+      Dob: "12/01/2021",
+      Address: "Dong Nai",
+      Gender: "Male",
+      Email: "dungngo23@gmail.com",
+      Phone: "0798002647",
+      CreatedTime: "12/01/2019",
+      Status: "Active",
+    },
+    {
+      FeID: "FE5",
+      RoleID: 2,
+      Username: "Le Quang Tien",
+      Password: "12345",
+      Dob: "12/01/2021",
+      Address: "Dong Nai",
+      Gender: "Male",
+      Email: "luanle@gmail.com",
+      Phone: "0798002647",
+      CreatedTime: "12/01/2019",
+      Status: "Active",
+    },
+    {
+      FeID: "FE6",
+      RoleID: 3,
+      Username: "Nguyen Tien Dung",
+      Password: "12345",
+      Dob: "01/03/1990",
+      Address: "Ho Chi Minh",
+      Gender: "Male",
+      Email: "nguyenvana@gmail.com",
+      Phone: "0987000001",
+      CreatedTime: "11/01/2020",
+      Status: "Active",
+    },
+    {
+      FeID: "FE7",
+      RoleID: 4,
+      Username: "Nguyen Tien Luan",
+      Password: "12345",
+      Dob: "04/05/1985",
+      Address: "Ha Noi",
+      Gender: "Female",
+      Email: "tranthib@gmail.com",
+      Phone: "0987000002",
+      CreatedTime: "10/01/2020",
+      Status: "Active",
+    },
+    {
+      FeID: "FE8",
+      RoleID: 2,
+      Username: "Pham Huy Kien",
+      Password: "12345",
+      Dob: "12/12/1988",
+      Address: "Da Nang",
+      Gender: "Male",
+      Email: "phamvanc@gmail.com",
+      Phone: "0987000003",
+      CreatedTime: "09/01/2020",
+      Status: "Inactive",
+    },
+    {
+      FeID: "FE9",
+      RoleID: 1,
+      Username: "Ngo Tan Tien",
+      Password: "12345",
+      Dob: "22/07/1992",
+      Address: "Hai Phong",
+      Gender: "Female",
+      Email: "hoangthid@gmail.com",
+      Phone: "0987000004",
+      CreatedTime: "08/01/2020",
+      Status: "Active",
+    },
+    {
+      FeID: "FE10",
+      RoleID: 3,
+      Username: "Nguyen Hoang Huy",
+      Password: "12345",
+      Dob: "30/06/1995",
+      Address: "Can Tho",
+      Gender: "Male",
+      Email: "vuvane@gmail.com",
+      Phone: "0987000005",
+      CreatedTime: "07/01/2020",
+      Status: "Inactive",
+    },
+    {
+      FeID: "FE11",
+      RoleID: 4,
+      Username: "Nguyen Kien Dung",
+      Password: "12345",
+      Dob: "14/02/1993",
+      Address: "Quang Ninh",
+      Gender: "Female",
+      Email: "lethif@gmail.com",
+      Phone: "0987000006",
+      CreatedTime: "06/01/2020",
+      Status: "Active",
+    },
+    {
+      FeID: "FE12",
+      RoleID: 2,
+      Username: "Tran Thi Thy",
+      Password: "12345",
+      Dob: "19/11/1986",
+      Address: "Vung Tau",
+      Gender: "Male",
+      Email: "tranvang@gmail.com",
+      Phone: "0987000007",
+      CreatedTime: "05/01/2020",
+      Status: "Inactive",
+    },
+    {
+      FeID: "FE13",
+      RoleID: 1,
+      Username: "Nguyen Thi Thy",
+      Password: "12345",
+      Dob: "25/09/1987",
+      Address: "Da Lat",
+      Gender: "Female",
+      Email: "nguyenthih@gmail.com",
+      Phone: "0987000008",
+      CreatedTime: "04/01/2020",
+      Status: "Active",
+    },
+    {
+      FeID: "FE14",
+      RoleID: 3,
+      Username: "Pham Van Van",
+      Password: "12345",
+      Dob: "18/10/1991",
+      Address: "Hue",
+      Gender: "Male",
+      Email: "phamvani@gmail.com",
+      Phone: "0987000009",
+      CreatedTime: "03/01/2020",
+      Status: "Inactive",
+    },
+    {
+      FeID: "FE15",
+      RoleID: 4,
+      Username: "Pham Thi Thy",
+      Password: "12345",
+      Dob: "11/08/1994",
+      Address: "Binh Dinh",
+      Gender: "Female",
+      Email: "tranthij@gmail.com",
+      Phone: "0987000010",
+      CreatedTime: "02/01/2020",
+      Status: "Active",
+    },
   ]);
 
   const [searchKeyword, setSearchKeyword] = useState<string>("");
@@ -97,13 +253,9 @@ const ManageMember = () => {
     setPage(0);
   };
 
-  const handleAddMember = () => {
-    // Logic to add a new member
-  };
+  const handleAddMember = () => {};
 
-  const handleExportData = () => {
-    // Logic to export data
-  };
+  const handleExportData = () => {};
 
   // Filter members based on search keyword and status
   const filteredMembers = members.filter((member) => {
@@ -112,7 +264,6 @@ const ManageMember = () => {
     const emailLower = member.Email.toLowerCase();
     const phone = member.Phone;
 
-    // Check if member matches search keyword and status filter
     return (
       (usernameLower.includes(keyword) ||
         emailLower.includes(keyword) ||
@@ -121,7 +272,6 @@ const ManageMember = () => {
     );
   });
 
-  // Get the members to display on the current page
   const displayedMembers = filteredMembers.slice(
     page * rowsPerPage,
     page * rowsPerPage + rowsPerPage
@@ -129,7 +279,6 @@ const ManageMember = () => {
 
   return (
     <Box sx={{ padding: 2 }}>
-      {/* Controls */}
       <Box
         sx={{
           marginBottom: 2,
@@ -155,7 +304,6 @@ const ManageMember = () => {
               sx={{ minWidth: 120 }}
             >
               <MenuItem value="">All</MenuItem>
-              <MenuItem value="Processing">Processing</MenuItem>
               <MenuItem value="Active">Active</MenuItem>
               <MenuItem value="Inactive">Inactive</MenuItem>
             </Select>
@@ -164,37 +312,31 @@ const ManageMember = () => {
         <Box>
           <Button
             variant="contained"
-            color="primary"
             sx={{ marginRight: 2 }}
             onClick={handleAddMember}
           >
-            Thêm thành viên mới
+            New member
           </Button>
-          <Button
-            variant="contained"
-            color="secondary"
-            onClick={handleExportData}
-          >
-            Xuất dữ liệu
+          <Button variant="contained" onClick={handleExportData}>
+            Export Data
           </Button>
         </Box>
       </Box>
 
-      {/* Table of Members */}
       <TableContainer component={Paper} sx={{ maxHeight: "50vh" }}>
         <Table stickyHeader sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
-            <TableRow sx={{ backgroundColor: "#FFA500" }}>
+            <TableRow>
               <StyledTableCell>Index</StyledTableCell>
               <StyledTableCell>Member ID</StyledTableCell>
-              <StyledTableCell align="left">Name</StyledTableCell>
-              <StyledTableCell align="left">Gender</StyledTableCell>
-              <StyledTableCell align="left">Date of Birth</StyledTableCell>
-              <StyledTableCell align="left">Address</StyledTableCell>
-              <StyledTableCell align="left">Email</StyledTableCell>
-              <StyledTableCell align="left">Phone</StyledTableCell>
-              <StyledTableCell align="left">Created Time</StyledTableCell>
-              <StyledTableCell align="left">Status</StyledTableCell>
+              <StyledTableCell>Name</StyledTableCell>
+              <StyledTableCell>Gender</StyledTableCell>
+              <StyledTableCell>Date of Birth</StyledTableCell>
+              <StyledTableCell>Address</StyledTableCell>
+              <StyledTableCell>Email</StyledTableCell>
+              <StyledTableCell>Phone</StyledTableCell>
+              <StyledTableCell>Created Time</StyledTableCell>
+              <StyledTableCell>Status</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -206,25 +348,20 @@ const ManageMember = () => {
                 <StyledTableCell component="th" scope="row">
                   {member.FeID}
                 </StyledTableCell>
-                <StyledTableCell align="left">
-                  {member.Username}
-                </StyledTableCell>
-                <StyledTableCell align="left">{member.Gender}</StyledTableCell>
-                <StyledTableCell align="left">{member.Dob}</StyledTableCell>
-                <StyledTableCell align="left">{member.Address}</StyledTableCell>
-                <StyledTableCell align="left">{member.Email}</StyledTableCell>
-                <StyledTableCell align="left">{member.Phone}</StyledTableCell>
-                <StyledTableCell align="left">
-                  {member.CreatedTime}
-                </StyledTableCell>
-                <StyledTableCell align="left">{member.Status}</StyledTableCell>
+                <StyledTableCell>{member.Username}</StyledTableCell>
+                <StyledTableCell>{member.Gender}</StyledTableCell>
+                <StyledTableCell>{member.Dob}</StyledTableCell>
+                <StyledTableCell>{member.Address}</StyledTableCell>
+                <StyledTableCell>{member.Email}</StyledTableCell>
+                <StyledTableCell>{member.Phone}</StyledTableCell>
+                <StyledTableCell>{member.CreatedTime}</StyledTableCell>
+                <StyledTableCell>{member.Status}</StyledTableCell>
               </StyledTableRow>
             ))}
           </TableBody>
         </Table>
       </TableContainer>
 
-      {/* Pagination Controls */}
       <TablePagination
         rowsPerPageOptions={[5, 10, 25]}
         component="div"
