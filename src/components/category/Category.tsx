@@ -83,10 +83,10 @@ const originList = [
 ];
 const Category = () => {
   return (
-    <div className=" mt-32 mx-[300px] flex flex-col text-20 gap-4 bg-white p-8 rounded-md">
+    <div className=" mt-10 mx-[250px] flex flex-col text-20 gap-4 bg-white p-8 rounded-md">
       <p className="text-gray-400">Category</p>
       <Divider variant="middle" />
-      <div className="flex flex-wrap gap-2 font-light mx-2">
+      <div className="flex flex-wrap gap-2 font-light mx-14">
         {categoryList.map((item) => (
           <p className=" bg-yellow-500 flex flex-col items-center p-3 w-40 rounded-md hover:bg-yellow-700 transition-all text-center duration-300 cursor-pointer">
             {item.icon}
@@ -97,7 +97,7 @@ const Category = () => {
 
       <p className="text-gray-400 mt-4">Origin</p>
       <Divider />
-      <div className="flex flex-wrap gap-2 font-light mx-2">
+      <div className="flex flex-wrap gap-2 font-light mx-14">
         {originList.map((item) => (
           <p className=" bg-blue-500 flex flex-col items-center p-3 w-40 rounded-md hover:bg-blue-700 transition-all text-center duration-300 cursor-pointer">
             {item.icon}

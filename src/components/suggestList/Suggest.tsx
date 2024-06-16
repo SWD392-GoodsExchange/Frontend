@@ -1,13 +1,13 @@
 import { Card, DialogProps } from "@mui/material";
 import React, { useState } from "react";
 import Img from "../../assets/—Pngtree—credit card_5933595.png";
-import { FaRegBookmark } from "react-icons/fa";
 import { MdReportProblem } from "react-icons/md";
 import PandaAvt from "../../assets/panda.png";
 import { FaRegCircleCheck } from "react-icons/fa6";
 import { BsCalendarDate } from "react-icons/bs";
 import { FaRegCommentDots } from "react-icons/fa";
 import Comment from "../comment/CommentList";
+import { FaCartArrowDown } from "react-icons/fa6";
 
 const Suggest = () => {
   const [openComment, setOpenComment] = useState(false);
@@ -41,12 +41,12 @@ const Suggest = () => {
           6/15/2024
         </p>
       </div>
-      <div className="w-[150px] h-[150px]">
+      <div className="w-72 h-72">
         <img src={Img} />
       </div>
-      <div className="container text-center w-64">
+      <div className="container text-center w-72">
         <p className="p-2 truncate whitespace-nowrap">
-          the atm 12345920120249300120
+          the atm 12345920120249300120sssssssssssss
         </p>
       </div>
 
@@ -61,14 +61,14 @@ const Suggest = () => {
       </button>
 
       <div className="my-2 px-2 flex gap-4 font-light text-13">
-        <p className="flex justify-center items-center">
-          <FaRegBookmark
+        <p className="flex justify-center items-center gap-1">
+          <FaCartArrowDown
             size={"25px"}
             className="text-blue-500 cursor-pointer hover:text-blue-700"
           />
-          Bookmark
+          Add to cart
         </p>
-        <p className="flex justify-center items-center">
+        <p className="flex justify-center items-center gap-1">
           <FaRegCommentDots
             size={"25px"}
             className="text-slate-500 cursor-pointer hover:text-slate-700"
@@ -77,7 +77,7 @@ const Suggest = () => {
           Comment
         </p>
         <Comment open={openComment} scroll={scroll} setOpen={setOpenComment} />
-        <p className="flex justify-center items-center">
+        <p className="flex justify-center items-center gap-1">
           <MdReportProblem
             size={"25px"}
             className="text-red-500 cursor-pointer hover:text-red-700"
