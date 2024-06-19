@@ -16,6 +16,7 @@ import LoginForm from "../loginForm/LoginForm";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
+  const [activePage, setActivePage] = useState("Exchange");
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -43,10 +44,22 @@ const Navbar = () => {
           <CiSearch size={"22px"} color="white" />
         </button>
       </div>
-      <p className="ml-16 p-3 cursor-pointer text-20 bg-white text-orange-500 rounded-md hover:text-orange-300">
+      <p
+        onClick={() => {
+          setActivePage("Exchange");
+        }}
+        className={`ml-16 p-3 cursor-pointer text-20 ${
+          activePage == "Exchange" ? ` bg-white text-orange-500` : ``
+        } rounded-md hover:text-orange-300`}
+      >
         Exchange
       </p>
-      <p className="mx-16 cursor-pointer hover:text-orange-300 text-20">
+      <p
+        onClick={() => setActivePage("Purchase")}
+        className={`mx-16 p-3 cursor-pointer ${
+          activePage == "Purchase" ? `bg-white text-orange-500` : ``
+        } hover:text-orange-300 text-20 rounded-md`}
+      >
         Purchase
       </p>
 
