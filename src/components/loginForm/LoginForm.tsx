@@ -4,7 +4,11 @@ import { FiEye } from "react-icons/fi";
 import { RxEyeClosed } from "react-icons/rx";
 import { RiExchangeFill } from "react-icons/ri";
 
-const LoginForm = () => {
+type Props = {
+  setChangeForm: React.Dispatch<React.SetStateAction<string>>;
+};
+
+const LoginForm = ({ setChangeForm }: Props) => {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -78,6 +82,19 @@ const LoginForm = () => {
       >
         Sign In
       </button>
+      <p className="text-slate-400 mr-48 justify-center items-center">
+        You don't have account?
+        <span className="text-orange-400">
+          <button
+            onClick={() => {
+              setChangeForm("Signup");
+            }}
+            className="hover:underline mx-1"
+          >
+            Sign up
+          </button>
+        </span>
+      </p>
     </div>
   );
 };

@@ -13,10 +13,12 @@ import {
 } from "@mui/material";
 import MyAvat from "../../assets/bear.png";
 import LoginForm from "../loginForm/LoginForm";
+import SignUp from "../registerForm/SignUp";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
   const [activePage, setActivePage] = useState("Exchange");
+  const [changeForm, setChangeForm] = useState("Signin");
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -110,9 +112,13 @@ const Navbar = () => {
         }}
       >
         <DialogContent>
-          <LoginForm />
+          {changeForm === "Signin" ? (
+            <LoginForm setChangeForm={setChangeForm} />
+          ) : (
+            <SignUp setChangeForm={setChangeForm} />
+          )}
         </DialogContent>
-        <DialogActions>
+        <DialogActions className="flex justify-center items-center">
           <button
             className="mr-5 p-3 bg-red-500 text-white rounded-md hover:text-orange-500 font-semibold transition-all duration-300"
             onClick={handleClose}
