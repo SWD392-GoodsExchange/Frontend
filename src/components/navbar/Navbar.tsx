@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { CiSearch } from "react-icons/ci";
 import { RiExchangeFill } from "react-icons/ri";
 import { BsCart4 } from "react-icons/bs";
@@ -26,7 +26,9 @@ const Navbar = () => {
 
   const handleClose = () => {
     setOpen(false);
+    setChangeForm("Signin");
   };
+
   return (
     <nav className="flex  items-center bg-gradient-to-b from-orange-600 to-orange-400 h-[120px] px-10">
       <div className="flex items-center">
@@ -111,7 +113,7 @@ const Navbar = () => {
           },
         }}
       >
-        <DialogContent>
+        <DialogContent className="overflow-x-hidden overflow-y-auto">
           {changeForm === "Signin" ? (
             <LoginForm setChangeForm={setChangeForm} />
           ) : (
