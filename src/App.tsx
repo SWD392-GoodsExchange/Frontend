@@ -1,11 +1,26 @@
+import { CssBaseline } from "@mui/material";
 import "./App.css";
-import HomePage from "./pages/HomePage";
+
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import GlobalStyles from "./GlobalStyles";
+
+import ManageOrderPage from "./pages/Shopping/manageOrderPage";
+import PayItemPage from "./pages/Shopping/payItemPage";
+import ShoppingCartPage from "./pages/Shopping/shoppingCartPage";
 
 function App() {
   return (
-    <div className="font-sora overflow-x-hidden overflow-y-auto h-screen text-white bg-gradient-to-b from-gray-200 to-gray-100">
-      <HomePage />
-    </div>
+    <BrowserRouter>
+      <CssBaseline />
+
+      <Routes>
+        <Route path="/" element={<ShoppingCartPage />} />
+        <Route path="/shoppingCart/payItem" element={<PayItemPage />} />
+        <Route path="/shoppingCart/payItem" element={<ManageOrderPage />} />
+      </Routes>
+
+      <GlobalStyles />
+    </BrowserRouter>
   );
 }
 

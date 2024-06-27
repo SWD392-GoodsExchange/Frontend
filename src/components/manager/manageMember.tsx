@@ -359,12 +359,12 @@ const ManageMember = () => {
       >
         <Box>
           <TextField
-            label="Search by Username, Email, or Phone"
+            label="🔎 Search by Username, Email, or Phone"
             variant="outlined"
             size="small"
             onChange={handleSearchChange}
             value={searchKeyword}
-            sx={{ marginRight: 2 }}
+            sx={{ marginRight: 2,width:"300px" }}
           />
           <FormControl variant="outlined" size="small">
             <InputLabel>Status</InputLabel>
