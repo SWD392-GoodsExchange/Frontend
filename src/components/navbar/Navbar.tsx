@@ -1,13 +1,34 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { CiSearch } from "react-icons/ci";
 import { RiExchangeFill } from "react-icons/ri";
 import { BsCart4 } from "react-icons/bs";
 import { IoIosNotifications } from "react-icons/io";
 import { IoChatboxEllipsesOutline } from "react-icons/io5";
-import { Badge } from "@mui/material";
+import {
+  Badge,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+} from "@mui/material";
 import MyAvat from "../../assets/bear.png";
+import LoginForm from "../loginForm/LoginForm";
+import SignUp from "../registerForm/SignUp";
 
 const Navbar = () => {
+  const [open, setOpen] = useState(false);
+  const [activePage, setActivePage] = useState("Exchange");
+  const [changeForm, setChangeForm] = useState("Signin");
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+    setChangeForm("Signin");
+  };
+
   return (
     <nav className="flex  items-center bg-gradient-to-b from-orange-600 to-orange-400 h-[120px] px-10">
       <div className="flex items-center">
@@ -27,10 +48,22 @@ const Navbar = () => {
           <CiSearch size={"22px"} color="white" />
         </button>
       </div>
-      <p className="ml-16 p-3 cursor-pointer text-20 bg-white text-orange-500 rounded-md hover:text-orange-300">
+      <p
+        onClick={() => {
+          setActivePage("Exchange");
+        }}
+        className={`ml-16 p-3 cursor-pointer text-20 ${
+          activePage == "Exchange" ? ` bg-white text-orange-500` : ``
+        } rounded-md hover:text-orange-300`}
+      >
         Exchange
       </p>
-      <p className="mx-16 cursor-pointer hover:text-orange-300 text-20">
+      <p
+        onClick={() => setActivePage("Purchase")}
+        className={`mx-16 p-3 cursor-pointer ${
+          activePage == "Purchase" ? `bg-white text-orange-500` : ``
+        } hover:text-orange-300 text-20 rounded-md`}
+      >
         Purchase
       </p>
 
@@ -56,10 +89,46 @@ const Navbar = () => {
           <img src={MyAvat} width={50} height={50} />
           VoMongLuan
         </p> */}
-        <button className="p-5 rounded-xl bg-white text-orange-500 hover:bg-orange-400 hover:text-white transition-all duration-500 shadow-2xl hover:shadow-md">
+        <button
+          onClick={handleClickOpen}
+          className="p-5 rounded-xl bg-white text-orange-500 hover:bg-orange-400 hover:text-white transition-all duration-500 shadow-2xl hover:shadow-md"
+        >
           Sign In
         </button>
       </div>
+
+      <Dialog
+        disableEscapeKeyDown
+        open={open}
+        onClose={handleClose}
+        PaperProps={{
+          component: "form",
+          onSubmit: (event: React.FormEvent<HTMLFormElement>) => {
+            event.preventDefault();
+            const formData = new FormData(event.currentTarget);
+            const formJson = Object.fromEntries((formData as any).entries());
+            const email = formJson.email;
+            console.log(email);
+            handleClose();
+          },
+        }}
+      >
+        <DialogContent className="overflow-x-hidden overflow-y-auto">
+          {changeForm === "Signin" ? (
+            <LoginForm setChangeForm={setChangeForm} />
+          ) : (
+            <SignUp setChangeForm={setChangeForm} />
+          )}
+        </DialogContent>
+        <DialogActions className="flex justify-center items-center">
+          <button
+            className="mr-5 p-3 bg-red-500 text-white rounded-md hover:text-orange-500 font-semibold transition-all duration-300"
+            onClick={handleClose}
+          >
+            Cancel
+          </button>
+        </DialogActions>
+      </Dialog>
     </nav>
   );
 };

@@ -20,9 +20,8 @@
     "react-chat-engine-advanced": "^0.1.28",
     "react-dom": "^18.2.0",
     "react-icons": "^5.2.1",
-    "react-router-dom": "^6.23.1",
-    "styled-components": "^6.1.11",
-    "use-history": "^1.4.1",
+    "react-images-uploading": "^3.1.7",
+    "react-router-dom": "^6.24.0",
     "websocket": "^1.0.35"
   },
   "devDependencies": {
