@@ -82,26 +82,11 @@ const ManageOrder = () => {
     return total;
   }, 0);
 
-  const handlePayItems = () => {
-    // Lọc các sản phẩm được chọn
-    const selectedProducts = products.filter(
-      (product) => checkedItems[product.id]
-    );
-
-    // // Chuyển hướng sang trang PayItem và truyền dữ liệu
-    // history.push({
-    //   pathname: "/pay-item",
-    //   state: { products: selectedProducts },
-    // });
-  };
-
   const [value, setValue] = useState(0);
 
   const handleChange = (event: any, newValue: number) => {
     setValue(newValue);
   };
-
-  const handlePayItem = () => {};
 
   return (
     <div className="shopping-cart-container" style={{ position: "relative" }}>
