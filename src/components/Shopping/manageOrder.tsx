@@ -1,6 +1,5 @@
 import DeleteIcon from "@mui/icons-material/Delete";
 import {
-  Button,
   Card,
   CardActions,
   CardContent,
@@ -8,59 +7,61 @@ import {
   Checkbox,
   Container,
   Divider,
-  Grid,
   IconButton,
   List,
   ListItem,
   Paper,
+  Tab,
+  Tabs,
   Typography,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useState } from "react"; // Ensure React and useState are imported correctly
+import { Product } from "../../interfaces/productResponse";
 
-const products = [
-  {
-    id: 1,
-    title: "Yellow Pencil with Love Heart",
-    categoryName: "Study Stuff",
-    usageInfor: "To write and note down information",
-    origin: "Vietnam",
-    price: 198000,
-    originalPrice: 350000,
-    image: "https://via.placeholder.com/150",
-  },
-  {
-    id: 3,
-    title: "Blue Gel Pen with Smiley Face",
-    categoryName: "Study Stuff",
-    usageInfo: "Smooth writing experience for detailed notes",
-    origin: "China",
-    price: 120000,
-    originalPrice: 180000,
-    image: "https://via.placeholder.com/150",
-  },
-  {
-    id: 4,
-    title: "Vintage Fountain Pen",
-    categoryName: "Luxury Pens",
-    usageInfo: "Ideal for elegant handwriting and signatures",
-    origin: "Germany",
-    price: 450000,
-    originalPrice: 600000,
-    image: "https://via.placeholder.com/150",
-  },
-  {
-    id: 5,
-    title: "Mechanical Pencil Set",
-    categoryName: "Drawing Tools",
-    usageInfo: "Perfect for precise sketches and technical drawings",
-    origin: "Japan",
-    price: 280000,
-    originalPrice: 350000,
-    image: "https://via.placeholder.com/150",
-  },
-];
+const ManageOrder = () => {
+  const [products, setProducts] = useState<Product[]>([
+    {
+      id: 1,
+      title: "Yellow Pencil with Love Heart",
+      categoryName: "Study Stuff",
+      usageInfor: "To write and note down information",
+      origin: "Vietnam",
+      price: 198000,
+      originalPrice: 350000,
+      image: "https://via.placeholder.com/150",
+    },
+    {
+      id: 3,
+      title: "Blue Gel Pen with Smiley Face",
+      categoryName: "Study Stuff",
+      usageInfor: "Smooth writing experience for detailed notes",
+      origin: "China",
+      price: 120000,
+      originalPrice: 180000,
+      image: "https://via.placeholder.com/150",
+    },
+    {
+      id: 4,
+      title: "Vintage Fountain Pen",
+      categoryName: "Luxury Pens",
+      usageInfor: "Ideal for elegant handwriting and signatures",
+      origin: "Germany",
+      price: 450000,
+      originalPrice: 600000,
+      image: "https://via.placeholder.com/150",
+    },
+    {
+      id: 5,
+      title: "Mechanical Pencil Set",
+      categoryName: "Drawing Tools",
+      usageInfor: "Perfect for precise sketches and technical drawings",
+      origin: "Japan",
+      price: 280000,
+      originalPrice: 350000,
+      image: "https://via.placeholder.com/150",
+    },
+  ]);
 
-const ShoppingCart = () => {
   const [checkedItems, setCheckedItems] = useState<{ [key: number]: boolean }>(
     {}
   );
@@ -81,10 +82,34 @@ const ShoppingCart = () => {
     return total;
   }, 0);
 
+  const [value, setValue] = useState(0);
+
+  const handleChange = (event: any, newValue: number) => {
+    setValue(newValue);
+  };
+
   return (
     <div className="shopping-cart-container" style={{ position: "relative" }}>
-      <Container>
-        <Paper elevation={3} style={{ padding: 20, width: "100%" }}>
+      <Container sx={{ paddingTop: "10px" }}>
+        <Paper>
+          <Tabs
+            value={value}
+            onChange={handleChange}
+            aria-label="custom tabs"
+            variant="fullWidth"
+          >
+            <Tab label="All" />
+            <Tab label="Confiming" />
+            <Tab label="Delivering" />
+            <Tab label="Completed" />
+            <Tab label="Cancelled" />
+            <Tab label="Return Goods" />
+          </Tabs>
+        </Paper>
+        <Paper
+          elevation={3}
+          style={{ padding: 20, width: "100%", marginTop: "20px" }}
+        >
           <List>
             {products.map((product) => (
               <React.Fragment key={product.id}>
@@ -92,7 +117,7 @@ const ShoppingCart = () => {
                   alignItems="flex-start"
                   sx={{
                     backgroundColor: checkedItems[product.id]
-                      ? "rgb(253 186 116)"
+                      ? "rgb(251 146 60)"
                       : "inherit",
                     marginTop: "5px",
                   }}
@@ -134,46 +159,9 @@ const ShoppingCart = () => {
             ))}
           </List>
         </Paper>
-        <Paper
-          elevation={3}
-          style={{
-            padding: 20,
-            marginTop: "20px",
-            width: "100%",
-            position: "sticky",
-            top: "20px", // Adjust as needed
-            zIndex: 1000, // Ensure it appears above other content
-          }}
-        >
-          <Grid
-            container
-            direction="column"
-            alignItems="flex-end"
-            spacing={2}
-            sx={{ paddingRight: "100px" }}
-          >
-            <Grid item>
-              <Typography variant="h5">Total Amount</Typography>
-              <Typography variant="h6" color="primary" gutterBottom>
-                {totalPrice.toLocaleString()} đ
-              </Typography>
-            </Grid>
-            <Grid item>
-              <Button
-                size="large"
-                color="primary"
-                variant="contained"
-                fullWidth
-                sx={{ width: "100%", maxWidth: "300px" }}
-              >
-                Pay items
-              </Button>
-            </Grid>
-          </Grid>
-        </Paper>
       </Container>
     </div>
   );
 };
 
-export default ShoppingCart;
+export default ManageOrder;
