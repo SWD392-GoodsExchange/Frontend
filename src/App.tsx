@@ -1,11 +1,14 @@
+import { BrowserRouter } from "react-router-dom";
 import "./App.css";
-import HomePage from "./pages/HomePage";
+import AppRoutes from "./routes/AppRoutes";
 
 function App() {
   return (
-    <div className="font-sora overflow-x-hidden overflow-y-auto h-screen text-white bg-gradient-to-b from-gray-200 to-gray-100">
-      <HomePage />
-    </div>
+    <BrowserRouter>
+      <div className="font-sora overflow-x-hidden overflow-y-auto h-screen text-white bg-gradient-to-b from-gray-200 to-gray-100">
+        <AppRoutes />
+      </div>
+    </BrowserRouter>
   );
 }
 

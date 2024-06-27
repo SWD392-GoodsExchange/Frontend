@@ -6,6 +6,7 @@ import {
   DialogTitle,
   Divider,
   IconButton,
+  TextField,
 } from "@mui/material";
 import React, { useState } from "react";
 import MyAvat from "../../assets/bear.png";
@@ -22,6 +23,7 @@ import VietNamFlag from "../../assets/vietnam.png";
 import UsaFlag from "../../assets/united-states.png";
 import ChinaFlag from "../../assets/china.png";
 import ThaiLanFlag from "../../assets/thailand.png";
+import ReactImageUploading from "react-images-uploading";
 
 const categoryList = [
   {
@@ -91,6 +93,22 @@ const originList = [
 
 const CreateProduct = () => {
   const [openDialog, setOpenDialog] = useState(false);
+  const [previewImage, setPreviewImage] = useState<string | null>(null);
+
+  const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        setPreviewImage(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleDropImage = () => {
+    setPreviewImage(null);
+  };
 
   const onClickOpenDialog = () => {
     setOpenDialog(true);
@@ -102,17 +120,18 @@ const CreateProduct = () => {
   return (
     <div className="flex justify-start mx-[250px] text-20 text-black mt-[50px]">
       <Card>
-        <div className="flex p-3 items-center">
+        <div className="flex p-3 w-[500px] items-center">
           <img src={MyAvat} className="w-[50px] h-[50px]" />
           <button
             onClick={onClickOpenDialog}
-            className="flex text-16 p-3 ml-3 rounded-full bg-slate-200 hover:bg-slate-300"
+            className="flex text-16  p-3 ml-3 w-[500px] rounded-full bg-slate-200 hover:bg-slate-300"
           >
             Post your product
           </button>
         </div>
       </Card>
       <Dialog
+        maxWidth="md"
         disableEscapeKeyDown
         open={openDialog}
         onClose={handleCloseDialog}
@@ -128,18 +147,16 @@ const CreateProduct = () => {
           },
         }}
       >
-        <DialogTitle className="w-[500px] flex justify-end">
-          <div className="flex justify-between gap-[110px] items-center">
-            <p>Post Product</p>
-            <IconButton>
-              <TiDelete onClick={handleCloseDialog} size={"30px"} />
-            </IconButton>
-          </div>
+        <DialogTitle className="w-auto flex justify-between items-center">
+          <p>Post Product</p>
+          <IconButton>
+            <TiDelete onClick={handleCloseDialog} size={"30px"} />
+          </IconButton>
         </DialogTitle>
         <Divider variant="fullWidth" />
-        <DialogContent className="flex overflow-x-hidden overflow-y-auto">
+        <DialogContent className="flex flex-col overflow-x-hidden overflow-y-auto">
           <div className="flex items-center">
-            <img src={MyAvat} className="w-[50px] h-[50px]" />
+            <img src={MyAvat} className="w-[70px] h-[70px]" />
             <div className="flex flex-col justify-center ">
               <p className="font-bold mx-2 text-20">Mong Luan Vo</p>
               <div className="flex gap-5 items-center mx-2">
@@ -163,8 +180,38 @@ const CreateProduct = () => {
                     ))}
                   </select>
                 </div>
+                <div className="p-2 flex gap-3 bg-orange-400 hover:bg-orange-600 rounded-md">
+                  <label>Type </label>
+                  <select>
+                    <option>Exchange</option>
+                    <option>Purchase</option>
+                  </select>
+                </div>
               </div>
             </div>
+          </div>
+          <div className="flex justify-center ">
+            <textarea
+              className="w-[100%] p-2  outline-none text-20"
+              placeholder="Write title of your product"
+            />
+          </div>
+          {previewImage && (
+            <div className="flex items-start w-[500px]">
+              <div className="flex ml-36 w-[450px] items-start justify-center outline-dashed">
+                <img className="w-[450px] h-[auto]" src={previewImage} />
+              </div>
+              <div>
+                <TiDelete
+                  className="text-slate-400 hover:text-slate-600"
+                  size={"30px"}
+                  onClick={handleDropImage}
+                />
+              </div>
+            </div>
+          )}
+          <div>
+            <input type="file" onChange={handleImageUpload} />
           </div>
         </DialogContent>
       </Dialog>
