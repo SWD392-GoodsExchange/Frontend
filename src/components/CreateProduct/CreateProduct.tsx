@@ -1,4 +1,5 @@
 import {
+  Button,
   Card,
   Dialog,
   DialogActions,
@@ -7,9 +8,10 @@ import {
   Divider,
   IconButton,
   TextField,
+  Tooltip,
 } from "@mui/material";
 import React, { useState } from "react";
-import MyAvat from "../../assets/bear.png";
+import MyAvat from "../../assets/panda.png";
 import { TiDelete } from "react-icons/ti";
 import { GiClothes, GiShorts } from "react-icons/gi";
 import { RiComputerLine } from "react-icons/ri";
@@ -26,74 +28,57 @@ import ThaiLanFlag from "../../assets/thailand.png";
 import ReactImageUploading from "react-images-uploading";
 
 const categoryList = [
+  { title: "School supply" },
   {
-    icon: <GiClothes size={"25px"} />,
-    title: "Fashion",
+    title: "Colthes",
   },
   {
-    icon: <RiComputerLine size={"25px"} />,
-    title: "Laptop",
+    title: "Technology",
   },
   {
-    icon: <FaMobileAlt size={"25px"} />,
-    title: "Mobile",
-  },
-  {
-    icon: <PiShirtFolded size={"25px"} />,
-    title: "T-Shirt",
-  },
-  {
-    icon: <MdOutlinePets size={"25px"} />,
-    title: "Pet",
-  },
-  {
-    icon: <IoFastFoodOutline size={"25px"} />,
-    title: "Food",
-  },
-  {
-    icon: <GiShorts size={"25px"} />,
-    title: "Short",
-  },
-  {
-    icon: <CgGames size={"25px"} />,
     title: "Game",
   },
   {
-    icon: <PiGuitarLight size={"25px"} />,
-    title: "Music",
+    title: "HomeStuff",
   },
   {
-    icon: <PiToolboxLight size={"25px"} />,
-    title: "Work",
+    title: "Pet",
+  },
+  {
+    title: "Others",
   },
 ];
 
 const originList = [
+  { title: "Vietnam" },
   {
-    icon: <img src={JapanFlag} alt="Japan" />,
     title: "Japan",
   },
   {
-    icon: <img src={VietNamFlag} alt="VietNam" />,
-    title: "VietNam",
-  },
-  {
-    icon: <img src={UsaFlag} alt="USA" />,
     title: "USA",
   },
   {
-    icon: <img src={ChinaFlag} alt="China" />,
     title: "China",
   },
   {
-    icon: <img src={ThaiLanFlag} alt="Thailand" />,
     title: "Thailand",
+  },
+  {
+    title: "Korea",
+  },
+  {
+    title: "Others",
   },
 ];
 
 const CreateProduct = () => {
   const [openDialog, setOpenDialog] = useState(false);
   const [previewImage, setPreviewImage] = useState<string | null>(null);
+  const [type, setType] = useState("exchange");
+
+  const onChangeType = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setType(e.target.value);
+  };
 
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -118,15 +103,15 @@ const CreateProduct = () => {
     setOpenDialog(false);
   };
   return (
-    <div className="flex justify-start mx-[250px] text-20 text-black mt-[50px]">
+    <div className="flex justify-center text-20 text-black my-1">
       <Card>
-        <div className="flex p-3 w-[500px] items-center">
+        <div className="flex p-3 w-auto items-center">
           <img src={MyAvat} className="w-[50px] h-[50px]" />
           <button
             onClick={onClickOpenDialog}
-            className="flex text-16  p-3 ml-3 w-[500px] rounded-full bg-slate-200 hover:bg-slate-300"
+            className="flex text-16  p-3 ml-3 w-[340px] rounded-full bg-slate-200 hover:bg-slate-400 hover:text-white transiton-all duration-300"
           >
-            Post your product
+            Post your product...
           </button>
         </div>
       </Card>
@@ -147,7 +132,7 @@ const CreateProduct = () => {
           },
         }}
       >
-        <DialogTitle className="w-auto flex justify-between items-center">
+        <DialogTitle className="flex justify-between items-center">
           <p>Post Product</p>
           <IconButton>
             <TiDelete onClick={handleCloseDialog} size={"30px"} />
@@ -155,18 +140,19 @@ const CreateProduct = () => {
         </DialogTitle>
         <Divider variant="fullWidth" />
         <DialogContent className="flex flex-col overflow-x-hidden overflow-y-auto">
-          <div className="flex items-center">
-            <img src={MyAvat} className="w-[70px] h-[70px]" />
-            <div className="flex flex-col justify-center ">
+          <div className="flex flex-col items-start">
+            <div className="flex items-center">
+              <img src={MyAvat} className="w-[60px] h-[60px]" />
               <p className="font-bold mx-2 text-20">Mong Luan Vo</p>
-              <div className="flex gap-5 items-center mx-2">
+            </div>
+
+            <div className="flex flex-col my-3 justify-center ">
+              <div className="flex flex-col gap-5 items-start mx-2">
                 <div className="p-2 flex gap-3 bg-yellow-400 hover:bg-yellow-600 rounded-md">
                   <label>Category </label>
                   <select>
                     {categoryList.map((item) => (
-                      <option>
-                        {item.icon} {item.title}
-                      </option>
+                      <option>{item.title}</option>
                     ))}
                   </select>
                 </div>
@@ -174,18 +160,38 @@ const CreateProduct = () => {
                   <label>Origin</label>
                   <select>
                     {originList.map((item) => (
-                      <option>
-                        {item.icon} {item.title}
-                      </option>
+                      <option>{item.title}</option>
                     ))}
                   </select>
                 </div>
                 <div className="p-2 flex gap-3 bg-orange-400 hover:bg-orange-600 rounded-md">
-                  <label>Type </label>
-                  <select>
-                    <option>Exchange</option>
-                    <option>Purchase</option>
+                  <label>Type</label>
+                  <select onChange={onChangeType}>
+                    <option value={"exchange"}>Exchange</option>
+                    <option value={"trade"}>Trade</option>
                   </select>
+                </div>
+                <div className="text-black flex items-center gap-2 ">
+                  <label>Price</label>
+                  <Tooltip
+                    placement="right-start"
+                    title={
+                      type === "trade"
+                        ? "Input price which you want"
+                        : "Only trade"
+                    }
+                  >
+                    <input
+                      disabled={type === "trade" ? false : true}
+                      className={`bg-slate-200 p-2 rounded-md ${
+                        type === "trade"
+                          ? `bg-slate-200`
+                          : ` cursor-not-allowed`
+                      }`}
+                      type="number"
+                      placeholder="VND"
+                    />
+                  </Tooltip>
                 </div>
               </div>
             </div>
@@ -196,10 +202,19 @@ const CreateProduct = () => {
               placeholder="Write title of your product"
             />
           </div>
+          <div className="flex justify-center my-3">
+            <TextField
+              variant="outlined"
+              fullWidth
+              multiline
+              label="Description"
+              color="secondary"
+            />
+          </div>
           {previewImage && (
-            <div className="flex items-start w-[500px]">
-              <div className="flex ml-36 w-[450px] items-start justify-center outline-dashed">
-                <img className="w-[450px] h-[auto]" src={previewImage} />
+            <div className="flex items-start w-[375px]">
+              <div className="flex w-[250px] items-start justify-start outline-dashed">
+                <img className="w-[250px] h-[auto]" src={previewImage} />
               </div>
               <div>
                 <TiDelete
@@ -212,6 +227,9 @@ const CreateProduct = () => {
           )}
           <div>
             <input type="file" onChange={handleImageUpload} />
+          </div>
+          <div className="flex justify-center mt-6">
+            <Button variant="contained">Post</Button>
           </div>
         </DialogContent>
       </Dialog>

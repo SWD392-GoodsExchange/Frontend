@@ -7,13 +7,21 @@ import { AiFillProduct } from "react-icons/ai";
 import { GoHistory } from "react-icons/go";
 import { Divider } from "@mui/material";
 import { GoChevronRight } from "react-icons/go";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const MyProfile = () => {
+  const navigate = useNavigate();
+  const handleBackHome = () => {
+    navigate(-1);
+  };
+
   return (
-    <div className="h-screen text-black bg-gradient-to-b from-orange-600 to-[#fbc4b8] pb-4">
+    <div className="h-screen text-black bg-gradient-to-b from-orange-600 to-[#f4a767] pb-4">
       <div className="flex justify-between px-3 py-2 items-center">
-        <div className="rounded-full p-3 bg-white hover:bg-orange-200 cursor-pointer">
+        <div
+          onClick={handleBackHome}
+          className="rounded-full p-3 bg-white hover:bg-orange-200 cursor-pointer"
+        >
           <IoIosArrowBack size={"22px"} />
         </div>
         <p className="font-normal text-24 ">My Profile</p>
@@ -25,17 +33,17 @@ const MyProfile = () => {
         <Avatar />
       </div>
       <div className="flex justify-center items-center mb-5">
-        <div className="flex flex-col items-center p-4 w-[90px] mx-0.5 bg-white rounded-xl">
+        <div className="flex flex-col shadow-md items-center p-4 w-[90px] mx-0.5 bg-white rounded-xl">
           <p>Product</p>
           <p className="italic text-orange-500 font-bold">34</p>
         </div>
-        <div className="flex flex-col items-center p-4  w-[90px] mx-0.5  bg-white rounded-xl">
+        <div className="flex flex-col shadow-md items-center p-4  w-[90px] mx-0.5  bg-white rounded-xl">
           <p>Order</p>
           <p className="italic text-orange-500 font-bold">16</p>
         </div>
       </div>
-      <div className="flex flex-col justify-center items-center">
-        <ul className="flex flex-col text-20 w-[300px] bg-white rounded-2xl">
+      <div className="flex flex-col  justify-center items-center">
+        <ul className="flex flex-col shadow-md text-20 w-[300px] bg-white rounded-2xl">
           <Link to="information">
             <li className="pl-4 py-5 flex items-center justify-between pr-5 hover:bg-orange-100 hover:rounded-t-2xl cursor-pointer">
               <p className="flex gap-3 items-center">

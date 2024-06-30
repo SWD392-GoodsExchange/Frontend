@@ -25,8 +25,8 @@ const LoginForm = ({ setChangeForm }: Props) => {
   };
 
   return (
-    <div className="flex flex-col w-[500px]">
-      <div className="flex flex-col items-center justify-center gap-8">
+    <div className="flex flex-col md:w-auto">
+      <div className="flex flex-col items-center justify-center gap-5">
         <div className="flex flex-col justify-center items-center text-20">
           <RiExchangeFill
             color="white"
@@ -38,7 +38,7 @@ const LoginForm = ({ setChangeForm }: Props) => {
         <h4 className="text-20 font-semibold">Sign in</h4>
       </div>
 
-      <div className="flex flex-col gap-6">
+      <div className="flex flex-col gap-4">
         <div className="flex flex-col gap-2">
           <p>User name</p>
           <input
@@ -59,13 +59,13 @@ const LoginForm = ({ setChangeForm }: Props) => {
             {showPassword ? (
               <FiEye
                 onClick={togglePasswordVisibility}
-                className="cursor-pointer"
+                className="cursor-pointer mr-3"
                 size={"22px"}
               />
             ) : (
               <RxEyeClosed
                 onClick={togglePasswordVisibility}
-                className="cursor-pointer"
+                className="cursor-pointer mr-3"
                 size={"22px"}
               />
             )}
@@ -82,7 +82,7 @@ const LoginForm = ({ setChangeForm }: Props) => {
       >
         Sign In
       </button>
-      <p className="text-slate-400 mr-48 justify-center items-center">
+      <p className="text-slate-400 justify-center items-center">
         You don't have account?
         <span className="text-orange-400">
           <button
