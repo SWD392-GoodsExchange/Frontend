@@ -10,14 +10,23 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
+  Tooltip,
 } from "@mui/material";
 import MyAvat from "../../assets/bear.png";
 import LoginForm from "../loginForm/LoginForm";
 import SignUp from "../registerForm/SignUp";
+import { RiMessengerFill } from "react-icons/ri";
+import { FaExchangeAlt } from "react-icons/fa";
+import { RiExchangeLine } from "react-icons/ri";
+import { RiNotification4Line } from "react-icons/ri";
+import { BsHouseDoor } from "react-icons/bs";
+import { RxAvatar } from "react-icons/rx";
+import { useNavigate } from "react-router-dom";
+import { RiExchangeFundsLine } from "react-icons/ri";
 
 const Navbar = () => {
+  const navigate = useNavigate();
   const [open, setOpen] = useState(false);
-  const [activePage, setActivePage] = useState("Exchange");
   const [changeForm, setChangeForm] = useState("Signin");
 
   const handleClickOpen = () => {
@@ -29,74 +38,66 @@ const Navbar = () => {
     setChangeForm("Signin");
   };
 
+  const handleClickProfile = () => {
+    navigate("/my-profile");
+  };
+
   return (
-    <nav className="flex  items-center bg-gradient-to-b from-orange-600 to-orange-400 h-[120px] px-10">
-      <div className="flex items-center">
-        <div className="text-20 font-bold mr-2">GoodsExchange</div>
-        <RiExchangeFill
-          size={"50px"}
-          color="white"
-          className="cursor-pointer"
-        />
-      </div>
-      <div className="flex bg-white ml-[20px] p-2 rounded-md text-black">
-        <input
-          className="pr-20 border-none outline-none"
-          placeholder="Search"
-        ></input>
-        <button className="bg-orange-500 p-2 rounded-md hover:bg-orange-700">
-          <CiSearch size={"22px"} color="white" />
-        </button>
-      </div>
-      <p
-        onClick={() => {
-          setActivePage("Exchange");
-        }}
-        className={`ml-16 p-3 cursor-pointer text-20 ${
-          activePage == "Exchange" ? ` bg-white text-orange-500` : ``
-        } rounded-md hover:text-orange-300`}
-      >
-        Exchange
-      </p>
-      <p
-        onClick={() => setActivePage("Purchase")}
-        className={`mx-16 p-3 cursor-pointer ${
-          activePage == "Purchase" ? `bg-white text-orange-500` : ``
-        } hover:text-orange-300 text-20 rounded-md`}
-      >
-        Purchase
-      </p>
-
-      <div className="mx-[50px] gap-14 flex items-center">
-        <div className="hover:bg-orange-700 p-2 rounded-md">
-          <Badge badgeContent={4} color="info">
-            <BsCart4 size={"25px"} />
-          </Badge>
+    <div className="flex flex-col gap-3 items-center justify-center bg-gradient-to-b from-orange-600 to-orange-400 h-[100px]">
+      <div className="flex justify-between w-[93%] ">
+        <div className="flex items-center gap-1">
+          <p className="font-semibold text-20">GooodsExchange</p>
+          <RiExchangeFill size={"30px"} />
         </div>
-        <div className="hover:bg-orange-700 p-2 rounded-md">
-          <Badge badgeContent={5} color="info">
-            <IoIosNotifications size={"25px"} />
-          </Badge>
-        </div>
-        <div className="hover:bg-orange-700 p-2 rounded-md">
-          <Badge badgeContent={10} color="info">
-            <IoChatboxEllipsesOutline size={"25px"} />
+        <div>
+          <Badge badgeContent={4} color="primary">
+            <RiMessengerFill size={"30px"} />
           </Badge>
         </div>
       </div>
-      <div className="font-semibold ">
-        {/* <p className="flex gap-2 items-center">
-          <img src={MyAvat} width={50} height={50} />
-          VoMongLuan
-        </p> */}
-        <button
-          onClick={handleClickOpen}
-          className="p-5 rounded-xl bg-white text-orange-500 hover:bg-orange-400 hover:text-white transition-all duration-500 shadow-2xl hover:shadow-md"
-        >
-          Sign In
-        </button>
+      <div className="flex justify-between items-center w-[93%]">
+        <Tooltip title="Exchange" enterDelay={300}>
+          <div>
+            <RiExchangeLine
+              className="hover:text-orange-300 cursor-pointer"
+              size={"30px"}
+            />
+          </div>
+        </Tooltip>
+        <Tooltip title="Trade" enterDelay={300}>
+          <div>
+            <BsHouseDoor
+              className="hover:text-orange-300 cursor-pointer"
+              size={"30px"}
+            />
+          </div>
+        </Tooltip>
+        <Tooltip title="Transaction" enterDelay={300}>
+          <div>
+            <RiExchangeFundsLine
+              className="hover:text-orange-300 cursor-pointer"
+              size={"30px"}
+            />
+          </div>
+        </Tooltip>
+        <Tooltip title="Notifications" enterDelay={300}>
+          <Badge badgeContent={4} color="primary">
+            <RiNotification4Line
+              className="hover:text-orange-300 cursor-pointer"
+              size={"30px"}
+            />
+          </Badge>
+        </Tooltip>
+        <Tooltip title="Profile" enterDelay={300}>
+          <div>
+            <RxAvatar
+              className="hover:text-orange-300 cursor-pointer"
+              size={"30px"}
+              onClick={handleClickOpen}
+            />
+          </div>
+        </Tooltip>
       </div>
-
       <Dialog
         disableEscapeKeyDown
         open={open}
@@ -129,7 +130,7 @@ const Navbar = () => {
           </button>
         </DialogActions>
       </Dialog>
-    </nav>
+    </div>
   );
 };
 
