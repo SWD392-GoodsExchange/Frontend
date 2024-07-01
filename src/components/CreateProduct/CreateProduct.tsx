@@ -105,11 +105,11 @@ const CreateProduct = () => {
   return (
     <div className="flex justify-center text-20 text-black my-1">
       <Card>
-        <div className="flex p-3 w-auto items-center">
+        <div className="flex p-3 w-[100%]items-center">
           <img src={MyAvat} className="w-[50px] h-[50px]" />
           <button
             onClick={onClickOpenDialog}
-            className="flex text-16  p-3 ml-3 w-[340px] rounded-full bg-slate-200 hover:bg-slate-400 hover:text-white transiton-all duration-300"
+            className="flex text-16  p-3 ml-3 w-[600px] rounded-full bg-slate-200 hover:bg-slate-400 hover:text-white transiton-all duration-300"
           >
             Post your product...
           </button>

@@ -75,7 +75,7 @@ const MyProfile = () => {
           <Divider variant="fullWidth" />
           <li className="pl-4 py-5  flex items-center justify-between pr-5  hover:bg-orange-100 hover:rounded-b-2xl cursor-pointer">
             <p className="flex gap-3 items-center">
-              <GoHistory color="grey" size={"22px"} /> History Order
+              <GoHistory color="grey" size={"22px"} /> Order History
             </p>
             <div>
               <GoChevronRight />

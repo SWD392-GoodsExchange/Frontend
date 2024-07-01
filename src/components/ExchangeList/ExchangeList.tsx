@@ -8,7 +8,7 @@ import { Tooltip } from "@mui/material";
 
 const ExchangeList = () => {
   return (
-    <div className="px-3 mx-[547px] py-3 my-1 flex flex-col items-start gap-2 bg-white w-[425px] rounded-md">
+    <div className="px-3 py-3 my-1 flex flex-col items-start gap-2 bg-white w-[100%] rounded-md shadow-2xl">
       <div className="flex gap-3">
         <img src={Avatar} width={50} height={50} />
         <div className="flex flex-col items-start">
@@ -22,6 +22,9 @@ const ExchangeList = () => {
         </div>
         <div className="p-2 my-2 bg-blue-500 text-center items-center rounded-2xl text-white hover:bg-blue-700 cursor-text">
           <p>Japan</p>
+        </div>
+        <div className="p-2 my-2 bg-orange-500 text-center items-center rounded-2xl text-white hover:bg-orange-700 cursor-text">
+          <p>Exchange</p>
         </div>
       </div>
       <div>

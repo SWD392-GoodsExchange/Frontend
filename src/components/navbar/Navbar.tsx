@@ -1,12 +1,8 @@
-import React, { useEffect, useState } from "react";
-import { CiSearch } from "react-icons/ci";
+import React, { useState } from "react";
+
 import { RiExchangeFill } from "react-icons/ri";
-import { BsCart4 } from "react-icons/bs";
-import { IoIosNotifications } from "react-icons/io";
-import { IoChatboxEllipsesOutline } from "react-icons/io5";
 import {
   Badge,
-  Button,
   Dialog,
   DialogActions,
   DialogContent,
@@ -16,16 +12,16 @@ import MyAvat from "../../assets/bear.png";
 import LoginForm from "../loginForm/LoginForm";
 import SignUp from "../registerForm/SignUp";
 import { RiMessengerFill } from "react-icons/ri";
-import { FaExchangeAlt } from "react-icons/fa";
 import { RiExchangeLine } from "react-icons/ri";
 import { RiNotification4Line } from "react-icons/ri";
-import { BsHouseDoor } from "react-icons/bs";
 import { RxAvatar } from "react-icons/rx";
 import { useNavigate } from "react-router-dom";
 import { RiExchangeFundsLine } from "react-icons/ri";
+import { RiMoneyDollarCircleLine } from "react-icons/ri";
 
 const Navbar = () => {
   const navigate = useNavigate();
+  const [activePage, setActivePage] = useState("exchange");
   const [open, setOpen] = useState(false);
   const [changeForm, setChangeForm] = useState("Signin");
 
@@ -43,21 +39,30 @@ const Navbar = () => {
   };
 
   return (
-    <div className="flex flex-col gap-3 items-center justify-center bg-gradient-to-b from-orange-600 to-orange-400 h-[100px]">
+    <div className="flex flex-col  gap-3 items-center justify-center bg-gradient-to-b from-orange-600 to-orange-400 h-[100px]">
       <div className="flex justify-between w-[93%] ">
         <div className="flex items-center gap-1">
           <p className="font-semibold text-20">GooodsExchange</p>
           <RiExchangeFill size={"30px"} />
         </div>
         <div>
-          <Badge badgeContent={4} color="primary">
+          <Badge badgeContent={6} color="primary">
             <RiMessengerFill size={"30px"} />
           </Badge>
         </div>
       </div>
       <div className="flex justify-between items-center w-[93%]">
         <Tooltip title="Exchange" enterDelay={300}>
-          <div>
+          <div
+            className={`p-1 transition-all duration-300 ${
+              activePage === "exchange"
+                ? `bg-white text-orange-500 rounded-full`
+                : ``
+            }`}
+            onClick={() => {
+              setActivePage("exchange");
+            }}
+          >
             <RiExchangeLine
               className="hover:text-orange-300 cursor-pointer"
               size={"30px"}
@@ -65,15 +70,33 @@ const Navbar = () => {
           </div>
         </Tooltip>
         <Tooltip title="Trade" enterDelay={300}>
-          <div>
-            <BsHouseDoor
+          <div
+            className={`p-1 transition-all duration-300 ${
+              activePage === "trade"
+                ? `bg-white text-orange-500 rounded-full`
+                : ``
+            }`}
+            onClick={() => {
+              setActivePage("trade");
+            }}
+          >
+            <RiMoneyDollarCircleLine
               className="hover:text-orange-300 cursor-pointer"
               size={"30px"}
             />
           </div>
         </Tooltip>
         <Tooltip title="Transaction" enterDelay={300}>
-          <div>
+          <div
+            className={`p-1 transition-all duration-300 ${
+              activePage === "transaction"
+                ? `bg-white text-orange-500 rounded-full`
+                : ``
+            }`}
+            onClick={() => {
+              setActivePage("transaction");
+            }}
+          >
             <RiExchangeFundsLine
               className="hover:text-orange-300 cursor-pointer"
               size={"30px"}
@@ -81,21 +104,30 @@ const Navbar = () => {
           </div>
         </Tooltip>
         <Tooltip title="Notifications" enterDelay={300}>
-          <Badge badgeContent={4} color="primary">
-            <RiNotification4Line
-              className="hover:text-orange-300 cursor-pointer"
-              size={"30px"}
-            />
-          </Badge>
+          <div
+            className={`p-1 transition-all duration-300 ${
+              activePage === "notifications"
+                ? `bg-white text-orange-500 rounded-full`
+                : ``
+            }`}
+            onClick={() => {
+              setActivePage("notifications");
+            }}
+          >
+            <Badge badgeContent={8} color="primary">
+              <RiNotification4Line
+                className="hover:text-orange-300 cursor-pointer"
+                size={"30px"}
+              />
+            </Badge>
+          </div>
         </Tooltip>
         <Tooltip title="Profile" enterDelay={300}>
-          <div>
-            <RxAvatar
-              className="hover:text-orange-300 cursor-pointer"
-              size={"30px"}
-              onClick={handleClickOpen}
-            />
-          </div>
+          <RxAvatar
+            className="hover:text-orange-300 cursor-pointer"
+            size={"30px"}
+            onClick={handleClickOpen}
+          />
         </Tooltip>
       </div>
       <Dialog
