@@ -44,12 +44,11 @@ const HomePage = () => {
             </div>
             <div className=" text-center text-black flex flex-col s my-1">
               <ExchangeList />
-              <ExchangeList />
             </div>
           </div>
         </Grid>
         <Grid item xs={3} spacing={1}>
-          <div className="mr-2 my-4 gap-4 flex flex-col overflow-scroll overflow-x-hidden overflow-y-auto">
+          <div className="mr-2 my-4 gap-4  flex flex-col overflow-scroll overflow-x-hidden overflow-y-auto">
             <Top5PostProduct />
             <Divider variant="middle" />
             <Top5Transaction />

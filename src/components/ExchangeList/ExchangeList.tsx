@@ -5,8 +5,14 @@ import { CiBookmark } from "react-icons/ci";
 import { GoReport } from "react-icons/go";
 import { LiaExchangeAltSolid } from "react-icons/lia";
 import { Tooltip } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 const ExchangeList = () => {
+  const navigate = useNavigate();
+
+  const onClickExchange = () => {
+    navigate("/exchange-ticket");
+  };
   return (
     <div className="px-3 py-3 my-1 flex flex-col items-start gap-2 bg-white w-[100%] rounded-md shadow-2xl">
       <div className="flex gap-3">
@@ -42,18 +48,21 @@ const ExchangeList = () => {
       </div>
       <p className="bg-slate-300 w-[100%] h-[2px]"></p>
       <div className="w-[100%] text-slate-700 flex justify-between">
-        <p className="flex gap-1 items-center transition-all duration-300 bg-purple-500 rounded-lg p-2 cursor-pointer hover:bg-purple-700 hover:text-white">
+        <button className="flex gap-1 items-center transition-all duration-300 bg-purple-500 rounded-lg p-2 cursor-pointer hover:bg-purple-700 hover:text-white">
           <CiBookmark size={"22px"} />
           Bookmark
-        </p>
-        <p className="flex gap-1 items-center transition-all duration-300 bg-orange-500 rounded-lg p-2 cursor-pointer hover:bg-orange-700 hover:text-white ">
+        </button>
+        <button
+          onClick={onClickExchange}
+          className="flex gap-1 items-center transition-all duration-300 bg-orange-500 rounded-lg p-2 cursor-pointer hover:bg-orange-700 hover:text-white "
+        >
           <LiaExchangeAltSolid size={"22px"} />
           Exchange
-        </p>
-        <p className="flex gap-1 items-center transition-all duration-300 bg-red-500 rounded-lg p-2 cursor-pointer hover:bg-red-700 hover:text-white">
+        </button>
+        <button className="flex gap-1 items-center transition-all duration-300 bg-red-500 rounded-lg p-2 cursor-pointer hover:bg-red-700 hover:text-white">
           <GoReport size={"22px"} />
           Report
-        </p>
+        </button>
       </div>
     </div>
   );

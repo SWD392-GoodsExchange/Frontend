@@ -13,19 +13,19 @@ import {
 import React, { useState } from "react";
 import MyAvat from "../../assets/panda.png";
 import { TiDelete } from "react-icons/ti";
-import { GiClothes, GiShorts } from "react-icons/gi";
-import { RiComputerLine } from "react-icons/ri";
-import { FaMobileAlt } from "react-icons/fa";
-import { PiGuitarLight, PiShirtFolded, PiToolboxLight } from "react-icons/pi";
-import { MdOutlinePets } from "react-icons/md";
-import { IoFastFoodOutline } from "react-icons/io5";
-import { CgGames } from "react-icons/cg";
-import JapanFlag from "../../assets/japan.png";
-import VietNamFlag from "../../assets/vietnam.png";
-import UsaFlag from "../../assets/united-states.png";
-import ChinaFlag from "../../assets/china.png";
-import ThaiLanFlag from "../../assets/thailand.png";
-import ReactImageUploading from "react-images-uploading";
+// import { GiClothes, GiShorts } from "react-icons/gi";
+// import { RiComputerLine } from "react-icons/ri";
+// import { FaMobileAlt } from "react-icons/fa";
+// import { PiGuitarLight, PiShirtFolded, PiToolboxLight } from "react-icons/pi";
+// import { MdOutlinePets } from "react-icons/md";
+// import { IoFastFoodOutline } from "react-icons/io5";
+// import { CgGames } from "react-icons/cg";
+// import JapanFlag from "../../assets/japan.png";
+// import VietNamFlag from "../../assets/vietnam.png";
+// import UsaFlag from "../../assets/united-states.png";
+// import ChinaFlag from "../../assets/china.png";
+// import ThaiLanFlag from "../../assets/thailand.png";
+// import ReactImageUploading from "react-images-uploading";
 
 const categoryList = [
   { title: "School supply" },
@@ -225,8 +225,33 @@ const CreateProduct = () => {
               </div>
             </div>
           )}
-          <div>
-            <input type="file" onChange={handleImageUpload} />
+          <div className="flex justify-center mt-3 ">
+            <input
+              type="file"
+              className="hidden"
+              id="image-input"
+              accept="image/*"
+              onChange={handleImageUpload}
+            />
+            <label
+              htmlFor="image-input"
+              className="cursor-pointer flex items-center justify-center w-60 h-16 bg-gray-200 border border-gray-400 rounded-lg"
+            >
+              <svg
+                className="w-6 h-6 text-gray-400"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+                ></path>
+              </svg>
+              <span className="ml-2 text-gray-500">Upload Image</span>
+            </label>
           </div>
           <div className="flex justify-center mt-6">
             <Button variant="contained">Post</Button>

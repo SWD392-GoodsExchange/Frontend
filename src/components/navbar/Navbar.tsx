@@ -8,7 +8,7 @@ import {
   DialogContent,
   Tooltip,
 } from "@mui/material";
-import MyAvat from "../../assets/bear.png";
+import MyAvat from "../../assets/panda.png";
 import LoginForm from "../loginForm/LoginForm";
 import SignUp from "../registerForm/SignUp";
 import { RiMessengerFill } from "react-icons/ri";
@@ -123,11 +123,18 @@ const Navbar = () => {
           </div>
         </Tooltip>
         <Tooltip title="Profile" enterDelay={300}>
-          <RxAvatar
+          <img
+            className="rounded-full cursor-pointer hover:outline transition-all"
+            onClick={handleClickProfile}
+            src={MyAvat}
+            width={30}
+            height={30}
+          />
+          {/* <RxAvatar
             className="hover:text-orange-300 cursor-pointer"
             size={"30px"}
             onClick={handleClickOpen}
-          />
+          /> */}
         </Tooltip>
       </div>
       <Dialog
