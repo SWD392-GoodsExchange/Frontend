@@ -5,6 +5,7 @@ import HistoryImg from "../../assets/history.png";
 import MyAvatar from "../../assets/panda.png";
 import Messenger from "../../assets/messenger.png";
 import { Link } from "react-router-dom";
+import Logout from "../../assets/logout.png";
 
 // const menuList = [
 //   { img: MyAvatar, title: "Vo Mong Luan" },
@@ -49,6 +50,11 @@ const Menu = () => {
           <p>{"Chat"}</p>
         </div>
       </Link>
+
+      <div className="flex font-semibold p-2 gap-4 rounded-lg items-center hover:bg-gray-300 cursor-pointer">
+        <img src={Logout} width={40} height={40} />
+        <p>{"Logout"}</p>
+      </div>
     </div>
   );
 };

@@ -110,19 +110,18 @@ const ExchangeTicket = () => {
           </div>
           <div>
             <p className="font-semibold">Title</p>
+            <p className="font-light">Description</p>
           </div>
           <div className="flex flex-col justify-center my-2">
-            <Tooltip title="Description" placement="top">
-              <img
-                className="outline outline-1 w-full rounded-lg"
-                src={ATM}
-                width={"300px"}
-                height="auto"
-              />
-            </Tooltip>
+            <img
+              className="outline outline-1 w-full rounded-lg"
+              src={ATM}
+              width={"300px"}
+              height="auto"
+            />
           </div>
         </Card>
-        <div className="p-3 bg-white rounded-full hover:text-orange-500 hover:bg-black">
+        <div className="p-5 bg-white rounded-full ">
           <FaExchangeAlt size={"40px"} />
         </div>
         {/* Thông tin người muốn trao đổi */}

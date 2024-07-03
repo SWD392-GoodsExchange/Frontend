@@ -12,7 +12,6 @@ import Top5Transaction from "../components/TopAccount/Top5Transaction";
 const HomePage = () => {
   return (
     <div>
-      <Navbar />
       <Grid
         className="flex justify-between text-center text-black"
         container

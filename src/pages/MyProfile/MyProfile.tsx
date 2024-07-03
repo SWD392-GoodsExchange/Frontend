@@ -16,7 +16,7 @@ const MyProfile = () => {
   };
 
   return (
-    <div className="h-screen text-black bg-gradient-to-b from-orange-600 to-[#f4a767] pb-4">
+    <div className="h-screen text-black bg-[#42FCAC00] pb-4">
       <div className="flex justify-between px-3 py-2 items-center">
         <div
           onClick={handleBackHome}

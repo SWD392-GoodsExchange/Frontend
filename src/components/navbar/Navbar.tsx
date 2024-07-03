@@ -15,15 +15,21 @@ import { RiMessengerFill } from "react-icons/ri";
 import { RiExchangeLine } from "react-icons/ri";
 import { RiNotification4Line } from "react-icons/ri";
 import { RxAvatar } from "react-icons/rx";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { RiExchangeFundsLine } from "react-icons/ri";
 import { RiMoneyDollarCircleLine } from "react-icons/ri";
 
 const Navbar = () => {
+  const location = useLocation();
   const navigate = useNavigate();
-  const [activePage, setActivePage] = useState("exchange");
+
+  const [notification, setNotification] = useState(false);
   const [open, setOpen] = useState(false);
   const [changeForm, setChangeForm] = useState("Signin");
+
+  const handleClickNoti = () => {
+    setNotification(!notification);
+  };
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -34,12 +40,8 @@ const Navbar = () => {
     setChangeForm("Signin");
   };
 
-  const handleClickProfile = () => {
-    navigate("/my-profile");
-  };
-
   return (
-    <div className="flex flex-col  gap-3 items-center justify-center bg-gradient-to-b from-orange-600 to-orange-400 h-[100px]">
+    <div className="flex flex-col text-white  gap-3 items-center justify-center bg-gradient-to-b from-orange-600 to-orange-400 h-[100px]">
       <div className="flex justify-between w-[93%] ">
         <div className="flex items-center gap-1">
           <p className="font-semibold text-20">GooodsExchange</p>
@@ -55,12 +57,12 @@ const Navbar = () => {
         <Tooltip title="Exchange" enterDelay={300}>
           <div
             className={`p-1 transition-all duration-300 ${
-              activePage === "exchange"
+              location.pathname === "/"
                 ? `bg-white text-orange-500 rounded-full`
                 : ``
             }`}
             onClick={() => {
-              setActivePage("exchange");
+              navigate("/");
             }}
           >
             <RiExchangeLine
@@ -72,12 +74,12 @@ const Navbar = () => {
         <Tooltip title="Trade" enterDelay={300}>
           <div
             className={`p-1 transition-all duration-300 ${
-              activePage === "trade"
+              location.pathname === "/trade"
                 ? `bg-white text-orange-500 rounded-full`
                 : ``
             }`}
             onClick={() => {
-              setActivePage("trade");
+              navigate("/trade");
             }}
           >
             <RiMoneyDollarCircleLine
@@ -89,12 +91,12 @@ const Navbar = () => {
         <Tooltip title="Transaction" enterDelay={300}>
           <div
             className={`p-1 transition-all duration-300 ${
-              activePage === "transaction"
+              location.pathname === "/transaction"
                 ? `bg-white text-orange-500 rounded-full`
                 : ``
             }`}
             onClick={() => {
-              setActivePage("transaction");
+              navigate("/transaction");
             }}
           >
             <RiExchangeFundsLine
@@ -106,13 +108,9 @@ const Navbar = () => {
         <Tooltip title="Notifications" enterDelay={300}>
           <div
             className={`p-1 transition-all duration-300 ${
-              activePage === "notifications"
-                ? `bg-white text-orange-500 rounded-full`
-                : ``
+              notification ? `bg-white text-orange-500 rounded-full` : ``
             }`}
-            onClick={() => {
-              setActivePage("notifications");
-            }}
+            onClick={handleClickNoti}
           >
             <Badge badgeContent={8} color="primary">
               <RiNotification4Line
@@ -124,8 +122,14 @@ const Navbar = () => {
         </Tooltip>
         <Tooltip title="Profile" enterDelay={300}>
           <img
-            className="rounded-full cursor-pointer hover:outline transition-all"
-            onClick={handleClickProfile}
+            className={`rounded-full cursor-pointer hover:outline transition-all ${
+              location.pathname === "/my-profile"
+                ? `bg-white text-orange-500 outline  rounded-full`
+                : ``
+            }`}
+            onClick={() => {
+              navigate("/my-profile");
+            }}
             src={MyAvat}
             width={30}
             height={30}

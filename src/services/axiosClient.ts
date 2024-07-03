@@ -2,7 +2,7 @@ import axios, { AxiosError } from "axios";
 // import { isEmpty } from "lodash";
 
 const axiosClient = axios.create({
-  baseURL: "https://localhost:7158/api",
+  baseURL: "https://localhost:5001/api",
   headers: {
     "Content-Type": "application/json",
   },
