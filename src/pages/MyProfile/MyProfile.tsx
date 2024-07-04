@@ -16,7 +16,7 @@ const MyProfile = () => {
   };
 
   return (
-    <div className="h-screen text-black bg-gradient-to-b from-orange-600 to-[#f4a767] pb-4">
+    <div className="h-screen text-black bg-[#42FCAC00] pb-4">
       <div className="flex justify-between px-3 py-2 items-center">
         <div
           onClick={handleBackHome}
@@ -55,14 +55,16 @@ const MyProfile = () => {
             </li>
           </Link>
           <Divider variant="fullWidth" />
-          <li className="pl-4 py-5  flex items-center justify-between pr-5  hover:bg-orange-100 cursor-pointer">
-            <p className="flex gap-3 items-center">
-              <AiFillProduct color="grey" size={"22px"} /> Product
-            </p>
-            <div>
-              <GoChevronRight />
-            </div>
-          </li>
+          <Link to="product">
+            <li className="pl-4 py-5  flex items-center justify-between pr-5  hover:bg-orange-100 cursor-pointer">
+              <p className="flex gap-3 items-center">
+                <AiFillProduct color="grey" size={"22px"} /> Product
+              </p>
+              <div>
+                <GoChevronRight />
+              </div>
+            </li>
+          </Link>
           <Divider variant="fullWidth" />
           <li className="pl-4 py-5  flex items-center justify-between pr-5  hover:bg-orange-100 cursor-pointer">
             <p className="flex gap-3 items-center">
@@ -75,7 +77,7 @@ const MyProfile = () => {
           <Divider variant="fullWidth" />
           <li className="pl-4 py-5  flex items-center justify-between pr-5  hover:bg-orange-100 hover:rounded-b-2xl cursor-pointer">
             <p className="flex gap-3 items-center">
-              <GoHistory color="grey" size={"22px"} /> History Order
+              <GoHistory color="grey" size={"22px"} /> Order History
             </p>
             <div>
               <GoChevronRight />

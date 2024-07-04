@@ -13,19 +13,19 @@ import {
 import React, { useState } from "react";
 import MyAvat from "../../assets/panda.png";
 import { TiDelete } from "react-icons/ti";
-import { GiClothes, GiShorts } from "react-icons/gi";
-import { RiComputerLine } from "react-icons/ri";
-import { FaMobileAlt } from "react-icons/fa";
-import { PiGuitarLight, PiShirtFolded, PiToolboxLight } from "react-icons/pi";
-import { MdOutlinePets } from "react-icons/md";
-import { IoFastFoodOutline } from "react-icons/io5";
-import { CgGames } from "react-icons/cg";
-import JapanFlag from "../../assets/japan.png";
-import VietNamFlag from "../../assets/vietnam.png";
-import UsaFlag from "../../assets/united-states.png";
-import ChinaFlag from "../../assets/china.png";
-import ThaiLanFlag from "../../assets/thailand.png";
-import ReactImageUploading from "react-images-uploading";
+// import { GiClothes, GiShorts } from "react-icons/gi";
+// import { RiComputerLine } from "react-icons/ri";
+// import { FaMobileAlt } from "react-icons/fa";
+// import { PiGuitarLight, PiShirtFolded, PiToolboxLight } from "react-icons/pi";
+// import { MdOutlinePets } from "react-icons/md";
+// import { IoFastFoodOutline } from "react-icons/io5";
+// import { CgGames } from "react-icons/cg";
+// import JapanFlag from "../../assets/japan.png";
+// import VietNamFlag from "../../assets/vietnam.png";
+// import UsaFlag from "../../assets/united-states.png";
+// import ChinaFlag from "../../assets/china.png";
+// import ThaiLanFlag from "../../assets/thailand.png";
+// import ReactImageUploading from "react-images-uploading";
 
 const categoryList = [
   { title: "School supply" },
@@ -105,18 +105,18 @@ const CreateProduct = () => {
   return (
     <div className="flex justify-center text-20 text-black my-1">
       <Card>
-        <div className="flex p-3 w-auto items-center">
+        <div className="flex p-3 w-[100%]items-center">
           <img src={MyAvat} className="w-[50px] h-[50px]" />
           <button
             onClick={onClickOpenDialog}
-            className="flex text-16  p-3 ml-3 w-[340px] rounded-full bg-slate-200 hover:bg-slate-400 hover:text-white transiton-all duration-300"
+            className="flex text-16  p-3 ml-3 w-[600px] rounded-full bg-slate-200 hover:bg-slate-400 hover:text-white transiton-all duration-300"
           >
             Post your product...
           </button>
         </div>
       </Card>
       <Dialog
-        maxWidth="md"
+        fullWidth
         disableEscapeKeyDown
         open={openDialog}
         onClose={handleCloseDialog}
@@ -147,7 +147,7 @@ const CreateProduct = () => {
             </div>
 
             <div className="flex flex-col my-3 justify-center ">
-              <div className="flex flex-col gap-5 items-start mx-2">
+              <div className="flex gap-4 items-start mx-2">
                 <div className="p-2 flex gap-3 bg-yellow-400 hover:bg-yellow-600 rounded-md">
                   <label>Category </label>
                   <select>
@@ -171,28 +171,6 @@ const CreateProduct = () => {
                     <option value={"trade"}>Trade</option>
                   </select>
                 </div>
-                <div className="text-black flex items-center gap-2 ">
-                  <label>Price</label>
-                  <Tooltip
-                    placement="right-start"
-                    title={
-                      type === "trade"
-                        ? "Input price which you want"
-                        : "Only trade"
-                    }
-                  >
-                    <input
-                      disabled={type === "trade" ? false : true}
-                      className={`bg-slate-200 p-2 rounded-md ${
-                        type === "trade"
-                          ? `bg-slate-200`
-                          : ` cursor-not-allowed`
-                      }`}
-                      type="number"
-                      placeholder="VND"
-                    />
-                  </Tooltip>
-                </div>
               </div>
             </div>
           </div>
@@ -202,7 +180,7 @@ const CreateProduct = () => {
               placeholder="Write title of your product"
             />
           </div>
-          <div className="flex justify-center my-3">
+          <div className="flex justify-center gap-2 my-3">
             <TextField
               variant="outlined"
               fullWidth
@@ -210,11 +188,29 @@ const CreateProduct = () => {
               label="Description"
               color="secondary"
             />
+            <div className="text-black flex items-center gap-2 ">
+              <label>Price</label>
+              <Tooltip
+                placement="right-start"
+                title={
+                  type === "trade" ? "Input price which you want" : "Only trade"
+                }
+              >
+                <input
+                  disabled={type === "trade" ? false : true}
+                  className={`bg-slate-200 p-2 rounded-md ${
+                    type === "trade" ? `bg-slate-200` : ` cursor-not-allowed`
+                  }`}
+                  type="number"
+                  placeholder="VND"
+                />
+              </Tooltip>
+            </div>
           </div>
           {previewImage && (
-            <div className="flex items-start w-[375px]">
-              <div className="flex w-[250px] items-start justify-start outline-dashed">
-                <img className="w-[250px] h-[auto]" src={previewImage} />
+            <div className="flex items-start w-[500px]">
+              <div className="flex w-[450px] items-start justify-start outline">
+                <img className="w-[450px] h-[auto]" src={previewImage} />
               </div>
               <div>
                 <TiDelete
@@ -225,8 +221,33 @@ const CreateProduct = () => {
               </div>
             </div>
           )}
-          <div>
-            <input type="file" onChange={handleImageUpload} />
+          <div className="flex justify-center mt-3 ">
+            <input
+              type="file"
+              className="hidden"
+              id="image-input"
+              accept="image/*"
+              onChange={handleImageUpload}
+            />
+            <label
+              htmlFor="image-input"
+              className="cursor-pointer flex items-center justify-center w-60 h-16 bg-gray-200 border border-gray-400 rounded-lg"
+            >
+              <svg
+                className="w-6 h-6 text-gray-400"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+                ></path>
+              </svg>
+              <span className="ml-2 text-gray-500">Upload Image</span>
+            </label>
           </div>
           <div className="flex justify-center mt-6">
             <Button variant="contained">Post</Button>
