@@ -57,7 +57,7 @@ const SignUp = ({ setChangeForm }: Props) => {
   };
 
   return (
-    <div className="flex flex-col w-[500px]">
+    <div className="flex flex-col md:w-auto">
       <div className="flex flex-col items-center justify-center gap-8">
         <div className="flex flex-col justify-center items-center text-20">
           <RiExchangeFill
@@ -107,13 +107,13 @@ const SignUp = ({ setChangeForm }: Props) => {
             {showPassword ? (
               <FiEye
                 onClick={togglePasswordVisibility}
-                className="cursor-pointer"
+                className="cursor-pointer mr-3"
                 size={"22px"}
               />
             ) : (
               <RxEyeClosed
                 onClick={togglePasswordVisibility}
-                className="cursor-pointer"
+                className="cursor-pointer mr-3"
                 size={"22px"}
               />
             )}
@@ -183,7 +183,7 @@ const SignUp = ({ setChangeForm }: Props) => {
       >
         Sign Up
       </button>
-      <p className="text-slate-400 mr-48 justify-center items-center">
+      <p className="text-slate-400 justify-center items-center">
         You have account?
         <span className="text-orange-400">
           <button
