@@ -8,6 +8,7 @@ import ExchangeList from "../components/ExchangeList/ExchangeList";
 import Menu from "../components/Menu/Menu";
 import Top5PostProduct from "../components/TopAccount/Top5PostProduct";
 import Top5Transaction from "../components/TopAccount/Top5Transaction";
+import Weather from "../components/Weather";
 
 const HomePage = () => {
   return (
@@ -22,6 +23,9 @@ const HomePage = () => {
             <Menu />
           </div>
           <Divider variant="middle" orientation="horizontal" />
+          <div className="my-5 mx-3">
+            <Weather />
+          </div>
         </Grid>
 
         <Grid item xs={4}>

@@ -18,18 +18,13 @@ import { RxAvatar } from "react-icons/rx";
 import { useLocation, useNavigate } from "react-router-dom";
 import { RiExchangeFundsLine } from "react-icons/ri";
 import { RiMoneyDollarCircleLine } from "react-icons/ri";
+import MyNotificatons from "../Notifications/MyNotifications";
 
 const Navbar = () => {
   const location = useLocation();
   const navigate = useNavigate();
-
-  const [notification, setNotification] = useState(false);
   const [open, setOpen] = useState(false);
   const [changeForm, setChangeForm] = useState("Signin");
-
-  const handleClickNoti = () => {
-    setNotification(!notification);
-  };
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -106,19 +101,7 @@ const Navbar = () => {
           </div>
         </Tooltip>
         <Tooltip title="Notifications" enterDelay={300}>
-          <div
-            className={`p-1 transition-all duration-300 ${
-              notification ? `bg-white text-orange-500 rounded-full` : ``
-            }`}
-            onClick={handleClickNoti}
-          >
-            <Badge badgeContent={8} color="primary">
-              <RiNotification4Line
-                className="hover:text-orange-300 cursor-pointer"
-                size={"30px"}
-              />
-            </Badge>
-          </div>
+          <MyNotificatons />
         </Tooltip>
         <Tooltip title="Profile" enterDelay={300}>
           <img

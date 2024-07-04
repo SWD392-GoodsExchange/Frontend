@@ -18,7 +18,7 @@ const Top5Transaction = () => {
         {top5Member.map((item) => (
           <div className="mx-2 my-2 hover:bg-gray-300 p-2 rounded-2xl cursor-pointer">
             <p className=" flex items-center gap-3 font-semibold">
-              <img src={item.avt} width={40} height={40} />
+              <img src={item.avt} width={50} height={50} />
               {item.username}
             </p>
           </div>

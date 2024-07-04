@@ -116,7 +116,7 @@ const CreateProduct = () => {
         </div>
       </Card>
       <Dialog
-        maxWidth="md"
+        fullWidth
         disableEscapeKeyDown
         open={openDialog}
         onClose={handleCloseDialog}
@@ -147,7 +147,7 @@ const CreateProduct = () => {
             </div>
 
             <div className="flex flex-col my-3 justify-center ">
-              <div className="flex flex-col gap-5 items-start mx-2">
+              <div className="flex gap-4 items-start mx-2">
                 <div className="p-2 flex gap-3 bg-yellow-400 hover:bg-yellow-600 rounded-md">
                   <label>Category </label>
                   <select>
@@ -171,28 +171,6 @@ const CreateProduct = () => {
                     <option value={"trade"}>Trade</option>
                   </select>
                 </div>
-                <div className="text-black flex items-center gap-2 ">
-                  <label>Price</label>
-                  <Tooltip
-                    placement="right-start"
-                    title={
-                      type === "trade"
-                        ? "Input price which you want"
-                        : "Only trade"
-                    }
-                  >
-                    <input
-                      disabled={type === "trade" ? false : true}
-                      className={`bg-slate-200 p-2 rounded-md ${
-                        type === "trade"
-                          ? `bg-slate-200`
-                          : ` cursor-not-allowed`
-                      }`}
-                      type="number"
-                      placeholder="VND"
-                    />
-                  </Tooltip>
-                </div>
               </div>
             </div>
           </div>
@@ -202,7 +180,7 @@ const CreateProduct = () => {
               placeholder="Write title of your product"
             />
           </div>
-          <div className="flex justify-center my-3">
+          <div className="flex justify-center gap-2 my-3">
             <TextField
               variant="outlined"
               fullWidth
@@ -210,11 +188,29 @@ const CreateProduct = () => {
               label="Description"
               color="secondary"
             />
+            <div className="text-black flex items-center gap-2 ">
+              <label>Price</label>
+              <Tooltip
+                placement="right-start"
+                title={
+                  type === "trade" ? "Input price which you want" : "Only trade"
+                }
+              >
+                <input
+                  disabled={type === "trade" ? false : true}
+                  className={`bg-slate-200 p-2 rounded-md ${
+                    type === "trade" ? `bg-slate-200` : ` cursor-not-allowed`
+                  }`}
+                  type="number"
+                  placeholder="VND"
+                />
+              </Tooltip>
+            </div>
           </div>
           {previewImage && (
-            <div className="flex items-start w-[375px]">
-              <div className="flex w-[250px] items-start justify-start outline-dashed">
-                <img className="w-[250px] h-[auto]" src={previewImage} />
+            <div className="flex items-start w-[500px]">
+              <div className="flex w-[450px] items-start justify-start outline">
+                <img className="w-[450px] h-[auto]" src={previewImage} />
               </div>
               <div>
                 <TiDelete

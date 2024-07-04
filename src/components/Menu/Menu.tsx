@@ -6,6 +6,7 @@ import MyAvatar from "../../assets/panda.png";
 import Messenger from "../../assets/messenger.png";
 import { Link } from "react-router-dom";
 import Logout from "../../assets/logout.png";
+import Weather from "../Weather";
 
 // const menuList = [
 //   { img: MyAvatar, title: "Vo Mong Luan" },
