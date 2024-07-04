@@ -26,7 +26,7 @@ const PriceContainer = styled(Box)({
 
 const ProductCard = () => {
   return (
-    <Grid container xs={12}>
+    <Grid container xs={12} sx={{ padding: "50px", paddingLeft: "200px" }}>
       <Grid item xs={3}>
         <ImageContainer>
           <CardMedia
@@ -52,7 +52,7 @@ const ProductCard = () => {
                 size="small"
                 sx={{ marginRight: "8px" }}
               >
-                Giảm đ1k
+                New
               </Button>
               <Button
                 variant="contained"
@@ -60,7 +60,7 @@ const ProductCard = () => {
                 size="small"
                 sx={{ marginRight: "8px" }}
               >
-                Giảm đ3k
+                Origin: Vietnam
               </Button>
               <Button
                 variant="contained"
@@ -68,21 +68,44 @@ const ProductCard = () => {
                 size="small"
                 sx={{ marginRight: "8px" }}
               >
-                Giảm đ5k
-              </Button>
-              <Button variant="contained" color="primary" size="small">
-                Giảm đ8k
+                Status: Selling
               </Button>
             </Box>
           </PriceContainer>
-          <Box sx={{ marginTop: "16px" }}>
-            <Button variant="outlined" size="small" sx={{ marginRight: "8px" }}>
-              Trả hàng 15 ngày
+          <Box
+            sx={{ marginTop: "16px", display: "flex", flexDirection: "column" }}
+          >
+            <Button
+              variant="outlined"
+              size="small"
+              sx={{ marginBottom: "8px", fontSize: "10px", width: "150px" }}
+            >
+              Create time: 13:59:48 05/01/2024
             </Button>
-            <Button variant="outlined" size="small">
-              Miễn phí vận chuyển
-            </Button>
+            <Box
+              sx={{
+                border: "black solid 1px",
+                borderRadius: "5px",
+                padding: "10px",
+                width: "60%",
+              }}
+            >
+              <Typography>Description :</Typography>
+              <Typography variant="body2" sx={{ marginTop: "8px" }}>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit,sed do
+              </Typography>
+            </Box>
           </Box>
+        </CardContent>
+        <CardContent>
+          <Button
+            variant="contained"
+            color="primary"
+            size="small"
+            sx={{ marginRight: "8px" }}
+          >
+            Purchase
+          </Button>
         </CardContent>
       </Grid>
     </Grid>

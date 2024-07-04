@@ -13,8 +13,9 @@ const ProductCardPage = () => {
       <Paper
         sx={{
           backgroundColor: "white",
-          width: "90%",
-          marginLeft: "100px",
+          width: "80%",
+          marginLeft: "150px",
+          height: "500px",
         }}
       >
         <ProductCard />
