@@ -10,7 +10,7 @@ const MemberInformation = () => {
     navigate(-1);
   };
   return (
-    <div className="h-auto text-black bg-gradient-to-b from-orange-600 to-[#f4a767] pb-4">
+    <div className="h-auto text-black bg-[#42FCAC00] pb-4">
       <div className="flex justify-between px-3 py-2 items-center">
         <div
           className="rounded-full p-3 bg-white hover:bg-orange-200 cursor-pointer"
