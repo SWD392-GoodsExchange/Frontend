@@ -15,6 +15,7 @@ import {
 } from "@mui/material";
 import ProductList from "../../components/Profile/ProfileInformation/Product/ProductList";
 import Weather from "../../components/Weather";
+import Navbar from "../../components/navbar/Navbar";
 
 const MyProduct = () => {
   const navigate = useNavigate();

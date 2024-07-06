@@ -3,6 +3,7 @@ import { IoIosArrowBack } from "react-icons/io";
 import { CiEdit } from "react-icons/ci";
 import ProfileInformation from "../../components/Profile/ProfileInformation/ProfileInformation";
 import { useNavigate } from "react-router-dom";
+import Navbar from "../../components/navbar/Navbar";
 
 const MemberInformation = () => {
   const navigate = useNavigate();

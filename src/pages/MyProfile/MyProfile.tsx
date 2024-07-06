@@ -8,6 +8,7 @@ import { GoHistory } from "react-icons/go";
 import { Divider } from "@mui/material";
 import { GoChevronRight } from "react-icons/go";
 import { Link, useNavigate } from "react-router-dom";
+import Navbar from "../../components/navbar/Navbar";
 
 const MyProfile = () => {
   const navigate = useNavigate();
@@ -66,14 +67,16 @@ const MyProfile = () => {
             </li>
           </Link>
           <Divider variant="fullWidth" />
-          <li className="pl-4 py-5  flex items-center justify-between pr-5  hover:bg-orange-100 cursor-pointer">
-            <p className="flex gap-3 items-center">
-              <CgBookmark color="grey" size={"22px"} /> Bookmark
-            </p>
-            <div>
-              <GoChevronRight />
-            </div>
-          </li>
+          <Link to="bookmark">
+            <li className="pl-4 py-5  flex items-center justify-between pr-5  hover:bg-orange-100 cursor-pointer">
+              <p className="flex gap-3 items-center">
+                <CgBookmark color="grey" size={"22px"} /> Bookmark
+              </p>
+              <div>
+                <GoChevronRight />
+              </div>
+            </li>
+          </Link>
           <Divider variant="fullWidth" />
           <li className="pl-4 py-5  flex items-center justify-between pr-5  hover:bg-orange-100 hover:rounded-b-2xl cursor-pointer">
             <p className="flex gap-3 items-center">

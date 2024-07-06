@@ -22,8 +22,8 @@ const ExchangeList = () => {
     fetchProducts();
   }, []);
 
-  const onClickExchange = () => {
-    navigate("/exchange-ticket");
+  const onClickExchange = (productId: number) => {
+    navigate(`/exchange-ticket/${productId}`);
   };
 
   return (
@@ -73,7 +73,9 @@ const ExchangeList = () => {
                 Bookmark
               </button>
               <button
-                onClick={onClickExchange}
+                onClick={() => {
+                  onClickExchange(item.productId);
+                }}
                 className="flex gap-1 items-center transition-all duration-300 bg-orange-500 rounded-lg p-2 cursor-pointer hover:bg-orange-700 hover:text-white "
               >
                 <LiaExchangeAltSolid size={"22px"} />

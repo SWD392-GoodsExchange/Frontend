@@ -4,9 +4,10 @@ import ProductImg from "../../assets/target.png";
 import HistoryImg from "../../assets/history.png";
 import MyAvatar from "../../assets/panda.png";
 import Messenger from "../../assets/messenger.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Logout from "../../assets/logout.png";
-import Weather from "../Weather";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 // const menuList = [
 //   { img: MyAvatar, title: "Vo Mong Luan" },
@@ -19,11 +20,20 @@ import Weather from "../Weather";
 //   { img: Messenger, title: "Chat" },
 // ];
 const Menu = () => {
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    setTimeout(() => {
+      localStorage.clear();
+      localStorage.setItem("loggedIn", "false");
+      navigate("/");
+    }, 3000);
+  };
   return (
     <div>
+      <ToastContainer />
       <Link to="/my-profile">
         <div className="flex font-semibold p-2 gap-4 rounded-lg items-center hover:bg-gray-300 cursor-pointer">
-          <img src={MyAvatar} width={40} height={40} />
+          <img src={localStorage.getItem("avatar")} width={40} height={40} />
           <p>{"Vo Mong Luan"}</p>
         </div>
       </Link>
@@ -52,7 +62,10 @@ const Menu = () => {
         </div>
       </Link>
 
-      <div className="flex font-semibold p-2 gap-4 rounded-lg items-center hover:bg-gray-300 cursor-pointer">
+      <div
+        onClick={handleLogout}
+        className="flex font-semibold p-2 gap-4 rounded-lg items-center hover:bg-gray-300 cursor-pointer"
+      >
         <img src={Logout} width={40} height={40} />
         <p>{"Logout"}</p>
       </div>
