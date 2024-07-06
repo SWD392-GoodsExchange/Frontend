@@ -24,7 +24,7 @@ const MyProduct = () => {
   };
 
   return (
-    <div className="h-auto text-black bg-[#42FCAC00] ">
+    <div className="h-auto text-black bg-[#42FCAC00] mt-[100px] ">
       <div className="flex justify-between px-3 py-2 items-center">
         <div
           className="rounded-full p-3 bg-white hover:bg-orange-200 cursor-pointer"

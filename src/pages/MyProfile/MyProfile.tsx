@@ -17,7 +17,7 @@ const MyProfile = () => {
   };
 
   return (
-    <div className="h-screen text-black bg-[#42FCAC00] pb-4">
+    <div className="h-screen text-black bg-[#42FCAC00] pb-4 mt-[100px]">
       <div className="flex justify-between px-3 py-2 items-center">
         <div
           onClick={handleBackHome}

@@ -6,6 +6,8 @@ const BookmarkList = () => {
     <div className="flex flex-col gap-4">
       <Bookmark />
       <Bookmark />
+      <Bookmark />
+      <Bookmark />
     </div>
   );
 };

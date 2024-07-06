@@ -18,7 +18,7 @@ const GuestPage = () => {
   }, [auth]);
   console.log(auth);
   return (
-    <div>
+    <div className="mt-[100px]">
       <Grid
         className="flex justify-between text-center text-black"
         container

@@ -6,7 +6,7 @@ import BookmarkFilter from "../../components/Bookmark/BookmarkFilter";
 
 const MyBookmark = () => {
   return (
-    <div className="text-black">
+    <div className="text-black mt-[100px]">
       <Grid container xs={12}>
         <Grid item xs={3}>
           <BookMarkNav />

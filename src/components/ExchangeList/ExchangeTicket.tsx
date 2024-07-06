@@ -60,7 +60,7 @@ const ExchangeTicket = () => {
     setPreviewImage(null);
   };
   return (
-    <div className="text-black h-[1000px] bg-gradient-to-b from-orange-600 to-[#f4a767] pb-4">
+    <div className="text-black h-[1000px] bg-gradient-to-b from-orange-600 to-[#f4a767] pb-4 mt-[100px]">
       <div className="flex justify-between px-3 py-2 items-center">
         <div
           onClick={() => {

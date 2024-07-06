@@ -37,7 +37,7 @@ const Navbar = () => {
   };
 
   return (
-    <div className="flex flex-col text-white  gap-3 items-center justify-center bg-gradient-to-b from-orange-600 to-orange-400 h-[100px]">
+    <div className="flex flex-col fixed text-white  gap-3 items-center justify-center bg-gradient-to-b from-orange-600 to-orange-400  h-[100px] w-[1540px]">
       <div className="flex justify-between w-[93%] ">
         <div className="flex items-center gap-1">
           <p className="font-semibold text-20">GooodsExchange</p>
