@@ -7,7 +7,9 @@ import {
   Typography,
 } from "@mui/material";
 import { styled } from "@mui/system";
+import Bookmarks from "../../assets/Bookmarks.png";
 import Panda from "../../assets/panda.png";
+import ShoppingCart from "../../assets/ShoppingCart.png";
 
 const ImageContainer = styled(Box)({
   display: "flex",
@@ -26,87 +28,133 @@ const PriceContainer = styled(Box)({
 
 const ProductCard = () => {
   return (
-    <Grid container xs={12} sx={{ padding: "50px", paddingLeft: "200px" }}>
-      <Grid item xs={3}>
+    <Grid container spacing={3} sx={{ padding: "20px" }}>
+      <Grid item xs={4}>
         <ImageContainer>
           <CardMedia
             component="img"
             alt="Product Image"
             image={Panda}
             title="Product Image"
-            sx={{ width: "50%", objectFit: "contain" }}
+            sx={{ width: "100%", objectFit: "contain", height: "100%" }}
           />
         </ImageContainer>
       </Grid>
-      <Grid item xs={9}>
+      <Grid item xs={8}>
         <CardContent>
-          <Typography variant="h6" component="div">
+          <Typography variant="h6" gutterBottom>
             2 Pencil HC 16B yellow
           </Typography>
-
           <PriceContainer>
             <Box>
               <Button
-                variant="contained"
-                color="primary"
+                variant="outlined"
                 size="small"
-                sx={{ marginRight: "8px" }}
+                sx={{
+                  borderBlockColor: "#E68730",
+                  background: "#FFC58F",
+                  color: "black",
+                }}
               >
-                New
+                <Typography sx={{ fontSize: "14px", paddingLeft: "5px" }}>
+                  New
+                </Typography>
               </Button>
               <Button
-                variant="contained"
-                color="primary"
+                variant="outlined"
                 size="small"
-                sx={{ marginRight: "8px" }}
+                sx={{
+                  marginLeft: "10px",
+                  borderBlockColor: "#E68730",
+                  background: "#FFC58F",
+                  color: "black",
+                }}
               >
-                Origin: Vietnam
+                <Typography sx={{ fontSize: "14px", paddingLeft: "5px" }}>
+                  Origin: Vietnam
+                </Typography>
               </Button>
               <Button
-                variant="contained"
-                color="primary"
+                variant="outlined"
                 size="small"
-                sx={{ marginRight: "8px" }}
+                sx={{
+                  marginLeft: "10px",
+                  borderBlockColor: "#E68730",
+                  background: "#FFC58F",
+                  color: "black",
+                }}
               >
-                Status: Selling
+                <Typography sx={{ fontSize: "14px", paddingLeft: "5px" }}>
+                  Status: Selling
+                </Typography>
               </Button>
             </Box>
           </PriceContainer>
-          <Box
-            sx={{ marginTop: "16px", display: "flex", flexDirection: "column" }}
-          >
+
+          <Box sx={{ marginTop: "16px" }}>
             <Button
               variant="outlined"
               size="small"
-              sx={{ marginBottom: "8px", fontSize: "10px", width: "150px" }}
+              sx={{ fontSize: "10px", width: "150px", fontWeight: "bold" }}
+            >
+              Posted by: Anchor Le
+            </Button>
+            <Button
+              variant="text"
+              size="small"
+              sx={{ fontSize: "10px", width: "150px", fontWeight: "bold" }}
             >
               Create time: 13:59:48 05/01/2024
             </Button>
             <Box
               sx={{
-                border: "black solid 1px",
+                border: "1px solid #ccc",
                 borderRadius: "5px",
                 padding: "10px",
-                width: "60%",
+                marginTop: "8px",
+                height: "200px",
               }}
             >
-              <Typography>Description :</Typography>
-              <Typography variant="body2" sx={{ marginTop: "8px" }}>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit,sed do
+              <Typography
+                variant="subtitle2"
+                gutterBottom
+                sx={{ fontWeight: "bold" }}
+              >
+                Description:
+              </Typography>
+              <Typography variant="body2">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                eiusmod tempor incididunt ut labore et dolore magna aliqua.
               </Typography>
             </Box>
           </Box>
         </CardContent>
-        <CardContent>
+        <Box sx={{ paddingLeft: "370px" }}>
           <Button
             variant="contained"
             color="primary"
             size="small"
             sx={{ marginRight: "8px" }}
           >
-            Purchase
+            <img src={Bookmarks} width="20" height="20" alt="ShoppingCart" />
+            <Typography sx={{ fontSize: "14px", paddingLeft: "5px" }}>
+              Bookmark
+            </Typography>
           </Button>
-        </CardContent>
+          <Button
+            variant="contained"
+            color="primary"
+            size="small"
+            sx={{ marginRight: "8px" }}
+          >
+            <img src={ShoppingCart} width="20" height="20" alt="ShoppingCart" />
+            <Typography sx={{ fontSize: "14px", paddingLeft: "5px" }}>
+              Purchase
+            </Typography>
+          </Button>
+        </Box>
       </Grid>
     </Grid>
   );
