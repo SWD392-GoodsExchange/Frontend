@@ -20,6 +20,11 @@ export interface ProductReponse {
   status: string;
   price: number;
   title: string;
-  images: any[];
+  images: Images[];
   createdTime: Date;
+}
+
+export interface Images {
+  imageUrl: string;
+  publicId: string;
 }

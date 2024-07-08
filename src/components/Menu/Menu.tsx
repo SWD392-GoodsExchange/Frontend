@@ -34,7 +34,7 @@ const Menu = () => {
       <Link to="/my-profile">
         <div className="flex font-semibold p-2 gap-4 rounded-lg items-center hover:bg-gray-300 cursor-pointer">
           <img src={localStorage.getItem("avatar")} width={40} height={40} />
-          <p>{"Vo Mong Luan"}</p>
+          <p>{localStorage.getItem("userName")}</p>
         </div>
       </Link>
       <Link to="/my-profile/product">

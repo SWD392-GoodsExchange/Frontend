@@ -22,8 +22,13 @@ const ExchangeList = () => {
     fetchProducts();
   }, []);
 
-  const onClickExchange = (productId: number) => {
-    navigate(`/exchange-ticket/${productId}`);
+  const onClickExchange = (
+    productId: number,
+    productObject: ProductReponse
+  ) => {
+    navigate(`/exchange-ticket/${productId}`, {
+      state: productObject,
+    });
   };
 
   return (
@@ -74,7 +79,7 @@ const ExchangeList = () => {
               </button>
               <button
                 onClick={() => {
-                  onClickExchange(item.productId);
+                  onClickExchange(item.productId, item);
                 }}
                 className="flex gap-1 items-center transition-all duration-300 bg-orange-500 rounded-lg p-2 cursor-pointer hover:bg-orange-700 hover:text-white "
               >

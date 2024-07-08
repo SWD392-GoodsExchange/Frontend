@@ -16,7 +16,6 @@ const HomePage = () => {
     const loggedIn = localStorage.getItem("loggedIn");
     setAuth(loggedIn);
   }, [auth]);
-  console.log(auth);
   return (
     <div className="mt-[100px]">
       <Grid
@@ -25,19 +24,21 @@ const HomePage = () => {
         xs={12}
       >
         <Grid item xs={3} spacing={1}>
-          {auth == "true" ? (
-            <>
-              <div className="ml-2 my-4 flex flex-col">
-                <Menu />
-              </div>
-              <Divider variant="middle" orientation="horizontal" />
-              <div className="my-5 mx-3">
-                <Weather />
-              </div>{" "}
-            </>
-          ) : (
-            <></>
-          )}
+          <div className="fixed">
+            {auth == "true" ? (
+              <>
+                <div className="ml-2 my-4 flex flex-col">
+                  <Menu />
+                </div>
+                <Divider variant="middle" orientation="horizontal" />
+                <div className="my-5 mx-3">
+                  <Weather />
+                </div>{" "}
+              </>
+            ) : (
+              <></>
+            )}
+          </div>
         </Grid>
 
         <Grid item xs={4}>
@@ -63,7 +64,7 @@ const HomePage = () => {
           </div>
         </Grid>
         <Grid item xs={3} spacing={1}>
-          <div className="mr-2 my-4 gap-4  flex flex-col overflow-scroll overflow-x-hidden overflow-y-auto">
+          <div className="mr-2 h-[auto] w-[350px] my-4 gap-4 fixed flex flex-col overflow-y-auto">
             <Top5PostProduct />
             <Divider variant="middle" />
             <Top5Transaction />

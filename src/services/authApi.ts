@@ -6,6 +6,10 @@ const authApi = {
     const url = "/members/login";
     return axiosClient.post(url, loginRequest);
   },
+  getInformationMember() {
+    const url = "/members/information";
+    return axiosClient.get(url);
+  },
 };
 
 export default authApi;

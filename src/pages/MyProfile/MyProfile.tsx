@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Avatar from "../../components/Avatar/Avatar";
 import { IoIosArrowBack } from "react-icons/io";
 import { CiEdit } from "react-icons/ci";
@@ -9,12 +9,23 @@ import { Divider } from "@mui/material";
 import { GoChevronRight } from "react-icons/go";
 import { Link, useNavigate } from "react-router-dom";
 import Navbar from "../../components/navbar/Navbar";
+import authApi from "../../services/authApi";
+import { MemberInformations } from "../../interfaces/Auth/MemberInformations";
 
 const MyProfile = () => {
+  const [memberInfor, setMemberInfor] = useState<MemberInformations>();
   const navigate = useNavigate();
   const handleBackHome = () => {
     navigate(-1);
   };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const memberInfo: any = await authApi.getInformationMember();
+      setMemberInfor(memberInfo);
+    };
+    fetchData();
+  });
 
   return (
     <div className="h-screen text-black bg-[#42FCAC00] pb-4 mt-[100px]">
@@ -31,7 +42,7 @@ const MyProfile = () => {
         </div>
       </div>
       <div className="flex justify-center ">
-        <Avatar />
+        <Avatar memberInfor={memberInfor} />
       </div>
       <div className="flex justify-center items-center mb-5">
         <div className="flex flex-col shadow-md items-center p-4 w-[90px] mx-0.5 bg-white rounded-xl">

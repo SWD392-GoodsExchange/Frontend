@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Avatar from "../../components/Avatar/Avatar";
 import { IoIosArrowBack } from "react-icons/io";
 import { CiEdit } from "react-icons/ci";
@@ -16,12 +16,31 @@ import {
 import ProductList from "../../components/Profile/ProfileInformation/Product/ProductList";
 import Weather from "../../components/Weather";
 import Navbar from "../../components/navbar/Navbar";
+import productApi from "../../services/productApi";
+import { ProductReponse } from "../../interfaces/productResponse";
+import authApi from "../../services/authApi";
+import { MemberInformations } from "../../interfaces/Auth/MemberInformations";
 
 const MyProduct = () => {
+  const [productList, setProductList] = useState<ProductReponse[]>();
+  const [memberInfor, setMemberInfor] = useState<MemberInformations>();
   const navigate = useNavigate();
   const backBefore = () => {
     navigate(-1);
   };
+
+  useEffect(() => {
+    const fetchProduct = async () => {
+      const memberInfor: any = await authApi.getInformationMember();
+      setMemberInfor(memberInfor);
+      const products: any = await productApi.getAllProductByFeid(
+        localStorage.getItem("feId")
+      );
+      setProductList(products.data);
+    };
+    fetchProduct();
+  }, []);
+  console.log(productList);
 
   return (
     <div className="h-auto text-black bg-[#42FCAC00] mt-[100px] ">
@@ -36,7 +55,7 @@ const MyProduct = () => {
         <div className="rounded-full p-3 bg-[#42fcac00] hover:bg-orange-200 cursor-pointer"></div>
       </div>
       <div className="flex justify-center ">
-        <Avatar />
+        <Avatar memberInfor={memberInfor} />
       </div>
       <Divider variant="middle" />
       <Grid container xs={12} sx={{ padding: "20px 0" }}>
@@ -115,7 +134,7 @@ const MyProduct = () => {
         </Grid>
         <Grid item xs={5}>
           <div className="flex flex-col items-center w-[500px] text-[#1B1E28]">
-            <ProductList />
+            <ProductList productList={productList} />
           </div>
         </Grid>
         <Grid item xs={3}>
