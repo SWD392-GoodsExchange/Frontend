@@ -33,10 +33,11 @@ const Navbar = () => {
   const handleClose = () => {
     setOpen(false);
     setChangeForm("Signin");
+    navigate("/");
   };
 
   return (
-    <div className="flex flex-col text-white  gap-3 items-center justify-center bg-gradient-to-b from-orange-600 to-orange-400 h-[100px]">
+    <div className="flex flex-col fixed text-white  gap-3 items-center justify-center bg-gradient-to-b from-orange-600 to-orange-400  h-[100px] w-[1520px]">
       <div className="flex justify-between w-[93%] ">
         <div className="flex items-center gap-1">
           <p className="font-semibold text-20">GooodsExchange</p>
@@ -52,12 +53,12 @@ const Navbar = () => {
         <Tooltip title="Exchange" enterDelay={300}>
           <div
             className={`p-1 transition-all duration-300 ${
-              location.pathname === "/"
+              location.pathname === "/exchange"
                 ? `bg-white text-orange-500 rounded-full`
                 : ``
             }`}
             onClick={() => {
-              navigate("/");
+              navigate("/exchange");
             }}
           >
             <RiExchangeLine
@@ -104,45 +105,37 @@ const Navbar = () => {
           <MyNotificatons />
         </Tooltip>
         <Tooltip title="Profile" enterDelay={300}>
-          <img
-            className={`rounded-full cursor-pointer hover:outline transition-all ${
-              location.pathname === "/my-profile"
-                ? `bg-white text-orange-500 outline  rounded-full`
-                : ``
-            }`}
-            onClick={() => {
-              navigate("/my-profile");
-            }}
-            src={MyAvat}
-            width={30}
-            height={30}
-          />
-          {/* <RxAvatar
-            className="hover:text-orange-300 cursor-pointer"
-            size={"30px"}
-            onClick={handleClickOpen}
-          /> */}
+          {localStorage.getItem("loggedIn") === "true" ? (
+            <img
+              className={`rounded-full cursor-pointer hover:outline  transition-all ${
+                location.pathname === "/my-profile"
+                  ? `bg-white text-orange-500 outline  rounded-full`
+                  : ``
+              }`}
+              onClick={() => {
+                navigate("/my-profile");
+              }}
+              src={localStorage.getItem("avatar")}
+              width={30}
+              height={30}
+            />
+          ) : (
+            <button
+              onClick={handleClickOpen}
+              className="p-2 rounded-xl bg-white text-orange-500 hover:bg-orange-400 hover:text-white transition-all duration-500 shadow-2xl hover:shadow-md"
+            >
+              Login
+            </button>
+          )}
         </Tooltip>
       </div>
-      <Dialog
-        disableEscapeKeyDown
-        open={open}
-        onClose={handleClose}
-        PaperProps={{
-          component: "form",
-          onSubmit: (event: React.FormEvent<HTMLFormElement>) => {
-            event.preventDefault();
-            const formData = new FormData(event.currentTarget);
-            const formJson = Object.fromEntries((formData as any).entries());
-            const email = formJson.email;
-            console.log(email);
-            handleClose();
-          },
-        }}
-      >
+      <Dialog disableEscapeKeyDown open={open} onClose={handleClose}>
         <DialogContent className="overflow-x-hidden overflow-y-auto">
           {changeForm === "Signin" ? (
-            <LoginForm setChangeForm={setChangeForm} />
+            <LoginForm
+              setChangeForm={setChangeForm}
+              handleClose={handleClose}
+            />
           ) : (
             <SignUp setChangeForm={setChangeForm} />
           )}

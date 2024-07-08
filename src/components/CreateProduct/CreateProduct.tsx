@@ -10,9 +10,11 @@ import {
   TextField,
   Tooltip,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import MyAvat from "../../assets/panda.png";
 import { TiDelete } from "react-icons/ti";
+import { RxAvatar } from "react-icons/rx";
+import categoryApi from "../../services/categoryApi";
 // import { GiClothes, GiShorts } from "react-icons/gi";
 // import { RiComputerLine } from "react-icons/ri";
 // import { FaMobileAlt } from "react-icons/fa";
@@ -71,10 +73,24 @@ const originList = [
   },
 ];
 
+interface CategoryInterface {
+  cateId: number;
+  cateName: string;
+}
+
 const CreateProduct = () => {
   const [openDialog, setOpenDialog] = useState(false);
   const [previewImage, setPreviewImage] = useState<string | null>(null);
-  const [type, setType] = useState("exchange");
+  const [type, setType] = useState("Exchange");
+  const [categories, setCategories] = useState<CategoryInterface[]>();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const category: any = await categoryApi.getAllCategory();
+      setCategories(category.data);
+    };
+    fetchData();
+  }, []);
 
   const onChangeType = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setType(e.target.value);
@@ -106,7 +122,11 @@ const CreateProduct = () => {
     <div className="flex justify-center text-20 text-black my-1">
       <Card>
         <div className="flex p-3 w-[100%]items-center">
-          <img src={MyAvat} className="w-[50px] h-[50px]" />
+          <img
+            src={localStorage.getItem("avatar")}
+            className="w-[50px] h-[50px]"
+          />
+
           <button
             onClick={onClickOpenDialog}
             className="flex text-16  p-3 ml-3 w-[600px] rounded-full bg-slate-200 hover:bg-slate-400 hover:text-white transiton-all duration-300"
@@ -120,17 +140,6 @@ const CreateProduct = () => {
         disableEscapeKeyDown
         open={openDialog}
         onClose={handleCloseDialog}
-        PaperProps={{
-          component: "form",
-          onSubmit: (event: React.FormEvent<HTMLFormElement>) => {
-            event.preventDefault();
-            const formData = new FormData(event.currentTarget);
-            const formJson = Object.fromEntries((formData as any).entries());
-            const email = formJson.email;
-            console.log(email);
-            handleCloseDialog();
-          },
-        }}
       >
         <DialogTitle className="flex justify-between items-center">
           <p>Post Product</p>
@@ -142,8 +151,13 @@ const CreateProduct = () => {
         <DialogContent className="flex flex-col overflow-x-hidden overflow-y-auto">
           <div className="flex flex-col items-start">
             <div className="flex items-center">
-              <img src={MyAvat} className="w-[60px] h-[60px]" />
-              <p className="font-bold mx-2 text-20">Mong Luan Vo</p>
+              <img
+                src={localStorage.getItem("avatar")}
+                className="w-[60px] h-[60px]"
+              />
+              <p className="font-bold mx-2 text-20">
+                {localStorage.getItem("userName")}
+              </p>
             </div>
 
             <div className="flex flex-col my-3 justify-center ">
@@ -151,8 +165,8 @@ const CreateProduct = () => {
                 <div className="p-2 flex gap-3 bg-yellow-400 hover:bg-yellow-600 rounded-md">
                   <label>Category </label>
                   <select>
-                    {categoryList.map((item) => (
-                      <option>{item.title}</option>
+                    {categories?.map((item) => (
+                      <option>{item.cateName}</option>
                     ))}
                   </select>
                 </div>
@@ -167,8 +181,8 @@ const CreateProduct = () => {
                 <div className="p-2 flex gap-3 bg-orange-400 hover:bg-orange-600 rounded-md">
                   <label>Type</label>
                   <select onChange={onChangeType}>
-                    <option value={"exchange"}>Exchange</option>
-                    <option value={"trade"}>Trade</option>
+                    <option value={"Exchange"}>Exchange</option>
+                    <option value={"Trade"}>Trade</option>
                   </select>
                 </div>
               </div>
