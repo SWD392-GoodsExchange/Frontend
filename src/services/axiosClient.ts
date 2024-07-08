@@ -14,7 +14,13 @@ axiosClient.interceptors.request.use(
     // Do something before request is sent
     if (token !== undefined) {
       console.log("Token: ", token);
-      config.headers["Authorization"] = `Bearer ${token}`;
+      if (config.headers) {
+        config.headers["Authorization"] = `Bearer ${token}`;
+      } else {
+        config.headers = {
+          Authorization: `Bearer ${token}`,
+        };
+      }
     }
     return config;
   },
