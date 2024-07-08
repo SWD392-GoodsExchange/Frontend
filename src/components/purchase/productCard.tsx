@@ -7,8 +7,14 @@ import {
   Typography,
 } from "@mui/material";
 import { styled } from "@mui/system";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick-theme.css";
+import "slick-carousel/slick/slick.css";
 import Bookmarks from "../../assets/Bookmarks.png";
-import Panda from "../../assets/panda.png";
+import MSI1 from "../../assets/MSI1.jpg";
+import MSI2 from "../../assets/MSI2.jpg";
+import MSI3 from "../../assets/MSI3.jpg";
+
 import ShoppingCart from "../../assets/ShoppingCart.png";
 
 const ImageContainer = styled(Box)({
@@ -27,23 +33,39 @@ const PriceContainer = styled(Box)({
 });
 
 const ProductCard = () => {
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 3000,
+  };
+
+  const images = [MSI1, MSI2, MSI3];
+
   return (
     <Grid container spacing={3} sx={{ padding: "20px" }}>
       <Grid item xs={4}>
-        <ImageContainer>
-          <CardMedia
-            component="img"
-            alt="Product Image"
-            image={Panda}
-            title="Product Image"
-            sx={{ width: "100%", objectFit: "contain", height: "100%" }}
-          />
-        </ImageContainer>
+        <Slider {...settings}>
+          {images.map((image, index) => (
+            <ImageContainer key={index}>
+              <CardMedia
+                component="img"
+                alt={`Product Image ${index + 1}`}
+                image={image}
+                title={`Product Image ${index + 1}`}
+                sx={{ width: "100%", objectFit: "contain", height: "100%" }}
+              />
+            </ImageContainer>
+          ))}
+        </Slider>
       </Grid>
       <Grid item xs={8}>
         <CardContent>
           <Typography variant="h6" gutterBottom>
-            2 Pencil HC 16B yellow
+            Laptop MSI Gaming GF63 12UC-887VN
           </Typography>
           <PriceContainer>
             <Box>
@@ -90,7 +112,6 @@ const ProductCard = () => {
               </Button>
             </Box>
           </PriceContainer>
-
           <Box sx={{ marginTop: "16px" }}>
             <Button
               variant="outlined"
@@ -106,6 +127,33 @@ const ProductCard = () => {
             >
               Create time: 13:59:48 05/01/2024
             </Button>
+            <Box>
+              <Button
+                variant="outlined"
+                size="small"
+                sx={{
+                  background: "#CCCCCC",
+                  color: "black",
+                  width: "250px",
+                }}
+              >
+                <Typography sx={{ fontSize: "14px" }}>Price:</Typography>
+                <Button
+                  variant="outlined"
+                  size="small"
+                  sx={{
+                    marginLeft: "10px",
+                    borderBlockColor: "#E68730",
+                    background: "#FFFFFF",
+                    color: "black",
+                  }}
+                >
+                  <Typography sx={{ fontSize: "14px", paddingLeft: "5px" }}>
+                    1.000.000.000 VND
+                  </Typography>
+                </Button>
+              </Button>
+            </Box>
             <Box
               sx={{
                 border: "1px solid #ccc",
@@ -123,10 +171,22 @@ const ProductCard = () => {
                 Description:
               </Typography>
               <Typography variant="body2">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                <li>
+                  CPU Intel Core i7-12650H đem lại khả năng xử lý những tác vụ
+                  làm việc nhanh chóng
+                </li>
+                <li>
+                  Card đồ họa RTX 3050 cân mọi tựa game như Esport hoặc game AAA
+                  ở mức đồ họa Medium
+                </li>
+                <li>
+                  RAM 8GB giúp bạn có thể thực hiện công việc trên nhiều tác vụ
+                  cùng lúc
+                </li>
+                <li>
+                  Ổ cứng 512GB SSD cho không gian thoải mái, tải game và sử dụng
+                  phần mềm nhanh chóng
+                </li>
               </Typography>
             </Box>
           </Box>
