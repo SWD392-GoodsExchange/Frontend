@@ -9,7 +9,7 @@ const PayItemPage = () => {
         backgroundColor: "white",
         marginTop: "100px",
         paddingTop: "15px",
-        height: "100%",
+        height: "800px",
       }}
     >
       {/* <Navbar /> */}

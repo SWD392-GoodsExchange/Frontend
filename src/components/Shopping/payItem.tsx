@@ -22,36 +22,43 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Location from "../../assets/Location.png";
 import MSI1 from "../../assets/MSI1.jpg";
 import { AddressInfor } from "../../interfaces/memberResponse";
 import { Product } from "../../interfaces/productResponse";
 
 const exampleMember: AddressInfor = {
-  Username: "John Doe",
+  Username: "Anchor Le",
   Phone: "(+84) 123456789",
   Address:
     "5 Đường 12b, Kp Chân Phúc Cẩm Phường Long Thạnh Mỹ, Thành Phố Thủ Đức, TP. Hồ Chí Minh",
 };
 
-const exampleProducts: Product[] = [
-  {
-    id: 1,
-    title: " Laptop MSI Gaming GF63 12UC-887VN",
-    categoryName: "Laptop",
-    usageInfor: "aljalkhjdajd",
-    origin: "Vietnam",
-    price: 1000000000,
-    image: MSI1,
-  },
-];
-
 const PayItem = () => {
+  const navigate = useNavigate();
+
+  const handlePayment = () => {
+    window.location.replace(
+      "https://sandbox.vnpayment.vn/paymentv2/Payment/Error.html?code=15"
+    );
+  };
+
+  const [products, setProducts] = useState<Product[]>([
+    {
+      id: 1,
+      title: "Laptop MSI Gaming GF63 12UC-887VN",
+      categoryName: "Laptop",
+      usageInfor: "aljalkhjdajd",
+      origin: "Vietnam",
+      price: 1000000000,
+      image: MSI1,
+    },
+  ]);
   const [checkedItems, setCheckedItems] = useState<{ [key: number]: boolean }>(
     {}
   );
-  const [products, setProducts] = useState<Product[]>(exampleProducts);
+
   const [addressInfor, setAddressInfor] = useState<AddressInfor>(exampleMember);
   const [open, setOpen] = useState(false);
   const [openNewAddress, setOpenNewAddress] = useState(false); // State for new address form
@@ -63,10 +70,10 @@ const PayItem = () => {
   const selectedProducts = location.state?.products || [];
 
   const handleCheckboxChange = (productId: number) => {
-    setCheckedItems({
-      ...checkedItems,
-      [productId]: !checkedItems[productId],
-    });
+    setCheckedItems((prevCheckedItems) => ({
+      ...prevCheckedItems,
+      [productId]: !prevCheckedItems[productId],
+    }));
   };
 
   const handleClickOpen = () => {
@@ -262,7 +269,7 @@ const PayItem = () => {
               Total Amount
             </Typography>
             <Typography variant="h6" color="primary" gutterBottom>
-              {totalPrice.toLocaleString()} đ
+              {totalPrice.toLocaleString()} VND
             </Typography>
           </Grid>
           <Grid item textAlign="right">
@@ -272,6 +279,7 @@ const PayItem = () => {
               size="large"
               fullWidth
               sx={{ maxWidth: 300 }}
+              onClick={handlePayment}
             >
               Pay items
             </Button>

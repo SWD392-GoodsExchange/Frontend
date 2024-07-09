@@ -27,7 +27,7 @@ const ManageOrder = () => {
       usageInfor: "To write and note down information",
       origin: "Vietnam",
       price: 198000,
-      originalPrice: 350000,
+
       image: "https://via.placeholder.com/150",
     },
     {
@@ -37,7 +37,7 @@ const ManageOrder = () => {
       usageInfor: "Smooth writing experience for detailed notes",
       origin: "China",
       price: 120000,
-      originalPrice: 180000,
+
       image: "https://via.placeholder.com/150",
     },
     {
@@ -47,7 +47,7 @@ const ManageOrder = () => {
       usageInfor: "Ideal for elegant handwriting and signatures",
       origin: "Germany",
       price: 450000,
-      originalPrice: 600000,
+
       image: "https://via.placeholder.com/150",
     },
     {
@@ -57,7 +57,7 @@ const ManageOrder = () => {
       usageInfor: "Perfect for precise sketches and technical drawings",
       origin: "Japan",
       price: 280000,
-      originalPrice: 350000,
+
       image: "https://via.placeholder.com/150",
     },
   ]);
@@ -142,9 +142,6 @@ const ManageOrder = () => {
                       </Typography>
                       <Typography variant="h6" color="primary">
                         {product.price.toLocaleString()} đ
-                      </Typography>
-                      <Typography variant="body2" color="textSecondary">
-                        <del>{product.originalPrice.toLocaleString()} đ</del>
                       </Typography>
                     </CardContent>
                     <CardActions>
