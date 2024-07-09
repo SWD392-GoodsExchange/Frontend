@@ -7,16 +7,16 @@ const ProductCardPage = () => {
   return (
     <Grid>
       <Navbar />
-      <Box sx={{ paddingTop: "100px", paddingLeft: "5px" }}>
+      <Box sx={{ paddingTop: "100px", marginLeft: "5px" }}>
         <BackButton />
       </Box>
       <Paper
         sx={{
           backgroundColor: "white",
           width: "70%",
-          marginLeft: "200px",
+          marginLeft: "230px",
           height: "500px",
-          marginTop: "10px",
+          marginTop: "20px",
         }}
       >
         <ProductCard />

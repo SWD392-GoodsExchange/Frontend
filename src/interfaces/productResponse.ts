@@ -5,7 +5,6 @@ export interface Product {
   usageInfor: string;
   origin: string;
   price: number;
-  originalPrice: number;
   image: string;
 }
 

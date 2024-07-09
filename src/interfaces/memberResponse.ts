@@ -11,3 +11,9 @@ export interface Member {
   CreatedTime: string;
   Status: string;
 }
+
+export interface AddressInfor {
+  Username: string;
+  Phone: string;
+  Address: string;
+}

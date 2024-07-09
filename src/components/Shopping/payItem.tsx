@@ -1,12 +1,9 @@
-import DeleteIcon from "@mui/icons-material/Delete";
 import {
   Box,
   Button,
   Card,
-  CardActions,
   CardContent,
   CardMedia,
-  Checkbox,
   Container,
   Dialog,
   DialogActions,
@@ -14,16 +11,12 @@ import {
   DialogTitle,
   Divider,
   FormControl,
-  FormControlLabel,
   Grid,
-  IconButton,
   InputLabel,
   List,
   ListItem,
   MenuItem,
   Paper,
-  Radio,
-  RadioGroup,
   Select,
   TextField,
   Typography,
@@ -31,19 +24,39 @@ import {
 import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
 import Location from "../../assets/Location.png";
-import { Member } from "../../interfaces/memberResponse";
+import MSI1 from "../../assets/MSI1.jpg";
+import { AddressInfor } from "../../interfaces/memberResponse";
 import { Product } from "../../interfaces/productResponse";
+
+const exampleMember: AddressInfor = {
+  Username: "John Doe",
+  Phone: "(+84) 123456789",
+  Address:
+    "5 Đường 12b, Kp Chân Phúc Cẩm Phường Long Thạnh Mỹ, Thành Phố Thủ Đức, TP. Hồ Chí Minh",
+};
+
+const exampleProducts: Product[] = [
+  {
+    id: 1,
+    title: " Laptop MSI Gaming GF63 12UC-887VN",
+    categoryName: "Laptop",
+    usageInfor: "aljalkhjdajd",
+    origin: "Vietnam",
+    price: 1000000000,
+    image: MSI1,
+  },
+];
 
 const PayItem = () => {
   const [checkedItems, setCheckedItems] = useState<{ [key: number]: boolean }>(
     {}
   );
-  const [products, setProducts] = useState<Product[]>([]);
-  const [member, setMember] = useState<Member>({} as Member);
+  const [products, setProducts] = useState<Product[]>(exampleProducts);
+  const [addressInfor, setAddressInfor] = useState<AddressInfor>(exampleMember);
   const [open, setOpen] = useState(false);
   const [openNewAddress, setOpenNewAddress] = useState(false); // State for new address form
   const [selectedAddress, setSelectedAddress] = useState(
-    member.Address || "address1"
+    addressInfor.Address || "address1"
   );
   const location = useLocation();
 
@@ -72,9 +85,13 @@ const PayItem = () => {
     setOpenNewAddress(false);
   };
 
-  const handleAddressChange = (event: any) => {
+  const handleAddressChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedAddress(event.target.value);
-    setMember({ ...member, Address: event.target.value });
+  };
+
+  const handleConfirmAddress = () => {
+    setAddressInfor({ ...addressInfor, Address: selectedAddress });
+    setOpen(false);
   };
 
   const totalPrice = products.reduce((total, product) => {
@@ -86,112 +103,93 @@ const PayItem = () => {
 
   return (
     <Container>
-      <Paper elevation={3} style={{ marginBottom: 20 }}>
+      <Paper elevation={3} style={{}}>
         <Box sx={{ p: 2 }}>
           <Typography variant="h6" gutterBottom sx={{ fontWeight: "bold" }}>
             Delivery Address
           </Typography>
-          <Box sx={{ display: "flex", alignItems: "center" }}>
-            <img
-              src={Location}
-              height={20}
-              width={30}
-              alt="Location"
-              style={{ marginRight: 10 }}
-            />
-            <Typography>{member.Address}</Typography>
-            <Box>
-              <Typography>{member.Username}</Typography>
-              <Typography>{member.Phone}</Typography>
-              <Typography>{member.Address}</Typography>
+          <Box sx={{ display: "flex", alignItems: "center", flexWrap: "wrap" }}>
+            <Box sx={{ display: "flex", alignItems: "center", flex: 1 }}>
+              <img
+                src={Location}
+                height={20}
+                width={30}
+                alt="Location"
+                style={{ marginRight: 10 }}
+              />
+              <Box>
+                <Typography>{addressInfor.Address}</Typography>
+                <Typography>{addressInfor.Username}</Typography>
+                <Typography>{addressInfor.Phone}</Typography>
+              </Box>
             </Box>
-            <Box>
-              <Button variant="contained" onClick={handleClickOpen}>
-                Change Address
-              </Button>
-              <Dialog open={open} onClose={handleClose}>
-                <DialogTitle>Địa Chỉ Của Tôi</DialogTitle>
-                <DialogContent>
-                  <RadioGroup
-                    aria-label="address"
-                    name="address"
+            <Button variant="contained" onClick={handleClickOpen}>
+              Change Address
+            </Button>
+            <Dialog open={open} onClose={handleClose}>
+              <DialogTitle>Delivery Address Change</DialogTitle>
+              <DialogContent sx={{}}>
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: 2,
+                    marginTop: "10px",
+                  }}
+                >
+                  <TextField
+                    label="Full Name"
+                    variant="outlined"
+                    fullWidth
+                    value={addressInfor.Username}
+                    onChange={(e) =>
+                      setAddressInfor({
+                        ...addressInfor,
+                        Username: e.target.value,
+                      })
+                    }
+                  />
+                  <TextField
+                    sx={{ width: "500px" }}
+                    label="Phone Number"
+                    variant="outlined"
+                    fullWidth
+                    value={addressInfor.Phone}
+                    onChange={(e) =>
+                      setAddressInfor({
+                        ...addressInfor,
+                        Phone: e.target.value,
+                      })
+                    }
+                  />
+                  <TextField
+                    label="Address"
+                    variant="outlined"
+                    fullWidth
                     value={selectedAddress}
                     onChange={handleAddressChange}
-                  >
-                    <FormControlLabel
-                      value="address1"
-                      control={<Radio />}
-                      label={
-                        <Box>
-                          <Typography>Lê Quang Huy</Typography>
-                          <Typography>(+84) 797090433</Typography>
-                          <Typography>
-                            Khu Phố Mỹ Khoan Thị Trấn Hiệp Phước Thị Trấn Hiệp
-                            Phước, Huyện Nhơn Trạch, Đồng Nai
-                          </Typography>
-                        </Box>
-                      }
-                    />
-                    <FormControlLabel
-                      value="address2"
-                      control={<Radio />}
-                      label={
-                        <Box>
-                          <Typography>Lê Quang Huy</Typography>
-                          <Typography>(+84) 387687323</Typography>
-                          <Typography>
-                            5 Đường 12b, Kp Chân Phúc Cẩm Phường Long Thạnh Mỹ,
-                            Thành Phố Thủ Đức, TP. Hồ Chí Minh
-                          </Typography>
-                        </Box>
-                      }
-                    />
-                  </RadioGroup>
-                  <Button
-                    onClick={handleClickOpenNewAddress}
-                    sx={{
-                      backgroundColor: "white",
-                      color: "rgb(251 146 60)",
-                      borderColor: "rgb(251 146 60)",
-                      border: "solid 1px",
-                      fontSize: "10px",
-                    }}
-                  >
-                    + New Address
-                  </Button>
-                </DialogContent>
-                <DialogActions>
-                  <Button
-                    onClick={handleClose}
-                    sx={{
-                      backgroundColor: "white",
-                      color: "rgb(251 146 60)",
-                      borderColor: "rgb(251 146 60)",
-                      border: "solid 1px",
-                      fontSize: "12px",
-                    }}
-                  >
-                    Cancel
-                  </Button>
-                  <Button
-                    onClick={handleClose}
-                    sx={{
-                      backgroundColor: "rgb(251 146 60)",
-                      color: "white",
-                      fontSize: "12px",
-                    }}
-                  >
-                    Confirm
-                  </Button>
-                </DialogActions>
-              </Dialog>
-            </Box>
+                  />
+                </Box>
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={handleClose} sx={{ fontSize: "12px" }}>
+                  Cancel
+                </Button>
+                <Button
+                  onClick={handleConfirmAddress}
+                  color="primary"
+                  sx={{ fontSize: "12px" }}
+                >
+                  Confirm
+                </Button>
+              </DialogActions>
+            </Dialog>
           </Box>
         </Box>
       </Paper>
 
       <Paper elevation={3} style={{ padding: 20, marginBottom: 20 }}>
-        <Typography variant="h6" gutterBottom>
+        <Typography variant="h6" gutterBottom sx={{ fontWeight: "bold" }}>
           Selected Products
         </Typography>
         <List>
@@ -206,10 +204,6 @@ const PayItem = () => {
                   marginBottom: 5,
                 }}
               >
-                <Checkbox
-                  checked={checkedItems[product.id] || false}
-                  onChange={() => handleCheckboxChange(product.id)}
-                />
                 <Card sx={{ display: "flex", width: "100%" }}>
                   <CardMedia
                     component="img"
@@ -225,17 +219,9 @@ const PayItem = () => {
                       {product.origin}
                     </Typography>
                     <Typography variant="h6" color="primary">
-                      {product.price.toLocaleString()} đ
-                    </Typography>
-                    <Typography variant="body2" color="textSecondary">
-                      <del>{product.originalPrice.toLocaleString()} đ</del>
+                      {product.price.toLocaleString()} VND
                     </Typography>
                   </CardContent>
-                  <CardActions>
-                    <IconButton color="primary">
-                      <DeleteIcon />
-                    </IconButton>
-                  </CardActions>
                 </Card>
               </ListItem>
               {index < products.length - 1 && <Divider />}
@@ -299,7 +285,6 @@ const PayItem = () => {
           <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
             <TextField label="Full Name" variant="outlined" fullWidth />
             <TextField label="Phone Number" variant="outlined" fullWidth />
-
             <TextField label="Detail Address" variant="outlined" fullWidth />
           </Box>
         </DialogContent>

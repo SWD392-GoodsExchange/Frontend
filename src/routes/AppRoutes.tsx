@@ -7,12 +7,13 @@ import MyBookmark from "../pages/MyProfile/MyBookmark";
 import MyProduct from "../pages/MyProfile/MyProduct";
 import MyProfile from "../pages/MyProfile/MyProfile";
 import ProductCardPage from "../pages/purchase/productCardPage";
+import PayItemPage from "../pages/Shopping/payItemPage";
 
 const AppRoutes = () => {
   return (
     <Routes>
       {/* <Route path="/" element={<GuestPage />} /> */}
-      <Route path="/" element={<ProductCardPage />} />
+      <Route path="/" element={<PayItemPage />} />
 
       <Route path="/exchange" element={<HomePage />} />
       <Route path="/my-profile" element={<MyProfile />} />
