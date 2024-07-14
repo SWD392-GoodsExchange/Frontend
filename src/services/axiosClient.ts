@@ -13,7 +13,7 @@ axiosClient.interceptors.request.use(
     const token = localStorage.getItem("jwtToken");
     // Do something before request is sent
     if (token !== undefined) {
-      console.log("Token: ", token);
+      // console.log("Token: ", token);
       if (config.headers) {
         config.headers["Authorization"] = `Bearer ${token}`;
       } else {
