@@ -1,4 +1,4 @@
-export interface Member {
+export interface MemberResponse {
   FeID: string;
   RoleID: number;
   Username: string;

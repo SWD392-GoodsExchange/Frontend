@@ -7,14 +7,11 @@ import {
   Typography,
 } from "@mui/material";
 import { styled } from "@mui/system";
+import { useParams } from "react-router-dom";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
 import Bookmarks from "../../assets/Bookmarks.png";
-import MSI1 from "../../assets/MSI1.jpg";
-import MSI2 from "../../assets/MSI2.jpg";
-import MSI3 from "../../assets/MSI3.jpg";
-
 import ShoppingCart from "../../assets/ShoppingCart.png";
 
 const ImageContainer = styled(Box)({
@@ -32,7 +29,37 @@ const PriceContainer = styled(Box)({
   marginTop: "8px",
 });
 
+const products = [
+  {
+    id: 1,
+    title: "Yellow Pencil with Love Heart",
+    categoryName: "Study Stuff",
+    usageInfor: "To write and note down information",
+    origin: "Vietnam",
+    price: 198000,
+    images: [
+      "https://via.placeholder.com/150",
+      "https://via.placeholder.com/150",
+      "https://via.placeholder.com/150",
+    ],
+  },
+  // other products here
+];
+
 const ProductCard = () => {
+  const { id } = useParams<{ id: string }>();
+
+  if (!id) {
+    return <Typography>Product ID not found in the URL</Typography>;
+  }
+
+  const productId = parseInt(id);
+  const product = products.find((product) => product.id === productId);
+
+  if (!product) {
+    return <Typography>Product not found</Typography>;
+  }
+
   const settings = {
     dots: true,
     infinite: true,
@@ -43,13 +70,11 @@ const ProductCard = () => {
     autoplaySpeed: 3000,
   };
 
-  const images = [MSI1, MSI2, MSI3];
-
   return (
-    <Grid container spacing={3} sx={{ padding: "20px" }}>
-      <Grid item xs={4}>
+    <Grid container spacing={3} sx={{ padding: "20px", paddingLeft: "30px" }}>
+      <Grid item xs={4} sx={{}}>
         <Slider {...settings}>
-          {images.map((image, index) => (
+          {product.images.map((image, index) => (
             <ImageContainer key={index}>
               <CardMedia
                 component="img"
@@ -65,7 +90,7 @@ const ProductCard = () => {
       <Grid item xs={8}>
         <CardContent>
           <Typography variant="h6" gutterBottom>
-            Laptop MSI Gaming GF63 12UC-887VN
+            {product.title}
           </Typography>
           <PriceContainer>
             <Box>
@@ -93,7 +118,7 @@ const ProductCard = () => {
                 }}
               >
                 <Typography sx={{ fontSize: "14px", paddingLeft: "5px" }}>
-                  Origin: Vietnam
+                  Origin: {product.origin}
                 </Typography>
               </Button>
               <Button
@@ -131,11 +156,7 @@ const ProductCard = () => {
               <Button
                 variant="outlined"
                 size="small"
-                sx={{
-                  background: "#CCCCCC",
-                  color: "black",
-                  width: "250px",
-                }}
+                sx={{ background: "#CCCCCC", color: "black", width: "250px" }}
               >
                 <Typography sx={{ fontSize: "14px" }}>Price:</Typography>
                 <Button
@@ -149,7 +170,7 @@ const ProductCard = () => {
                   }}
                 >
                   <Typography sx={{ fontSize: "14px", paddingLeft: "5px" }}>
-                    1.000.000.000 VND
+                    {product.price.toLocaleString()} VND
                   </Typography>
                 </Button>
               </Button>
@@ -170,28 +191,11 @@ const ProductCard = () => {
               >
                 Description:
               </Typography>
-              <Typography variant="body2">
-                <li>
-                  CPU Intel Core i7-12650H đem lại khả năng xử lý những tác vụ
-                  làm việc nhanh chóng
-                </li>
-                <li>
-                  Card đồ họa RTX 3050 cân mọi tựa game như Esport hoặc game AAA
-                  ở mức đồ họa Medium
-                </li>
-                <li>
-                  RAM 8GB giúp bạn có thể thực hiện công việc trên nhiều tác vụ
-                  cùng lúc
-                </li>
-                <li>
-                  Ổ cứng 512GB SSD cho không gian thoải mái, tải game và sử dụng
-                  phần mềm nhanh chóng
-                </li>
-              </Typography>
+              <Typography variant="body2">{product.usageInfor}</Typography>
             </Box>
           </Box>
         </CardContent>
-        <Box sx={{ paddingLeft: "370px" }}>
+        <Box sx={{ paddingLeft: "350px" }}>
           <Button
             variant="contained"
             color="primary"

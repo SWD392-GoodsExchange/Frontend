@@ -1,8 +1,8 @@
 import { Box, Grid, Paper } from "@mui/material";
-import ProductCard from "../../components/purchase/productCard";
+import Bill from "../../components/purchase/Bill";
 import BackButton from "../back/backButton";
 
-const ProductCardPage = () => {
+const BillPage = () => {
   return (
     <Grid>
       <Box sx={{ paddingTop: "100px", marginLeft: "5px" }}>
@@ -17,10 +17,10 @@ const ProductCardPage = () => {
           marginTop: "20px",
         }}
       >
-        <ProductCard />
+        <Bill />
       </Paper>
     </Grid>
   );
 };
 
-export default ProductCardPage;
+export default BillPage;

@@ -8,7 +8,7 @@ export interface Product {
   image: string;
 }
 
-export interface ProductReponse {
+export interface ProductResponse {
   productId: number;
   feId: string;
   userName: string;
@@ -19,7 +19,7 @@ export interface ProductReponse {
   status: string;
   price: number;
   title: string;
-  images: Images[];
+  images: Images;
   createdTime: Date;
 }
 

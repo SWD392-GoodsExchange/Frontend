@@ -195,7 +195,10 @@ const PayItem = () => {
         </Box>
       </Paper>
 
-      <Paper elevation={3} style={{ padding: 20, marginBottom: 20 }}>
+      <Paper
+        elevation={3}
+        style={{ padding: 20, marginBottom: 20, marginTop: "10px" }}
+      >
         <Typography variant="h6" gutterBottom sx={{ fontWeight: "bold" }}>
           Selected Products
         </Typography>
