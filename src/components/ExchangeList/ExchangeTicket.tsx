@@ -21,6 +21,8 @@ import { TiDelete } from "react-icons/ti";
 import { TransitionProps } from "@mui/material/transitions";
 import { ProductReponse } from "../../interfaces/productResponse";
 import productApi from "../../services/productApi";
+import { IoBanOutline } from "react-icons/io5";
+import * as signalR from "@microsoft/signalr";
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -39,6 +41,9 @@ const ExchangeTicket = () => {
   const navigate = useNavigate();
   const [openProductList, setOpenProductList] = useState(false);
   const [myProductList, setMyProductList] = useState<ProductReponse[]>();
+  const [chooseProductId, setChooseProductId] = useState<number | undefined>(
+    undefined
+  );
 
   useEffect(() => {
     const fetchData = async () => {
@@ -76,12 +81,17 @@ const ExchangeTicket = () => {
   const sendExchangeRequest = () => {
     setOpen(false);
   };
+
   const handleDropImage = () => {
     setPreviewImage(null);
   };
   console.log(myProductList);
+  const chooseProduct = myProductList?.find(
+    (item) => item.productId === chooseProductId
+  );
+  console.log(chooseProduct);
   return (
-    <div className="text-black h-[1000px] bg-gradient-to-b from-orange-600 to-[#f4a767] pb-4 mt-[100px]">
+    <div className="text-black h-[640px] bg-gradient-to-b from-orange-600 to-[#f4a767] pb-4 mt-[100px]">
       <div className="flex justify-between px-3 py-2 items-center">
         <div
           onClick={() => {
@@ -115,7 +125,7 @@ const ExchangeTicket = () => {
             <img src={Avatar} width={50} height={50} />
             <div className="flex flex-col items-start">
               <h4 className="font-bold">{productObject.userName}</h4>
-              <p className="font-light">
+              <p className="font-light truncate">
                 {productObject.createdTime.toLocaleString()}
               </p>
             </div>
@@ -146,16 +156,25 @@ const ExchangeTicket = () => {
             />
           </div>
         </Card>
-        <div className="p-5 bg-white rounded-full ">
-          <FaExchangeAlt size={"40px"} />
-        </div>
+        <Tooltip title="Show all products">
+          <div
+            onClick={openProductLists}
+            className={`${
+              openProductList
+                ? "text-orange-700 bg-orange-700 shadow-sm"
+                : `text-black`
+            } p-4 bg-white rounded-full hover:text-orange-700 text-orange-400 transition-all duration-300`}
+          >
+            <FaExchangeAlt size={"40px"} />
+          </div>
+        </Tooltip>
         {/* Thông tin người muốn trao đổi */}
         <Card
           sx={{
             width: "300px",
             padding: 2,
             minheight: "450px",
-            height: "auto",
+            height: "470px",
           }}
         >
           <div className="flex items-center gap-3">
@@ -166,50 +185,84 @@ const ExchangeTicket = () => {
             </div>
           </div>
           <div className="flex flex-col h-[auto] justify-center mt-2">
-            <button
-              onClick={openProductLists}
-              className={`${
-                openProductList
-                  ? "text-white bg-orange-700 shadow-sm"
-                  : `text-black`
-              } p-3 bg-orange-500 rounded-lg  hover:text-white transition-all duration-300`}
-            >
-              Show all product
-            </button>
-            {openProductList === true && (
-              <div className="flex fixed p-5 bg-slate-200 overflow-y-auto rounded-md right-20 top-[138px] flex-col justify-center items-center">
-                {myProductList?.map((item) => (
-                  <Card
-                    sx={{
-                      display: "flex",
-                      flexDirection: "column",
-                      width: "250px",
-                      padding: "0 10px",
-                      margin: "5px 0",
-                    }}
-                  >
-                    <div className="flex gap-1">
-                      <div className="p-2 my-2 bg-yellow-500 text-13 text-center items-center rounded-2xl text-white hover:bg-yellow-700 cursor-text">
-                        <p>{item.categoryName}</p>
-                      </div>
-                      <div className="p-2 my-2 bg-blue-500 text-13 text-center items-center rounded-2xl text-white hover:bg-blue-700 cursor-text">
-                        <p>{item.origin}</p>
-                      </div>
-                      <div className="p-2 my-2 bg-orange-500 text-13 text-center items-center rounded-2xl text-white hover:bg-orange-700 cursor-text">
-                        <p>{item.type}</p>
-                      </div>
+            <div>
+              {chooseProductId === undefined ? (
+                <p className="flex justify-center mt-5 items-center gap-1 font-semibold">
+                  <IoBanOutline color="red" size={"22px"} />
+                  No product choosen
+                </p>
+              ) : (
+                <>
+                  <div className="flex gap-1">
+                    <div className="p-2 my-2 bg-yellow-500 text-13 text-center items-center rounded-2xl text-white hover:bg-yellow-700 cursor-text">
+                      <p>{chooseProduct?.categoryName}</p>
                     </div>
-
-                    <div className="flex flex-col">
-                      <p className="font-bold">{item.title}</p>
-                      <p className="font-light">{item.description}</p>
+                    <div className="p-2 my-2 bg-blue-500 text-13 text-center items-center rounded-2xl text-white hover:bg-blue-700 cursor-text">
+                      <p>{chooseProduct?.origin}</p>
                     </div>
-                    <img src={ATM} alt="" width={200} height={200} />
-                  </Card>
-                ))}
-              </div>
-            )}
+                    <div className="p-2 my-2 bg-orange-500 text-13 text-center items-center rounded-2xl text-white hover:bg-orange-700 cursor-text">
+                      <p>{chooseProduct?.type}</p>
+                    </div>
+                  </div>
+                  <div>
+                    <p className="font-semibold">{chooseProduct?.title}</p>
+                    <p className="font-light">
+                      Description: {chooseProduct?.description}
+                    </p>
+                  </div>
+                  <div className="flex flex-col justify-center my-2">
+                    {chooseProduct?.images.map((image) => (
+                      <img
+                        className="outline outline-1 w-full rounded-lg"
+                        src={image.imageUrl}
+                        width={"300px"}
+                        height="auto"
+                      />
+                    ))}
+                  </div>
+                </>
+              )}
+            </div>
           </div>
+
+          {openProductList === true && (
+            <div className="flex fixed  overflow-y-auto p-5 bg-slate-200 flex-col rounded-md right-[50px] w-[320px] h-[470px] top-[200px] ">
+              {myProductList?.map((item) => (
+                <div
+                  key={item.productId}
+                  onClick={() => {
+                    setChooseProductId(item.productId);
+                  }}
+                  className={`${
+                    item.productId === chooseProductId &&
+                    `outline outline-orange-500`
+                  } flex flex-col w-[auto] h-[auto] rounded-md px-[10px] py-[5px] my-[5px] bg-white shadow-md cursor-pointer`}
+                >
+                  <div className="flex gap-1">
+                    <div className="p-2 my-2 bg-yellow-500 text-13 text-center items-center rounded-2xl text-white hover:bg-yellow-700 cursor-text">
+                      <p>{item.categoryName}</p>
+                    </div>
+                    <div className="p-2 my-2 bg-blue-500 text-13 text-center items-center rounded-2xl text-white hover:bg-blue-700 cursor-text">
+                      <p>{item.origin}</p>
+                    </div>
+                    <div className="p-2 my-2 bg-orange-500 text-13 text-center items-center rounded-2xl text-white hover:bg-orange-700 cursor-text">
+                      <p>{item.type}</p>
+                    </div>
+                  </div>
+
+                  <div className="flex flex-col">
+                    <p className="font-bold">{item.title}</p>
+                    <p className="font-light">
+                      Description: {item.description}
+                    </p>
+                  </div>
+                  {item.images.map((image) => (
+                    <img src={image.imageUrl} alt="" width={200} height={200} />
+                  ))}
+                </div>
+              ))}
+            </div>
+          )}
           {/* <div className="flex justify-center mt-3 ">
             <input
               type="file"
@@ -258,12 +311,12 @@ const ExchangeTicket = () => {
         aria-describedby="alert-dialog-slide-description"
       >
         <DialogTitle>
-          Did you want send exchange request to{" "}
-          <span className="font-semibold"> Nguyen Dinh Hoang Huy</span>?
+          Did you want send exchange request to
+          <span className="font-semibold"> {productObject.userName}</span>?
         </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-slide-description">
-            We will send notification for Nguyen Dinh Hoang Huy now
+            We will send notification for {productObject.userName} now
           </DialogContentText>
         </DialogContent>
         <DialogActions>

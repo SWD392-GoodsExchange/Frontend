@@ -7,6 +7,7 @@ import authApi from "../../services/authApi";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
+import SignalRServices from "../../services/signalR/signalRServices";
 
 type Props = {
   setChangeForm: React.Dispatch<React.SetStateAction<string>>;
@@ -21,6 +22,7 @@ const LoginForm = ({ setChangeForm, handleClose }: Props) => {
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
+  const [isLogged, setIsLogged] = useState<boolean>();
 
   const handleChangeFeId = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFeId(e.target.value);
@@ -49,6 +51,7 @@ const LoginForm = ({ setChangeForm, handleClose }: Props) => {
         localStorage.setItem("userName", loginResponse.data.userName);
         localStorage.setItem("jwtToken", loginResponse.data.jwtToken);
         localStorage.setItem("refreshToken", loginResponse.data.refreshToken);
+        setIsLogged(true);
         setTimeout(() => {
           handleClose();
           navigate("/exchange");
@@ -66,6 +69,9 @@ const LoginForm = ({ setChangeForm, handleClose }: Props) => {
   return (
     <div className="flex flex-col md:w-auto">
       <ToastContainer />
+      {/* {isLogged == true && (
+        <SignalRServices token={localStorage.getItem("jwtToken")} />
+      )} */}
       <div className="flex flex-col items-center justify-center gap-5">
         <div className="flex flex-col justify-center items-center text-20">
           <RiExchangeFill

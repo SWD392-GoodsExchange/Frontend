@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import productApi from "../../services/productApi";
 import { ProductReponse } from "../../interfaces/productResponse";
 import Loading from "../Loading";
+import bookMarkApi from "../../services/bookMarkApi";
 
 const ExchangeList = () => {
   const [products, setproducts] = useState<ProductReponse[]>();
@@ -20,7 +21,7 @@ const ExchangeList = () => {
       setproducts(productsApi.data.data);
     };
     fetchProducts();
-  }, []);
+  }, [products]);
 
   const onClickExchange = (
     productId: number,
@@ -29,6 +30,19 @@ const ExchangeList = () => {
     navigate(`/exchange-ticket/${productId}`, {
       state: productObject,
     });
+  };
+
+  const bookMarkProduct = (productId: number) => {
+    bookMarkApi
+      .createBookMark({
+        ProductId: productId.toString(),
+      })
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return (
@@ -61,19 +75,28 @@ const ExchangeList = () => {
             </div>
             <div>
               <p className="font-semibold flex justify-start">{item.title}</p>
-              <p className="font-light">Description: {item.description}</p>
+              <p className="font-light flex justify-start">
+                Description: {item.description}
+              </p>
             </div>
             <div className="flex flex-col justify-center my-2">
-              <img
-                className="outline outline-1 w-full rounded-lg"
-                src={ATM}
-                width={"300px"}
-                height="auto"
-              />
+              {item.images.map((image) => (
+                <img
+                  className="outline outline-1 w-full rounded-lg"
+                  src={image.imageUrl}
+                  width={"300px"}
+                  height="auto"
+                />
+              ))}
             </div>
             <p className="bg-slate-300 w-[100%] h-[2px]"></p>
             <div className="w-[100%] text-slate-700 flex justify-between">
-              <button className="flex gap-1 items-center transition-all duration-300 bg-purple-500 rounded-lg p-2 cursor-pointer hover:bg-purple-700 hover:text-white">
+              <button
+                onClick={() => {
+                  bookMarkProduct(item.productId);
+                }}
+                className="flex gap-1 items-center transition-all duration-300 bg-purple-300 rounded-lg p-2 cursor-pointer hover:bg-purple-500"
+              >
                 <CiBookmark size={"22px"} />
                 Bookmark
               </button>
@@ -81,12 +104,12 @@ const ExchangeList = () => {
                 onClick={() => {
                   onClickExchange(item.productId, item);
                 }}
-                className="flex gap-1 items-center transition-all duration-300 bg-orange-500 rounded-lg p-2 cursor-pointer hover:bg-orange-700 hover:text-white "
+                className="flex gap-1 items-center transition-all duration-300 bg-orange-300 rounded-lg p-2 cursor-pointer hover:bg-orange-500  "
               >
                 <LiaExchangeAltSolid size={"22px"} />
                 Exchange
               </button>
-              <button className="flex gap-1 items-center transition-all duration-300 bg-red-500 rounded-lg p-2 cursor-pointer hover:bg-red-700 hover:text-white">
+              <button className="flex gap-1 items-center transition-all duration-300 bg-red-300 rounded-lg p-2 cursor-pointer hover:bg-red-500 ">
                 <GoReport size={"22px"} />
                 Report
               </button>

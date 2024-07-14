@@ -9,6 +9,14 @@ const productApi = {
     const url = `/products/${FeId}`;
     return axiosClient.get(url);
   },
+  createProduct(data: FormData) {
+    const url = "/products";
+    return axiosClient.post(url, data, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+  },
 };
 
 export default productApi;
