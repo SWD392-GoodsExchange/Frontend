@@ -5,11 +5,10 @@ export interface Product {
   usageInfor: string;
   origin: string;
   price: number;
-  originalPrice: number;
   image: string;
 }
 
-export interface ProductReponse {
+export interface ProductResponse {
   productId: number;
   feId: string;
   userName: string;
@@ -20,7 +19,7 @@ export interface ProductReponse {
   status: string;
   price: number;
   title: string;
-  images: Images[];
+  images: Images;
   createdTime: Date;
 }
 

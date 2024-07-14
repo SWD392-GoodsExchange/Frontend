@@ -1,14 +1,21 @@
-import { Paper } from "@mui/material";
+import { Grid, Paper } from "@mui/material";
 
 import ManageOrder from "../../components/Shopping/manageOrder";
-import Navbar from "../../components/navbar/Navbar";
 
 const ManageOrderPage = () => {
   return (
-    <Paper sx={{ backgroundColor: "white" }}>
-      <Navbar />
-      <ManageOrder />
-    </Paper>
+    <Grid>
+      <Paper
+        sx={{
+          backgroundColor: "white",
+          marginTop: "100px",
+          paddingTop: "15px",
+          height: "800px",
+        }}
+      >
+        <ManageOrder />
+      </Paper>
+    </Grid>
   );
 };
 

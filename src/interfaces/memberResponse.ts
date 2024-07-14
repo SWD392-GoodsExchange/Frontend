@@ -1,4 +1,4 @@
-export interface Member {
+export interface MemberResponse {
   FeID: string;
   RoleID: number;
   Username: string;
@@ -10,4 +10,10 @@ export interface Member {
   Phone: string;
   CreatedTime: string;
   Status: string;
+}
+
+export interface AddressInfor {
+  Username: string;
+  Phone: string;
+  Address: string;
 }

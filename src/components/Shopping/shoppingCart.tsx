@@ -21,6 +21,7 @@ import React, { useState } from "react"; // Ensure React and useState are import
 import { Product } from "../../interfaces/productResponse";
 
 const ShoppingCart = () => {
+  const state = useState();
   const [products, setProducts] = useState<Product[]>([
     {
       id: 1,
@@ -29,7 +30,6 @@ const ShoppingCart = () => {
       usageInfor: "To write and note down information",
       origin: "Vietnam",
       price: 198000,
-      originalPrice: 350000,
       image: "https://via.placeholder.com/150",
     },
     {
@@ -39,7 +39,6 @@ const ShoppingCart = () => {
       usageInfor: "Smooth writing experience for detailed notes",
       origin: "China",
       price: 120000,
-      originalPrice: 180000,
       image: "https://via.placeholder.com/150",
     },
     {
@@ -49,7 +48,6 @@ const ShoppingCart = () => {
       usageInfor: "Ideal for elegant handwriting and signatures",
       origin: "Germany",
       price: 450000,
-      originalPrice: 600000,
       image: "https://via.placeholder.com/150",
     },
     {
@@ -59,7 +57,6 @@ const ShoppingCart = () => {
       usageInfor: "Perfect for precise sketches and technical drawings",
       origin: "Japan",
       price: 280000,
-      originalPrice: 350000,
       image: "https://via.placeholder.com/150",
     },
   ]);
@@ -85,16 +82,9 @@ const ShoppingCart = () => {
   }, 0);
 
   const handlePayItems = () => {
-    // Lọc các sản phẩm được chọn
     const selectedProducts = products.filter(
       (product) => checkedItems[product.id]
     );
-
-    // // Chuyển hướng sang trang PayItem và truyền dữ liệu
-    // history.push({
-    //   pathname: "/pay-item",
-    //   state: { products: selectedProducts },
-    // });
   };
 
   const [value, setValue] = useState(0);
@@ -156,9 +146,6 @@ const ShoppingCart = () => {
                       </Typography>
                       <Typography variant="h6" color="primary">
                         {product.price.toLocaleString()} đ
-                      </Typography>
-                      <Typography variant="body2" color="textSecondary">
-                        <del>{product.originalPrice.toLocaleString()} đ</del>
                       </Typography>
                     </CardContent>
                     <CardActions>

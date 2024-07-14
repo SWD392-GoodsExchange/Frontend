@@ -1,6 +1,5 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
-import { RiExchangeFill } from "react-icons/ri";
 import {
   Badge,
   Dialog,
@@ -8,17 +7,17 @@ import {
   DialogContent,
   Tooltip,
 } from "@mui/material";
-import MyAvat from "../../assets/panda.png";
-import LoginForm from "../loginForm/LoginForm";
-import SignUp from "../registerForm/SignUp";
-import { RiMessengerFill } from "react-icons/ri";
-import { RiExchangeLine } from "react-icons/ri";
-import { RiNotification4Line } from "react-icons/ri";
-import { RxAvatar } from "react-icons/rx";
+import {
+  RiExchangeFill,
+  RiExchangeFundsLine,
+  RiExchangeLine,
+  RiMessengerFill,
+  RiMoneyDollarCircleLine,
+} from "react-icons/ri";
 import { useLocation, useNavigate } from "react-router-dom";
-import { RiExchangeFundsLine } from "react-icons/ri";
-import { RiMoneyDollarCircleLine } from "react-icons/ri";
+import LoginForm from "../loginForm/LoginForm";
 import MyNotificatons from "../Notifications/MyNotifications";
+import SignUp from "../registerForm/SignUp";
 
 const Navbar = () => {
   const location = useLocation();

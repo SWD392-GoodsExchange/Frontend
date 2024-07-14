@@ -7,7 +7,12 @@ import {
   Typography,
 } from "@mui/material";
 import { styled } from "@mui/system";
-import Panda from "../../assets/panda.png";
+import { useParams } from "react-router-dom";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick-theme.css";
+import "slick-carousel/slick/slick.css";
+import Bookmarks from "../../assets/Bookmarks.png";
+import ShoppingCart from "../../assets/ShoppingCart.png";
 
 const ImageContainer = styled(Box)({
   display: "flex",
@@ -24,89 +29,196 @@ const PriceContainer = styled(Box)({
   marginTop: "8px",
 });
 
-const ProductCard = () => {
-  return (
-    <Grid container xs={12} sx={{ padding: "50px", paddingLeft: "200px" }}>
-      <Grid item xs={3}>
-        <ImageContainer>
-          <CardMedia
-            component="img"
-            alt="Product Image"
-            image={Panda}
-            title="Product Image"
-            sx={{ width: "50%", objectFit: "contain" }}
-          />
-        </ImageContainer>
-      </Grid>
-      <Grid item xs={9}>
-        <CardContent>
-          <Typography variant="h6" component="div">
-            2 Pencil HC 16B yellow
-          </Typography>
+const products = [
+  {
+    id: 1,
+    title: "Yellow Pencil with Love Heart",
+    categoryName: "Study Stuff",
+    usageInfor: "To write and note down information",
+    origin: "Vietnam",
+    price: 198000,
+    images: [
+      "https://via.placeholder.com/150",
+      "https://via.placeholder.com/150",
+      "https://via.placeholder.com/150",
+    ],
+  },
+  // other products here
+];
 
+const ProductCard = () => {
+  const { id } = useParams<{ id: string }>();
+
+  if (!id) {
+    return <Typography>Product ID not found in the URL</Typography>;
+  }
+
+  const productId = parseInt(id);
+  const product = products.find((product) => product.id === productId);
+
+  if (!product) {
+    return <Typography>Product not found</Typography>;
+  }
+
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 3000,
+  };
+
+  return (
+    <Grid container spacing={3} sx={{ padding: "20px", paddingLeft: "30px" }}>
+      <Grid item xs={4} sx={{}}>
+        <Slider {...settings}>
+          {product.images.map((image, index) => (
+            <ImageContainer key={index}>
+              <CardMedia
+                component="img"
+                alt={`Product Image ${index + 1}`}
+                image={image}
+                title={`Product Image ${index + 1}`}
+                sx={{ width: "100%", objectFit: "contain", height: "100%" }}
+              />
+            </ImageContainer>
+          ))}
+        </Slider>
+      </Grid>
+      <Grid item xs={8}>
+        <CardContent>
+          <Typography variant="h6" gutterBottom>
+            {product.title}
+          </Typography>
           <PriceContainer>
             <Box>
               <Button
-                variant="contained"
-                color="primary"
+                variant="outlined"
                 size="small"
-                sx={{ marginRight: "8px" }}
+                sx={{
+                  borderBlockColor: "#E68730",
+                  background: "#FFC58F",
+                  color: "black",
+                }}
               >
-                New
+                <Typography sx={{ fontSize: "14px", paddingLeft: "5px" }}>
+                  New
+                </Typography>
               </Button>
               <Button
-                variant="contained"
-                color="primary"
+                variant="outlined"
                 size="small"
-                sx={{ marginRight: "8px" }}
+                sx={{
+                  marginLeft: "10px",
+                  borderBlockColor: "#E68730",
+                  background: "#FFC58F",
+                  color: "black",
+                }}
               >
-                Origin: Vietnam
+                <Typography sx={{ fontSize: "14px", paddingLeft: "5px" }}>
+                  Origin: {product.origin}
+                </Typography>
               </Button>
               <Button
-                variant="contained"
-                color="primary"
+                variant="outlined"
                 size="small"
-                sx={{ marginRight: "8px" }}
+                sx={{
+                  marginLeft: "10px",
+                  borderBlockColor: "#E68730",
+                  background: "#FFC58F",
+                  color: "black",
+                }}
               >
-                Status: Selling
+                <Typography sx={{ fontSize: "14px", paddingLeft: "5px" }}>
+                  Status: Selling
+                </Typography>
               </Button>
             </Box>
           </PriceContainer>
-          <Box
-            sx={{ marginTop: "16px", display: "flex", flexDirection: "column" }}
-          >
+          <Box sx={{ marginTop: "16px" }}>
             <Button
               variant="outlined"
               size="small"
-              sx={{ marginBottom: "8px", fontSize: "10px", width: "150px" }}
+              sx={{ fontSize: "10px", width: "150px", fontWeight: "bold" }}
+            >
+              Posted by: Anchor Le
+            </Button>
+            <Button
+              variant="text"
+              size="small"
+              sx={{ fontSize: "10px", width: "150px", fontWeight: "bold" }}
             >
               Create time: 13:59:48 05/01/2024
             </Button>
+            <Box>
+              <Button
+                variant="outlined"
+                size="small"
+                sx={{ background: "#CCCCCC", color: "black", width: "250px" }}
+              >
+                <Typography sx={{ fontSize: "14px" }}>Price:</Typography>
+                <Button
+                  variant="outlined"
+                  size="small"
+                  sx={{
+                    marginLeft: "10px",
+                    borderBlockColor: "#E68730",
+                    background: "#FFFFFF",
+                    color: "black",
+                  }}
+                >
+                  <Typography sx={{ fontSize: "14px", paddingLeft: "5px" }}>
+                    {product.price.toLocaleString()} VND
+                  </Typography>
+                </Button>
+              </Button>
+            </Box>
             <Box
               sx={{
-                border: "black solid 1px",
+                border: "1px solid #ccc",
                 borderRadius: "5px",
                 padding: "10px",
-                width: "60%",
+                marginTop: "8px",
+                height: "200px",
               }}
             >
-              <Typography>Description :</Typography>
-              <Typography variant="body2" sx={{ marginTop: "8px" }}>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit,sed do
+              <Typography
+                variant="subtitle2"
+                gutterBottom
+                sx={{ fontWeight: "bold" }}
+              >
+                Description:
               </Typography>
+              <Typography variant="body2">{product.usageInfor}</Typography>
             </Box>
           </Box>
         </CardContent>
-        <CardContent>
+        <Box sx={{ paddingLeft: "350px" }}>
           <Button
             variant="contained"
             color="primary"
             size="small"
             sx={{ marginRight: "8px" }}
           >
-            Purchase
+            <img src={Bookmarks} width="20" height="20" alt="ShoppingCart" />
+            <Typography sx={{ fontSize: "14px", paddingLeft: "5px" }}>
+              Bookmark
+            </Typography>
           </Button>
-        </CardContent>
+          <Button
+            variant="contained"
+            color="primary"
+            size="small"
+            sx={{ marginRight: "8px" }}
+          >
+            <img src={ShoppingCart} width="20" height="20" alt="ShoppingCart" />
+            <Typography sx={{ fontSize: "14px", paddingLeft: "5px" }}>
+              Purchase
+            </Typography>
+          </Button>
+        </Box>
       </Grid>
     </Grid>
   );
