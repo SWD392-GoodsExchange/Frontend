@@ -30,7 +30,7 @@ const AppRoutes = () => {
 
       <Route path="/trade" element={<ProductList />} />
       <Route path="/products/:productId" element={<ProductCardPage />} />
-      <Route path="/Purchase/PayItem" element={<PayItemPage />} />
+      <Route path="/Purchase/PayItem/:productId" element={<PayItemPage />} />
       <Route path="/order/history" element={<OrderHistoryPage />} />
       <Route path="/Purchase/ShoppingCart" element={<ShoppingCart />} />
       <Route path="/Purchase/Bookmark" element={<ManageOrderPage />} />

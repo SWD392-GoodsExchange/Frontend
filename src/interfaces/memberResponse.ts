@@ -12,8 +12,12 @@ export interface MemberResponse {
   Status: string;
 }
 
-export interface AddressInfor {
-  Username: string;
-  Phone: string;
-  Address: string;
+export interface MemberInfor {
+  FeID?: string;
+  Username?: string;
+  Address?: string;
+  Gender?: string;
+  Email?: string;
+  Phone?: string;
+  DoB?: Date;
 }

@@ -21,49 +21,34 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Location from "../../assets/Location.png";
-import MSI1 from "../../assets/MSI1.jpg";
-import { AddressInfor } from "../../interfaces/memberResponse";
-import { Product } from "../../interfaces/productResponse";
 
-const exampleMember: AddressInfor = {
-  Username: "Anchor Le",
-  Phone: "(+84) 123456789",
-  Address:
-    "5 Đường 12b, Kp Chân Phúc Cẩm Phường Long Thạnh Mỹ, Thành Phố Thủ Đức, TP. Hồ Chí Minh",
-};
+import { MemberInfor } from "../../interfaces/memberResponse";
+import { Product } from "../../interfaces/productResponse";
+import authApi from "../../services/authApi";
+import productApi from "../../services/productApi";
 
 const PayItem = () => {
   const navigate = useNavigate();
-
+  const { state } = useLocation();
   const handlePayment = () => {
     window.location.replace(
       "https://sandbox.vnpayment.vn/paymentv2/Payment/Error.html?code=15"
     );
   };
 
-  const [products, setProducts] = useState<Product[]>([
-    {
-      id: 1,
-      title: "Laptop MSI Gaming GF63 12UC-887VN",
-      categoryName: "Laptop",
-      usageInfor: "aljalkhjdajd",
-      origin: "Vietnam",
-      price: 1000000000,
-      image: MSI1,
-    },
-  ]);
+  const [products, setProducts] = useState<Product[]>([]);
   const [checkedItems, setCheckedItems] = useState<{ [key: number]: boolean }>(
     {}
   );
 
-  const [addressInfor, setAddressInfor] = useState<AddressInfor>(exampleMember);
+  const [memberInfor, setMemberInfor] = useState<MemberInfor>();
   const [open, setOpen] = useState(false);
-  const [openNewAddress, setOpenNewAddress] = useState(false); // State for new address form
+  const [openNewAddress, setOpenNewAddress] = useState(false);
   const [selectedAddress, setSelectedAddress] = useState(
-    addressInfor.Address || "address1"
+    memberInfor?.Address || "address1"
   );
   const location = useLocation();
 
@@ -75,6 +60,26 @@ const PayItem = () => {
       [productId]: !prevCheckedItems[productId],
     }));
   };
+
+  const fetchMember = async () => {
+    const response = await authApi.getInformationMember();
+    console.log("resMember:", response);
+    setMemberInfor(response.data);
+  };
+
+  useEffect(() => {
+    fetchMember();
+  }, []);
+
+  const fetchProduct = async () => {
+    const response = await productApi.getProductByPId(state.productId);
+    console.log("res:", response);
+    setProducts(response.data);
+  };
+
+  useEffect(() => {
+    fetchProduct();
+  }, [state.productId]);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -97,7 +102,13 @@ const PayItem = () => {
   };
 
   const handleConfirmAddress = () => {
-    setAddressInfor({ ...addressInfor, Address: selectedAddress });
+    setMemberInfor({
+      ...memberInfor,
+      Address: selectedAddress,
+      FeID: memberInfor?.FeID || "",
+      Username: memberInfor?.Username || "",
+      Phone: memberInfor?.Phone || "",
+    });
     setOpen(false);
   };
 
@@ -125,9 +136,9 @@ const PayItem = () => {
                 style={{ marginRight: 10 }}
               />
               <Box>
-                <Typography>{addressInfor.Address}</Typography>
-                <Typography>{addressInfor.Username}</Typography>
-                <Typography>{addressInfor.Phone}</Typography>
+                <Typography>{memberInfor?.Address}</Typography>
+                <Typography>{memberInfor?.Username}</Typography>
+                <Typography>{memberInfor?.Phone}</Typography>
               </Box>
             </Box>
             <Button variant="contained" onClick={handleClickOpen}>
@@ -148,10 +159,10 @@ const PayItem = () => {
                     label="Full Name"
                     variant="outlined"
                     fullWidth
-                    value={addressInfor.Username}
+                    value={memberInfor?.Username}
                     onChange={(e) =>
-                      setAddressInfor({
-                        ...addressInfor,
+                      setMemberInfor({
+                        ...memberInfor,
                         Username: e.target.value,
                       })
                     }
@@ -161,10 +172,10 @@ const PayItem = () => {
                     label="Phone Number"
                     variant="outlined"
                     fullWidth
-                    value={addressInfor.Phone}
+                    value={memberInfor?.Phone}
                     onChange={(e) =>
-                      setAddressInfor({
-                        ...addressInfor,
+                      setMemberInfor({
+                        ...memberInfor,
                         Phone: e.target.value,
                       })
                     }

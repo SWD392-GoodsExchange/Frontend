@@ -8,7 +8,7 @@ import {
 } from "@mui/material";
 import { styled } from "@mui/system";
 import { useEffect, useState } from "react";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
@@ -34,21 +34,21 @@ const PriceContainer = styled(Box)({
 
 const ProductCard = () => {
   const { state } = useLocation();
+  const navigate = useNavigate();
   console.log("state", state);
-  const { id } = useParams<{ id: string }>();
-  console.log("id", id);
   const [product, setProduct] = useState<ProductResponse | null>(null);
+  const [clickedPurchaseId, setClickedPurchaseId] = useState<number | null>(
+    null
+  );
 
   useEffect(() => {
     const fetchProduct = async () => {
-      if (id) {
-        const response = await productApi.getProductByPId(Number(id));
-        console.log("res:", response);
-        setProduct(response.data);
-      }
+      const response = await productApi.getProductByPId(state.productId);
+      console.log("res:", response);
+      setProduct(response.data);
     };
     fetchProduct();
-  }, [id]);
+  }, [state.productId]);
 
   if (!product) {
     return <Typography>Product not found</Typography>;
@@ -62,6 +62,20 @@ const ProductCard = () => {
     slidesToScroll: 1,
     autoplay: true,
     autoplaySpeed: 3000,
+  };
+
+  const handlePurchase = (
+    productId: number,
+    productResponse: ProductResponse
+  ) => {
+    if (clickedPurchaseId === productId) {
+      setClickedPurchaseId(null);
+    } else {
+      setClickedPurchaseId(productId);
+      navigate(`/Purchase/PayItem/${productId}`, {
+        state: productResponse,
+      });
+    }
   };
 
   return (
@@ -137,14 +151,14 @@ const ProductCard = () => {
               size="small"
               sx={{ fontSize: "10px", width: "150px", fontWeight: "bold" }}
             >
-              Posted by: Anchor Le
+              Posted by: {product.userName}
             </Button>
             <Button
               variant="text"
               size="small"
               sx={{ fontSize: "10px", width: "150px", fontWeight: "bold" }}
             >
-              Create time: 13:59:48 05/01/2024
+              Create time: {new Date(product.createdTime).toLocaleDateString()}
             </Button>
             <Box>
               <Button
@@ -194,13 +208,14 @@ const ProductCard = () => {
             variant="outlined"
             size="small"
             sx={{ background: "#CCCCCC", color: "black", width: "250px" }}
+            onClick={() => handlePurchase(product.productId, product)}
           >
             <img
               src={ShoppingCart}
               alt="Shopping Cart"
               style={{ width: "20px", marginRight: "5px" }}
             />
-            Add to Cart
+            Purchase
           </Button>
           <Button
             variant="outlined"
