@@ -8,24 +8,49 @@ import {
   Grid,
   Typography,
 } from "@mui/material";
-import { products } from "../../interfaces/product/product";
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { ProductResponse } from "../../interfaces/productResponse";
+import productApi from "../../services/productApi";
 
 const ProductList = () => {
+  const [products, setProducts] = useState<ProductResponse[]>([]);
+  console.log("first", products);
+
+  const fetchProductsList = async () => {
+    const response: any = (await productApi.getAllProduct()).data.data;
+    console.log("FetchData:", response);
+    if (response && response.length > 0) {
+      setProducts(response);
+    }
+  };
+
+  useEffect(() => {
+    const initUseEffect = async () => {
+      await fetchProductsList();
+    };
+    initUseEffect();
+  }, []);
+
   return (
-    <Container maxWidth="lg">
+    <Container maxWidth="lg" sx={{ marginTop: "100px" }}>
       <Typography variant="h4" component="h1" gutterBottom>
         Products
       </Typography>
       <Grid container spacing={4}>
         {products.map((product) => (
-          <Grid item key={product.ProductID} xs={12} sm={6} md={4}>
+          <Grid item key={product.productId} xs={12} sm={6} md={4}>
             <Card>
-              <CardMedia
-                component="img"
-                height="200"
-                image={product.imageURL}
-                alt={product.title}
-              />
+              {product.images.map((image) => (
+                <CardMedia
+                  key={image.publicId}
+                  component="img"
+                  style={{ width: 151 }}
+                  image={image.imageUrl}
+                  alt="Product Image"
+                />
+              ))}
+
               <CardContent>
                 <Typography gutterBottom variant="h5" component="div">
                   {product.title}
@@ -41,7 +66,8 @@ const ProductList = () => {
                 <Button
                   size="small"
                   color="primary"
-                  href={`/products/${product.ProductID}`}
+                  component={Link}
+                  to={`/products/${product.productId}`}
                 >
                   View Details
                 </Button>

@@ -7,12 +7,15 @@ import {
   Typography,
 } from "@mui/material";
 import { styled } from "@mui/system";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
 import Bookmarks from "../../assets/Bookmarks.png";
 import ShoppingCart from "../../assets/ShoppingCart.png";
+import { ProductResponse } from "../../interfaces/productResponse";
+import productApi from "../../services/productApi";
 
 const ImageContainer = styled(Box)({
   display: "flex",
@@ -29,32 +32,19 @@ const PriceContainer = styled(Box)({
   marginTop: "8px",
 });
 
-const products = [
-  {
-    id: 1,
-    title: "Yellow Pencil with Love Heart",
-    categoryName: "Study Stuff",
-    usageInfor: "To write and note down information",
-    origin: "Vietnam",
-    price: 198000,
-    images: [
-      "https://via.placeholder.com/150",
-      "https://via.placeholder.com/150",
-      "https://via.placeholder.com/150",
-    ],
-  },
-  // other products here
-];
-
 const ProductCard = () => {
   const { id } = useParams<{ id: string }>();
+  const [product, setProduct] = useState<ProductResponse | null>(null);
 
-  if (!id) {
-    return <Typography>Product ID not found in the URL</Typography>;
-  }
-
-  const productId = parseInt(id);
-  const product = products.find((product) => product.id === productId);
+  useEffect(() => {
+    const fetchProduct = async () => {
+      if (id) {
+        const response = await productApi.getProductByPId(Number(id)); // assuming productApi has a method getProductByPId
+        setProduct(response.data);
+      }
+    };
+    fetchProduct();
+  }, [id]);
 
   if (!product) {
     return <Typography>Product not found</Typography>;
@@ -72,14 +62,14 @@ const ProductCard = () => {
 
   return (
     <Grid container spacing={3} sx={{ padding: "20px", paddingLeft: "30px" }}>
-      <Grid item xs={4} sx={{}}>
+      <Grid item xs={4}>
         <Slider {...settings}>
           {product.images.map((image, index) => (
             <ImageContainer key={index}>
               <CardMedia
                 component="img"
                 alt={`Product Image ${index + 1}`}
-                image={image}
+                image={image.imageUrl}
                 title={`Product Image ${index + 1}`}
                 sx={{ width: "100%", objectFit: "contain", height: "100%" }}
               />
@@ -191,32 +181,34 @@ const ProductCard = () => {
               >
                 Description:
               </Typography>
-              <Typography variant="body2">{product.usageInfor}</Typography>
+              <Typography variant="body2">{product.description}</Typography>
             </Box>
           </Box>
         </CardContent>
         <Box sx={{ paddingLeft: "350px" }}>
           <Button
-            variant="contained"
-            color="primary"
+            variant="outlined"
             size="small"
-            sx={{ marginRight: "8px" }}
+            sx={{ background: "#CCCCCC", color: "black", width: "250px" }}
           >
-            <img src={Bookmarks} width="20" height="20" alt="ShoppingCart" />
-            <Typography sx={{ fontSize: "14px", paddingLeft: "5px" }}>
-              Bookmark
-            </Typography>
+            <img
+              src={ShoppingCart}
+              alt="Shopping Cart"
+              style={{ width: "20px", marginRight: "5px" }}
+            />
+            Add to Cart
           </Button>
           <Button
-            variant="contained"
-            color="primary"
+            variant="outlined"
             size="small"
-            sx={{ marginRight: "8px" }}
+            sx={{ background: "#CCCCCC", color: "black", width: "250px" }}
           >
-            <img src={ShoppingCart} width="20" height="20" alt="ShoppingCart" />
-            <Typography sx={{ fontSize: "14px", paddingLeft: "5px" }}>
-              Purchase
-            </Typography>
+            <img
+              src={Bookmarks}
+              alt="Bookmarks"
+              style={{ width: "20px", marginRight: "5px" }}
+            />
+            Bookmark
           </Button>
         </Box>
       </Grid>
