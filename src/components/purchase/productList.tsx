@@ -9,13 +9,18 @@ import {
   Typography,
 } from "@mui/material";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ProductResponse } from "../../interfaces/productResponse";
 import productApi from "../../services/productApi";
 
 const ProductList = () => {
+  const navigate = useNavigate();
   const [products, setProducts] = useState<ProductResponse[]>([]);
   console.log("first", products);
+
+  const [clickedViewDetailId, setClickedViewDetailId] = useState<number | null>(
+    null
+  );
 
   const fetchProductsList = async () => {
     const response: any = (await productApi.getAllProduct()).data.data;
@@ -31,6 +36,20 @@ const ProductList = () => {
     };
     initUseEffect();
   }, []);
+
+  const handleViewDetails = (
+    productId: number,
+    productResponse: ProductResponse
+  ) => {
+    if (clickedViewDetailId === productId) {
+      setClickedViewDetailId(null);
+    } else {
+      setClickedViewDetailId(productId);
+      navigate(`/Products/${productId}`, {
+        state: productResponse,
+      });
+    }
+  };
 
   return (
     <Container maxWidth="lg" sx={{ marginTop: "100px" }}>
@@ -67,7 +86,7 @@ const ProductList = () => {
                   size="small"
                   color="primary"
                   component={Link}
-                  to={`/products/${product.productId}`}
+                  onClick={() => handleViewDetails(product.productId, product)}
                 >
                   View Details
                 </Button>

@@ -8,7 +8,7 @@ import {
 } from "@mui/material";
 import { styled } from "@mui/system";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
@@ -33,13 +33,17 @@ const PriceContainer = styled(Box)({
 });
 
 const ProductCard = () => {
+  const { state } = useLocation();
+  console.log("state", state);
   const { id } = useParams<{ id: string }>();
+  console.log("id", id);
   const [product, setProduct] = useState<ProductResponse | null>(null);
 
   useEffect(() => {
     const fetchProduct = async () => {
       if (id) {
-        const response = await productApi.getProductByPId(Number(id)); // assuming productApi has a method getProductByPId
+        const response = await productApi.getProductByPId(Number(id));
+        console.log("res:", response);
         setProduct(response.data);
       }
     };
