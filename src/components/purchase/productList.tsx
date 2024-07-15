@@ -9,7 +9,7 @@ import {
   Typography,
 } from "@mui/material";
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { ProductResponse } from "../../interfaces/productResponse";
 import productApi from "../../services/productApi";
 
@@ -85,7 +85,6 @@ const ProductList = () => {
                 <Button
                   size="small"
                   color="primary"
-                  component={Link}
                   onClick={() => handleViewDetails(product.productId, product)}
                 >
                   View Details
