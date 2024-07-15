@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
 import * as signalR from "@microsoft/signalr";
+import { useEffect } from "react";
 
 type Props = {
   token: string | null;

@@ -1,13 +1,13 @@
 import { Grid } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import BookMarkNav from "../../components/Bookmark/BookMarkNav";
-import BookmarkList from "../../components/Bookmark/BookmarkList";
 import BookmarkFilter from "../../components/Bookmark/BookmarkFilter";
+import BookmarkList from "../../components/Bookmark/BookmarkList";
+import { ProductResponse } from "../../interfaces/productResponse";
 import bookMarkApi from "../../services/bookMarkApi";
-import { ProductReponse } from "../../interfaces/productResponse";
 
 const MyBookmark = () => {
-  const [bookmarks, setBookMarks] = useState<ProductReponse[]>();
+  const [bookmarks, setBookMarks] = useState<ProductResponse[]>();
   useEffect(() => {
     const fetchData = async () => {
       const bookmarkList: any = await bookMarkApi.getAllBookmark();

@@ -19,7 +19,7 @@ export interface ProductResponse {
   status: string;
   price: number;
   title: string;
-  images: Images;
+  images: Images[];
   createdTime: Date;
 }
 
