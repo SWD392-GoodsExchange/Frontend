@@ -5,7 +5,7 @@ export interface Product {
   usageInfor: string;
   origin: string;
   price: number;
-  image: string;
+  images: Images[];
 }
 
 export interface ProductResponse {

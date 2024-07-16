@@ -9,12 +9,10 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  Divider,
   FormControl,
   Grid,
   InputLabel,
   List,
-  ListItem,
   MenuItem,
   Paper,
   Select,
@@ -22,7 +20,7 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import Location from "../../assets/Location.png";
 
 import { MemberInfor } from "../../interfaces/memberResponse";
@@ -31,45 +29,37 @@ import authApi from "../../services/authApi";
 import productApi from "../../services/productApi";
 
 const PayItem = () => {
-  const navigate = useNavigate();
   const { state } = useLocation();
   const handlePayment = () => {
-    window.location.replace(
-      "https://sandbox.vnpayment.vn/paymentv2/Payment/Error.html?code=15"
-    );
+    // window.location.replace(
+    //   "https://sandbox.vnpayment.vn/paymentv2/Payment/Error.html?code=15"
+    // );
   };
 
-  const [products, setProducts] = useState<Product[]>([]);
+  const [products, setProducts] = useState<Product | null>(null);
   const [checkedItems, setCheckedItems] = useState<{ [key: number]: boolean }>(
     {}
   );
 
   const [memberInfor, setMemberInfor] = useState<MemberInfor>();
+
   const [open, setOpen] = useState(false);
   const [openNewAddress, setOpenNewAddress] = useState(false);
-  const [selectedAddress, setSelectedAddress] = useState(
-    memberInfor?.Address || "address1"
-  );
-  const location = useLocation();
-
-  const selectedProducts = location.state?.products || [];
-
-  const handleCheckboxChange = (productId: number) => {
-    setCheckedItems((prevCheckedItems) => ({
-      ...prevCheckedItems,
-      [productId]: !prevCheckedItems[productId],
-    }));
-  };
+  const [selectedAddress, setSelectedAddress] = useState(memberInfor?.Address);
+  const [totalPrice, setTotalPrice] = useState<number>(0);
 
   const fetchMember = async () => {
     const response = await authApi.getInformationMember();
     console.log("resMember:", response);
     setMemberInfor(response.data);
+    console.log("setMember", setMemberInfor);
   };
 
   useEffect(() => {
     fetchMember();
   }, []);
+
+  console.log("memberInfor:", memberInfor);
 
   const fetchProduct = async () => {
     const response = await productApi.getProductByPId(state.productId);
@@ -81,16 +71,24 @@ const PayItem = () => {
     fetchProduct();
   }, [state.productId]);
 
+  useEffect(() => {
+    if (products) {
+      calculateTotalPrice();
+    }
+  }, [products]);
+
+  const calculateTotalPrice = () => {
+    if (products) {
+      setTotalPrice(products.price);
+    }
+  };
+
   const handleClickOpen = () => {
     setOpen(true);
   };
 
   const handleClose = () => {
     setOpen(false);
-  };
-
-  const handleClickOpenNewAddress = () => {
-    setOpenNewAddress(true);
   };
 
   const handleCloseNewAddress = () => {
@@ -102,22 +100,14 @@ const PayItem = () => {
   };
 
   const handleConfirmAddress = () => {
-    setMemberInfor({
-      ...memberInfor,
-      Address: selectedAddress,
-      FeID: memberInfor?.FeID || "",
-      Username: memberInfor?.Username || "",
-      Phone: memberInfor?.Phone || "",
-    });
+    if (memberInfor) {
+      setMemberInfor({
+        ...memberInfor,
+        Address: selectedAddress,
+      });
+    }
     setOpen(false);
   };
-
-  const totalPrice = products.reduce((total, product) => {
-    if (checkedItems[product.id]) {
-      return total + product.price;
-    }
-    return total;
-  }, 0);
 
   return (
     <Container>
@@ -159,10 +149,10 @@ const PayItem = () => {
                     label="Full Name"
                     variant="outlined"
                     fullWidth
-                    value={memberInfor?.Username}
+                    value={memberInfor?.Username ?? ""}
                     onChange={(e) =>
                       setMemberInfor({
-                        ...memberInfor,
+                        ...memberInfor!,
                         Username: e.target.value,
                       })
                     }
@@ -172,10 +162,10 @@ const PayItem = () => {
                     label="Phone Number"
                     variant="outlined"
                     fullWidth
-                    value={memberInfor?.Phone}
+                    value={memberInfor?.Phone ?? ""}
                     onChange={(e) =>
                       setMemberInfor({
-                        ...memberInfor,
+                        ...memberInfor!,
                         Phone: e.target.value,
                       })
                     }
@@ -214,40 +204,32 @@ const PayItem = () => {
           Selected Products
         </Typography>
         <List>
-          {products.map((product, index) => (
-            <React.Fragment key={product.id}>
-              <ListItem
-                alignItems="flex-start"
-                sx={{
-                  backgroundColor: checkedItems[product.id]
-                    ? "rgb(251 146 60 / 50%)"
-                    : "inherit",
-                  marginBottom: 5,
-                }}
-              >
-                <Card sx={{ display: "flex", width: "100%" }}>
-                  <CardMedia
-                    component="img"
-                    sx={{ width: 151, objectFit: "cover" }}
-                    image={product.image}
-                    alt="Product"
-                  />
-                  <CardContent sx={{ flex: "1 0 auto" }}>
-                    <Typography component="h5" variant="h5">
-                      {product.title}
-                    </Typography>
-                    <Typography variant="subtitle1" color="textSecondary">
-                      {product.origin}
-                    </Typography>
-                    <Typography variant="h6" color="primary">
-                      {product.price.toLocaleString()} VND
-                    </Typography>
-                  </CardContent>
-                </Card>
-              </ListItem>
-              {index < products.length - 1 && <Divider />}
-            </React.Fragment>
-          ))}
+          {products ? (
+            <Card sx={{ display: "flex", width: "100%" }}>
+              {products.images.map((image) => (
+                <CardMedia
+                  key={image.publicId}
+                  component="img"
+                  style={{ width: 151, height: "100%" }}
+                  image={image.imageUrl}
+                  alt="Product Image"
+                />
+              ))}
+              <CardContent sx={{ flex: "1 0 auto" }}>
+                <Typography component="h5" variant="h5">
+                  {products.title}
+                </Typography>
+                <Typography variant="subtitle1" color="textSecondary">
+                  {products.origin}
+                </Typography>
+                <Typography variant="h6" color="primary">
+                  {products.price.toLocaleString()} VND
+                </Typography>
+              </CardContent>
+            </Card>
+          ) : (
+            <Typography>No products found</Typography>
+          )}
         </List>
       </Paper>
 

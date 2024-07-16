@@ -9,7 +9,6 @@ import {
 import { styled } from "@mui/system";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import Slider from "react-slick";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
 import Bookmarks from "../../assets/Bookmarks.png";
@@ -21,7 +20,7 @@ const ImageContainer = styled(Box)({
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
-  padding: "16px",
+  height: "300px",
   backgroundColor: "#f5f5f5",
 });
 
@@ -35,7 +34,6 @@ const PriceContainer = styled(Box)({
 const ProductCard = () => {
   const { state } = useLocation();
   const navigate = useNavigate();
-  console.log("state", state);
   const [product, setProduct] = useState<ProductResponse | null>(null);
   const [clickedPurchaseId, setClickedPurchaseId] = useState<number | null>(
     null
@@ -44,7 +42,6 @@ const ProductCard = () => {
   useEffect(() => {
     const fetchProduct = async () => {
       const response = await productApi.getProductByPId(state.productId);
-      console.log("res:", response);
       setProduct(response.data);
     };
     fetchProduct();
@@ -81,19 +78,17 @@ const ProductCard = () => {
   return (
     <Grid container spacing={3} sx={{ padding: "20px", paddingLeft: "30px" }}>
       <Grid item xs={4}>
-        <Slider {...settings}>
-          {product.images.map((image, index) => (
-            <ImageContainer key={index}>
-              <CardMedia
-                component="img"
-                alt={`Product Image ${index + 1}`}
-                image={image.imageUrl}
-                title={`Product Image ${index + 1}`}
-                sx={{ width: "100%", objectFit: "contain", height: "100%" }}
-              />
-            </ImageContainer>
+        <ImageContainer>
+          {product.images.map((image) => (
+            <CardMedia
+              key={image.publicId}
+              component="img"
+              style={{ width: 151, height: "100%" }}
+              image={image.imageUrl}
+              alt="Product Image"
+            />
           ))}
-        </Slider>
+        </ImageContainer>
       </Grid>
       <Grid item xs={8}>
         <CardContent>
@@ -160,7 +155,7 @@ const ProductCard = () => {
             >
               Create time: {new Date(product.createdTime).toLocaleDateString()}
             </Button>
-            <Box>
+            <Box sx={{ marginTop: "10px" }}>
               <Button
                 variant="outlined"
                 size="small"
@@ -203,11 +198,23 @@ const ProductCard = () => {
             </Box>
           </Box>
         </CardContent>
-        <Box sx={{ paddingLeft: "350px" }}>
+        <Box sx={{ paddingLeft: "250px", display: "flex", gap: "10px" }}>
           <Button
             variant="outlined"
             size="small"
-            sx={{ background: "#CCCCCC", color: "black", width: "250px" }}
+            sx={{ background: "#CCCCCC", color: "black", width: "200px" }}
+          >
+            <img
+              src={Bookmarks}
+              alt="Bookmarks"
+              style={{ width: "20px", marginRight: "5px" }}
+            />
+            Bookmark
+          </Button>
+          <Button
+            variant="outlined"
+            size="small"
+            sx={{ background: "#CCCCCC", color: "black", width: "200px" }}
             onClick={() => handlePurchase(product.productId, product)}
           >
             <img
@@ -216,18 +223,6 @@ const ProductCard = () => {
               style={{ width: "20px", marginRight: "5px" }}
             />
             Purchase
-          </Button>
-          <Button
-            variant="outlined"
-            size="small"
-            sx={{ background: "#CCCCCC", color: "black", width: "250px" }}
-          >
-            <img
-              src={Bookmarks}
-              alt="Bookmarks"
-              style={{ width: "20px", marginRight: "5px" }}
-            />
-            Bookmark
           </Button>
         </Box>
       </Grid>

@@ -52,10 +52,7 @@ const ProductList = () => {
   };
 
   return (
-    <Container maxWidth="lg" sx={{ marginTop: "100px" }}>
-      <Typography variant="h4" component="h1" gutterBottom>
-        Products
-      </Typography>
+    <Container maxWidth="lg" sx={{ marginTop: "130px" }}>
       <Grid container spacing={4}>
         {products.map((product) => (
           <Grid item key={product.productId} xs={12} sm={6} md={4}>
