@@ -13,11 +13,11 @@ export interface MemberResponse {
 }
 
 export interface MemberInfor {
-  FeID?: string;
-  Username?: string;
-  Address?: string;
-  Gender?: string;
-  Email?: string;
-  Phone?: string;
-  DoB?: Date;
+  feId: string;
+  username: string;
+  dob: string;
+  address: string;
+  gender: string;
+  email: string;
+  phone: string;
 }

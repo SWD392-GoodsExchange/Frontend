@@ -12,7 +12,6 @@ import {
   FormControl,
   Grid,
   InputLabel,
-  List,
   MenuItem,
   Paper,
   Select,
@@ -23,64 +22,59 @@ import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import Location from "../../assets/Location.png";
 
+import {
+  CheckoutResponse,
+  OrderDetail,
+} from "../../interfaces/checkOutResponse";
 import { MemberInfor } from "../../interfaces/memberResponse";
-import { Product } from "../../interfaces/productResponse";
+import { ProductResponse } from "../../interfaces/productResponse";
 import authApi from "../../services/authApi";
 import productApi from "../../services/productApi";
+import purchaseApi from "../../services/purchaseApi";
 
 const PayItem = () => {
   const { state } = useLocation();
-  const handlePayment = () => {
-    // window.location.replace(
-    //   "https://sandbox.vnpayment.vn/paymentv2/Payment/Error.html?code=15"
-    // );
-  };
 
-  const [products, setProducts] = useState<Product | null>(null);
-  const [checkedItems, setCheckedItems] = useState<{ [key: number]: boolean }>(
-    {}
-  );
-
-  const [memberInfor, setMemberInfor] = useState<MemberInfor>();
-
+  const [products, setProducts] = useState<ProductResponse | null>(null);
+  const [memberInfor, setMemberInfor] = useState<MemberInfor | null>(null);
   const [open, setOpen] = useState(false);
-  const [openNewAddress, setOpenNewAddress] = useState(false);
-  const [selectedAddress, setSelectedAddress] = useState(memberInfor?.Address);
+  const [selectedAddress, setSelectedAddress] = useState<string>("");
   const [totalPrice, setTotalPrice] = useState<number>(0);
 
   const fetchMember = async () => {
-    const response = await authApi.getInformationMember();
-    console.log("resMember:", response);
-    setMemberInfor(response.data);
-    console.log("setMember", setMemberInfor);
+    try {
+      const response: any = await authApi.getInformationMember();
+      setMemberInfor(response);
+    } catch (error) {
+      console.error("Error fetching member information:", error);
+    }
   };
 
   useEffect(() => {
     fetchMember();
   }, []);
 
-  console.log("memberInfor:", memberInfor);
-
-  const fetchProduct = async () => {
-    const response = await productApi.getProductByPId(state.productId);
-    console.log("res:", response);
-    setProducts(response.data);
-  };
-
+  console.log("FeId", memberInfor?.feId);
   useEffect(() => {
+    const fetchProduct = async () => {
+      try {
+        const response = await productApi.getProductByPId(state.productId);
+        setProducts(response.data);
+      } catch (error) {
+        console.error("Error fetching product information:", error);
+      }
+    };
     fetchProduct();
   }, [state.productId]);
 
   useEffect(() => {
     if (products) {
-      calculateTotalPrice();
+      setTotalPrice(products.price);
     }
   }, [products]);
 
-  const calculateTotalPrice = () => {
-    if (products) {
-      setTotalPrice(products.price);
-    }
+  const handleAddressChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSelectedAddress(event.target.value);
   };
 
   const handleClickOpen = () => {
@@ -91,164 +85,168 @@ const PayItem = () => {
     setOpen(false);
   };
 
-  const handleCloseNewAddress = () => {
-    setOpenNewAddress(false);
-  };
-
-  const handleAddressChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSelectedAddress(event.target.value);
-  };
-
   const handleConfirmAddress = () => {
     if (memberInfor) {
       setMemberInfor({
         ...memberInfor,
-        Address: selectedAddress,
+        address: selectedAddress,
       });
     }
     setOpen(false);
   };
 
+  console.log("products", products);
+  console.log("memberInfor", memberInfor);
+
+  const handlePayment = async () => {
+    fetchMember();
+    if (!products || !memberInfor || !memberInfor.feId) {
+      console.error("Missing required data for payment.");
+      return;
+    }
+
+    const orderDetails: OrderDetail[] = [
+      {
+        productId: products.productId,
+        sellerId: products.feId ?? "",
+        amount: products.price,
+      },
+    ];
+
+    const checkoutData: CheckoutResponse = {
+      memberId: memberInfor.feId,
+      orderDetails: orderDetails,
+    };
+
+    try {
+      const response = await purchaseApi.checkOutPayment(checkoutData);
+      console.log("Payment response:", response);
+      // Handle success (e.g., navigate to success page)
+      window.location.href = response.data;
+    } catch (error) {
+      console.error("Payment error:", error);
+      // Handle error (e.g., show error message)
+    }
+  };
+
   return (
     <Container>
-      <Paper elevation={3} style={{}}>
-        <Box sx={{ p: 2 }}>
-          <Typography variant="h6" gutterBottom sx={{ fontWeight: "bold" }}>
-            Delivery Address
-          </Typography>
-          <Box sx={{ display: "flex", alignItems: "center", flexWrap: "wrap" }}>
-            <Box sx={{ display: "flex", alignItems: "center", flex: 1 }}>
-              <img
-                src={Location}
-                height={20}
-                width={30}
-                alt="Location"
-                style={{ marginRight: 10 }}
-              />
-              <Box>
-                <Typography>{memberInfor?.Address}</Typography>
-                <Typography>{memberInfor?.Username}</Typography>
-                <Typography>{memberInfor?.Phone}</Typography>
-              </Box>
+      {/* Delivery Address Section */}
+      <Paper elevation={3} style={{ padding: 20, marginBottom: 20 }}>
+        <Typography variant="h6" gutterBottom style={{ fontWeight: "bold" }}>
+          Delivery Address
+        </Typography>
+        <Box
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
+        >
+          <Box style={{ display: "flex", alignItems: "center" }}>
+            <img
+              src={Location}
+              alt="Location"
+              style={{ marginRight: 10, width: 30, height: 20 }}
+            />
+            <Box>
+              <Typography>{memberInfor?.address}</Typography>
+              <Typography>{memberInfor?.username}</Typography>
+              <Typography>{memberInfor?.phone}</Typography>
             </Box>
-            <Button variant="contained" onClick={handleClickOpen}>
-              Change Address
-            </Button>
-            <Dialog open={open} onClose={handleClose}>
-              <DialogTitle>Delivery Address Change</DialogTitle>
-              <DialogContent sx={{}}>
-                <Box
-                  sx={{
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: 2,
-                    marginTop: "10px",
-                  }}
-                >
-                  <TextField
-                    label="Full Name"
-                    variant="outlined"
-                    fullWidth
-                    value={memberInfor?.Username ?? ""}
-                    onChange={(e) =>
-                      setMemberInfor({
-                        ...memberInfor!,
-                        Username: e.target.value,
-                      })
-                    }
-                  />
-                  <TextField
-                    sx={{ width: "500px" }}
-                    label="Phone Number"
-                    variant="outlined"
-                    fullWidth
-                    value={memberInfor?.Phone ?? ""}
-                    onChange={(e) =>
-                      setMemberInfor({
-                        ...memberInfor!,
-                        Phone: e.target.value,
-                      })
-                    }
-                  />
-                  <TextField
-                    label="Address"
-                    variant="outlined"
-                    fullWidth
-                    value={selectedAddress}
-                    onChange={handleAddressChange}
-                  />
-                </Box>
-              </DialogContent>
-              <DialogActions>
-                <Button onClick={handleClose} sx={{ fontSize: "12px" }}>
-                  Cancel
-                </Button>
-                <Button
-                  onClick={handleConfirmAddress}
-                  color="primary"
-                  sx={{ fontSize: "12px" }}
-                >
-                  Confirm
-                </Button>
-              </DialogActions>
-            </Dialog>
           </Box>
+          <Button variant="contained" onClick={handleClickOpen}>
+            Change Address
+          </Button>
+          <Dialog open={open} onClose={handleClose}>
+            <DialogTitle>Delivery Address Change</DialogTitle>
+            <DialogContent>
+              <TextField
+                label="Full Name"
+                variant="outlined"
+                fullWidth
+                value={memberInfor?.username ?? ""}
+                onChange={(e) =>
+                  setMemberInfor({
+                    ...memberInfor!,
+                    username: e.target.value,
+                  })
+                }
+              />
+              <TextField
+                label="Phone Number"
+                variant="outlined"
+                fullWidth
+                value={memberInfor?.phone ?? ""}
+                onChange={(e) =>
+                  setMemberInfor({
+                    ...memberInfor!,
+                    phone: e.target.value,
+                  })
+                }
+              />
+              <TextField
+                label="Address"
+                variant="outlined"
+                fullWidth
+                value={selectedAddress}
+                onChange={handleAddressChange}
+              />
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleClose} color="secondary">
+                Cancel
+              </Button>
+              <Button onClick={handleConfirmAddress} color="primary">
+                Confirm
+              </Button>
+            </DialogActions>
+          </Dialog>
         </Box>
       </Paper>
 
-      <Paper
-        elevation={3}
-        style={{ padding: 20, marginBottom: 20, marginTop: "10px" }}
-      >
-        <Typography variant="h6" gutterBottom sx={{ fontWeight: "bold" }}>
+      {/* Selected Products Section */}
+      <Paper elevation={3} style={{ padding: 20, marginBottom: 20 }}>
+        <Typography variant="h6" gutterBottom style={{ fontWeight: "bold" }}>
           Selected Products
         </Typography>
-        <List>
-          {products ? (
-            <Card sx={{ display: "flex", width: "100%" }}>
-              {products.images.map((image) => (
-                <CardMedia
-                  key={image.publicId}
-                  component="img"
-                  style={{ width: 151, height: "100%" }}
-                  image={image.imageUrl}
-                  alt="Product Image"
-                />
-              ))}
-              <CardContent sx={{ flex: "1 0 auto" }}>
-                <Typography component="h5" variant="h5">
-                  {products.title}
-                </Typography>
-                <Typography variant="subtitle1" color="textSecondary">
-                  {products.origin}
-                </Typography>
-                <Typography variant="h6" color="primary">
-                  {products.price.toLocaleString()} VND
-                </Typography>
-              </CardContent>
-            </Card>
-          ) : (
-            <Typography>No products found</Typography>
-          )}
-        </List>
+        {products ? (
+          <Card sx={{ display: "flex", marginBottom: 2 }}>
+            <CardMedia
+              component="img"
+              image={products.images[0]?.imageUrl}
+              alt="Product Image"
+              style={{ width: 151, height: "100%" }}
+            />
+            <CardContent sx={{ flex: "1 0 auto" }}>
+              <Typography variant="h5" gutterBottom>
+                {products.title}
+              </Typography>
+              <Typography
+                variant="subtitle1"
+                color="textSecondary"
+                gutterBottom
+              >
+                {products.origin}
+              </Typography>
+              <Typography variant="h6" color="primary">
+                {products.price.toLocaleString()} VND
+              </Typography>
+            </CardContent>
+          </Card>
+        ) : (
+          <Typography>No products found</Typography>
+        )}
       </Paper>
 
-      <Paper
-        elevation={3}
-        style={{
-          padding: 20,
-          marginBottom: 20,
-          position: "sticky",
-          top: 20,
-          zIndex: 1000,
-        }}
-      >
-        <Grid container direction="column" spacing={2}>
-          <Grid item>
+      {/* Payment Section */}
+      <Paper elevation={3} style={{ padding: 20, marginBottom: 20 }}>
+        <Grid container spacing={2}>
+          <Grid item xs={12} sm={6}>
             <Typography variant="h6" gutterBottom>
               Payment Method
             </Typography>
-            <FormControl variant="outlined" size="small" fullWidth>
+            <FormControl variant="outlined" fullWidth>
               <InputLabel>Payment method</InputLabel>
               <Select label="Payment method">
                 <MenuItem value="CashOnDelivery">
@@ -260,51 +258,24 @@ const PayItem = () => {
               </Select>
             </FormControl>
           </Grid>
-          <Grid item textAlign="right">
+          <Grid item xs={12} sm={6} style={{ textAlign: "right" }}>
             <Typography variant="h6" gutterBottom>
               Total Amount
             </Typography>
             <Typography variant="h6" color="primary" gutterBottom>
               {totalPrice.toLocaleString()} VND
             </Typography>
-          </Grid>
-          <Grid item textAlign="right">
             <Button
               variant="contained"
               color="primary"
-              size="large"
-              fullWidth
-              sx={{ maxWidth: 300 }}
               onClick={handlePayment}
+              fullWidth
             >
               Pay items
             </Button>
           </Grid>
         </Grid>
       </Paper>
-
-      <Dialog open={openNewAddress} onClose={handleCloseNewAddress}>
-        <DialogTitle>New Address</DialogTitle>
-        <DialogContent>
-          <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
-            <TextField label="Full Name" variant="outlined" fullWidth />
-            <TextField label="Phone Number" variant="outlined" fullWidth />
-            <TextField label="Detail Address" variant="outlined" fullWidth />
-          </Box>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleCloseNewAddress} sx={{ fontSize: "12px" }}>
-            Back
-          </Button>
-          <Button
-            onClick={handleCloseNewAddress}
-            color="primary"
-            sx={{ fontSize: "12px" }}
-          >
-            Complete
-          </Button>
-        </DialogActions>
-      </Dialog>
     </Container>
   );
 };
