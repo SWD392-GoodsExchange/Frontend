@@ -5,16 +5,42 @@ import MenuItem from "@mui/material/MenuItem";
 import { Badge } from "@mui/material";
 import { RiNotification4Line } from "react-icons/ri";
 import OtherAvatar from "../../assets/bear.png";
+import * as signalR from "@microsoft/signalr";
+import { NotificationDto } from "../../services/signalR/signalRServices";
 
 const MyNotificatons = () => {
+  const [notifications, setNotifications] = React.useState<NotificationDto[]>();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
+  React.useEffect(() => {
+    const connection = new signalR.HubConnectionBuilder()
+      .withUrl(
+        `https://localhost:5001/hubs/notification?access_token=${localStorage.getItem(
+          "jwtToken"
+        )}`
+      )
+      .build();
+
+    connection
+      .start()
+      .then(() => {
+        console.log("SignalR connected");
+
+        connection.on("NotificationOfUser", (notifications) => {
+          console.log("NotificationOfUser:", notifications);
+          setNotifications(notifications);
+        });
+      })
+      .catch((error: any) => console.log(`SignalR error: ${error}`));
+  }, [localStorage.getItem("jwtToken")]);
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const subNotifications = notifications?.slice(0, 5);
   return (
     <>
       <div>
@@ -28,7 +54,7 @@ const MyNotificatons = () => {
           aria-expanded={open ? "true" : undefined}
           onClick={handleClick}
         >
-          <Badge badgeContent={8} color="primary">
+          <Badge badgeContent={notifications?.length} color="primary">
             <RiNotification4Line
               className="hover:text-orange-300 cursor-pointer"
               size={"30px"}
@@ -40,6 +66,7 @@ const MyNotificatons = () => {
           anchorEl={anchorEl}
           open={open}
           onClose={handleClose}
+          disableScrollLock={true}
           PaperProps={{
             elevation: 0,
             sx: {
@@ -68,36 +95,31 @@ const MyNotificatons = () => {
           }}
           transformOrigin={{ horizontal: "left", vertical: "top" }}
         >
-          <MenuItem
-            onClick={handleClose}
-            sx={{
-              width: "420px",
-              display: "flex",
-              gap: 1,
-              alignItems: "center",
-            }}
-          >
-            <img src={OtherAvatar} width={50} height={50} />
-            <div>
-              <p className="font-bold">Le Trung Kien</p>
-              <p>sent exchange request</p>
-            </div>
-          </MenuItem>
-          <MenuItem
-            onClick={handleClose}
-            sx={{
-              width: "420px",
-              display: "flex",
-              gap: 1,
-              alignItems: "center",
-            }}
-          >
-            <img src={OtherAvatar} width={50} height={50} />
-            <div>
-              <p className="font-bold">Le Trung Kien</p>
-              <p>sent exchange request</p>
-            </div>
-          </MenuItem>
+          {subNotifications ? (
+            subNotifications.map((item) => (
+              <MenuItem
+                key={item.notificationId}
+                onClick={handleClose}
+                sx={{
+                  width: "420px",
+                  display: "flex",
+                  gap: 1,
+                  alignItems: "center",
+                }}
+              >
+                <img src={OtherAvatar} width={50} height={50} />
+                <div>
+                  <p className="font-bold">
+                    {item.senderUsername}{" "}
+                    <span className="font-light italic">{item.senderId}</span>
+                  </p>
+                  <p>{item.content}</p>
+                </div>
+              </MenuItem>
+            ))
+          ) : (
+            <div>No Notifications</div>
+          )}
         </Menu>
       </div>
     </>

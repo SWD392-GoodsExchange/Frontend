@@ -13,12 +13,13 @@ import BillPage from "../pages/purchase/billPage";
 import ProductCardPage from "../pages/purchase/productCardPage";
 import ManageOrderPage from "../pages/Shopping/manageOrderPage";
 import PayItemPage from "../pages/Shopping/payItemPage";
+import GuestPage from "../pages/Guest/GuestPage";
 
 const AppRoutes = () => {
   return (
     <Routes>
       {/* <Route path="/" element={<GuestPage />} /> */}
-      <Route path="/" element={<ProductCardPage />} />
+      <Route path="/" element={<GuestPage />} />
 
       <Route path="/exchange" element={<HomePage />} />
       <Route path="/my-profile" element={<MyProfile />} />

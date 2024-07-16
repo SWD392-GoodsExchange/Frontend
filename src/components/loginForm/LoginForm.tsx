@@ -69,9 +69,9 @@ const LoginForm = ({ setChangeForm, handleClose }: Props) => {
   return (
     <div className="flex flex-col md:w-auto">
       <ToastContainer />
-      {/* {isLogged == true && (
+      {isLogged == true && (
         <SignalRServices token={localStorage.getItem("jwtToken")} />
-      )} */}
+      )}
       <div className="flex flex-col items-center justify-center gap-5">
         <div className="flex flex-col justify-center items-center text-20">
           <RiExchangeFill

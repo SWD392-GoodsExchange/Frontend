@@ -19,10 +19,12 @@ import { FaExchangeAlt } from "react-icons/fa";
 import MyAvat from "../../assets/panda.png";
 import { TiDelete } from "react-icons/ti";
 import { TransitionProps } from "@mui/material/transitions";
-import { ProductReponse } from "../../interfaces/productResponse";
 import productApi from "../../services/productApi";
 import { IoBanOutline } from "react-icons/io5";
 import * as signalR from "@microsoft/signalr";
+import { ProductResponse } from "../../interfaces/productResponse";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -35,21 +37,23 @@ const Transition = React.forwardRef(function Transition(
 
 const ExchangeTicket = () => {
   const location = useLocation();
-  const productObject: ProductReponse = location.state;
+  const productObject: ProductResponse = location.state;
+  console.log(productObject);
   const [previewImage, setPreviewImage] = useState<string | null>(null);
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
   const [openProductList, setOpenProductList] = useState(false);
-  const [myProductList, setMyProductList] = useState<ProductReponse[]>();
+  const [myProductList, setMyProductList] = useState<ProductResponse[]>();
   const [chooseProductId, setChooseProductId] = useState<number | undefined>(
     undefined
   );
 
   useEffect(() => {
     const fetchData = async () => {
-      const fetchProductList: any = await productApi.getAllProductByFeid(
-        localStorage.getItem("feId")
-      );
+      const fetchProductList: any =
+        await productApi.getAllProductExchangeByFeid(
+          localStorage.getItem("feId")
+        );
       setMyProductList(fetchProductList.data);
     };
     fetchData();
@@ -79,6 +83,45 @@ const ExchangeTicket = () => {
   };
 
   const sendExchangeRequest = () => {
+    const connection = new signalR.HubConnectionBuilder()
+      .withUrl(
+        `https://localhost:5001/hubs/notification?access_token=${localStorage.getItem(
+          "jwtToken"
+        )}`
+      )
+      .build();
+
+    connection
+      .start()
+      .then(() => {
+        console.log("SignalR connected");
+        connection
+          .invoke("SendNotification", {
+            RecipientId: productObject.feId.toString(),
+            OnwerProductId: productObject.productId.toString(),
+            ExchangerProductIds: chooseProductId?.toString(),
+          })
+          .then(() => {
+            toast.success("Send exchange request success", {
+              position: "top-right",
+              autoClose: 3000,
+              onClose: () => {
+                navigate("/exchange");
+              },
+            });
+            console.log("Success");
+          })
+          .catch((error) => {
+            toast.error("User cannot send notification to yourself!", {
+              position: "top-right",
+              autoClose: 3000,
+            });
+            console.log("Error:", error);
+          });
+      })
+      .catch((error) => {
+        console.log(`SignalR error: ${error}`);
+      });
     setOpen(false);
   };
 
@@ -92,6 +135,7 @@ const ExchangeTicket = () => {
   console.log(chooseProduct);
   return (
     <div className="text-black h-[640px] bg-gradient-to-b from-orange-600 to-[#f4a767] pb-4 mt-[100px]">
+      <ToastContainer />
       <div className="flex justify-between px-3 py-2 items-center">
         <div
           onClick={() => {
@@ -122,7 +166,7 @@ const ExchangeTicket = () => {
           }}
         >
           <div className="flex items-center gap-3">
-            <img src={Avatar} width={50} height={50} />
+            <img src={productObject.avatar} width={50} height={50} />
             <div className="flex flex-col items-start">
               <h4 className="font-bold">{productObject.userName}</h4>
               <p className="font-light truncate">
@@ -148,12 +192,14 @@ const ExchangeTicket = () => {
             </p>
           </div>
           <div className="flex flex-col justify-center my-2">
-            <img
-              className="outline outline-1 w-full rounded-lg"
-              src={ATM}
-              width={"300px"}
-              height="auto"
-            />
+            {productObject.images.map((image) => (
+              <img
+                className="outline outline-1 w-full rounded-lg"
+                src={image.imageUrl}
+                width={"300px"}
+                height="300px"
+              />
+            ))}
           </div>
         </Card>
         <Tooltip title="Show all products">

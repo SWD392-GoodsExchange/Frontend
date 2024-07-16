@@ -1,9 +1,9 @@
 import React from "react";
 import Bookmark from "./Bookmark";
-import { ProductReponse } from "../../interfaces/productResponse";
+import { ProductResponse } from "../../interfaces/productResponse";
 
 type Props = {
-  bookmarks: ProductReponse[] | undefined;
+  bookmarks: ProductResponse[] | undefined;
 };
 
 const BookmarkList = ({ bookmarks }: Props) => {
@@ -15,6 +15,7 @@ const BookmarkList = ({ bookmarks }: Props) => {
           productId={item.productId}
           feId={item.feId}
           userName={item.userName}
+          avatar={item.avatar}
           categoryName={item.categoryName}
           description={item.description}
           origin={item.origin}

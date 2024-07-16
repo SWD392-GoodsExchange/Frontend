@@ -7,32 +7,49 @@ import { LiaExchangeAltSolid } from "react-icons/lia";
 import { Tooltip } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import productApi from "../../services/productApi";
-import { ProductReponse } from "../../interfaces/productResponse";
 import Loading from "../Loading";
 import bookMarkApi from "../../services/bookMarkApi";
+import { ProductResponse } from "../../interfaces/productResponse";
+import { GoBookmarkFill } from "react-icons/go";
 
 const ExchangeList = () => {
-  const [products, setproducts] = useState<ProductReponse[]>();
+  const [products, setproducts] = useState<ProductResponse[]>();
   const navigate = useNavigate();
+  const [bookmarkedList, setBookmarkedList] = useState<ProductResponse[]>();
 
   useEffect(() => {
     const fetchProducts = async () => {
       const productsApi: any = await productApi.getExchangeProducts();
       setproducts(productsApi.data.data);
+      const bookmarkedList: any = await bookMarkApi.getAllBookmark();
+      setBookmarkedList(bookmarkedList.data);
     };
     fetchProducts();
-  }, [products]);
+  }, [products, bookmarkedList]);
 
   const onClickExchange = (
     productId: number,
-    productObject: ProductReponse
+    productObject: ProductResponse
   ) => {
     navigate(`/exchange-ticket/${productId}`, {
       state: productObject,
     });
   };
 
+  const listProductBookmarked = bookmarkedList?.map((item) => {
+    return item.productId;
+  });
+
   const bookMarkProduct = (productId: number) => {
+    if (listProductBookmarked?.includes(productId) == true) {
+      bookMarkApi
+        .deleteBookMark(productId)
+        .then((response) => console.log(response))
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+
     bookMarkApi
       .createBookMark({
         ProductId: productId.toString(),
@@ -54,7 +71,7 @@ const ExchangeList = () => {
             className="px-3 py-3 my-1 flex flex-col items-start gap-2 bg-white w-[100%] rounded-md shadow-2xl"
           >
             <div className="flex gap-3">
-              <img src={Avatar} width={50} height={50} />
+              <img src={item.avatar} width={50} height={50} />
               <div className="flex flex-col items-start">
                 <h4 className="font-bold">{item.userName}</h4>
                 <p className="font-light">
@@ -95,9 +112,16 @@ const ExchangeList = () => {
                 onClick={() => {
                   bookMarkProduct(item.productId);
                 }}
-                className="flex gap-1 items-center transition-all duration-300 bg-purple-300 rounded-lg p-2 cursor-pointer hover:bg-purple-500"
+                className={`${
+                  listProductBookmarked?.includes(item.productId) == true &&
+                  `text-white bg-purple-500 font-bold`
+                } flex gap-1 items-center transition-all duration-300 bg-purple-300 rounded-lg p-2 cursor-pointer hover:bg-purple-500`}
               >
-                <CiBookmark size={"22px"} />
+                {listProductBookmarked?.includes(item.productId) == true ? (
+                  <GoBookmarkFill size={"22px"} />
+                ) : (
+                  <CiBookmark size={"22px"} />
+                )}
                 Bookmark
               </button>
               <button

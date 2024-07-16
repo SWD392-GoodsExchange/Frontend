@@ -12,6 +12,7 @@ export interface ProductResponse {
   productId: number;
   feId: string;
   userName: string;
+  avatar: string;
   categoryName: string;
   description: string;
   origin: string;
@@ -19,7 +20,7 @@ export interface ProductResponse {
   status: string;
   price: number;
   title: string;
-  images: Images;
+  images: Images[];
   createdTime: Date;
 }
 

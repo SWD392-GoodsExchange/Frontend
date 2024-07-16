@@ -4,17 +4,17 @@ import BookMarkNav from "../../components/Bookmark/BookMarkNav";
 import BookmarkList from "../../components/Bookmark/BookmarkList";
 import BookmarkFilter from "../../components/Bookmark/BookmarkFilter";
 import bookMarkApi from "../../services/bookMarkApi";
-import { ProductReponse } from "../../interfaces/productResponse";
+import { ProductResponse } from "../../interfaces/productResponse";
 
 const MyBookmark = () => {
-  const [bookmarks, setBookMarks] = useState<ProductReponse[]>();
+  const [bookmarks, setBookMarks] = useState<ProductResponse[]>();
   useEffect(() => {
     const fetchData = async () => {
       const bookmarkList: any = await bookMarkApi.getAllBookmark();
       setBookMarks(bookmarkList.data);
     };
     fetchData();
-  }, []);
+  }, [bookmarks]);
   return (
     <div className="text-black mt-[100px]">
       <Grid container xs={12}>
