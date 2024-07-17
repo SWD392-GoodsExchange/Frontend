@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Avatar from "../../components/Avatar/Avatar";
 import { IoIosArrowBack } from "react-icons/io";
 import { CiEdit } from "react-icons/ci";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   Card,
   Divider,
@@ -17,15 +17,16 @@ import ProductList from "../../components/Profile/ProfileInformation/Product/Pro
 import Weather from "../../components/Weather";
 import Navbar from "../../components/navbar/Navbar";
 import productApi from "../../services/productApi";
-import { ProductReponse } from "../../interfaces/productResponse";
 import authApi from "../../services/authApi";
 import { MemberInformations } from "../../interfaces/Auth/MemberInformations";
 import CreateProduct from "../../components/CreateProduct/CreateProduct";
 import FilterProduct from "../../components/Profile/ProfileInformation/Product/FilterProduct";
 import categoryApi from "../../services/categoryApi";
+import { ProductResponse } from "../../interfaces/productResponse";
 
 const MyProduct = () => {
-  const [productList, setProductList] = useState<ProductReponse[]>();
+  const { feId } = useParams();
+  const [productList, setProductList] = useState<ProductResponse[]>();
   const [memberInfor, setMemberInfor] = useState<MemberInformations>();
   const navigate = useNavigate();
   const backBefore = () => {
@@ -37,12 +38,12 @@ const MyProduct = () => {
       const memberInfor: any = await authApi.getInformationMember();
       setMemberInfor(memberInfor);
       const products: any = await productApi.getAllProductByFeid(
-        localStorage.getItem("feId")
+        feId || localStorage.getItem("feId")
       );
       setProductList(products.data);
     };
     fetchProduct();
-  }, []);
+  }, [productList, feId]);
   console.log(productList);
 
   return (

@@ -18,6 +18,10 @@ const bookMarkApi = {
     const url = "/members/bookmark";
     return axiosClient.post(url, data);
   },
+  deleteBookMark(productId: number) {
+    const url = `/members/bookmark/${productId}`;
+    return axiosClient.delete(url);
+  },
 };
 
 export default bookMarkApi;

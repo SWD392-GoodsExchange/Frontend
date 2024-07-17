@@ -1,8 +1,10 @@
 import React from "react";
 import { ProductReponse } from "../../../../interfaces/productResponse";
-import { CiViewBoard } from "react-icons/ci";
+import { CiBookmark, CiViewBoard } from "react-icons/ci";
 import { AiOutlineDelete } from "react-icons/ai";
 import { RxUpdate } from "react-icons/rx";
+import { LiaExchangeAltSolid } from "react-icons/lia";
+import { GoReport } from "react-icons/go";
 type Props = {
   productList: ProductReponse[] | undefined;
 };
@@ -46,17 +48,17 @@ const ProductList = ({ productList }: Props) => {
           </div>
           <p className="bg-slate-300 w-[100%] h-[2px]"></p>
           <div className="w-[100%] text-slate-700 flex justify-between">
-            <button className="flex gap-1 items-center transition-all duration-300 bg-purple-500 rounded-lg p-2 cursor-pointer hover:bg-purple-700 hover:text-white">
-              <RxUpdate size={"22px"} />
-              Update
+            <button className="flex gap-1 items-center transition-all duration-300 bg-purple-300 rounded-lg p-2 cursor-pointer hover:bg-purple-500">
+              <CiBookmark size={"22px"} />
+              Bookmark
             </button>
-            <button className="flex gap-1 items-center transition-all duration-300 bg-orange-500 rounded-lg p-2 cursor-pointer hover:bg-orange-700 hover:text-white ">
-              <CiViewBoard size={"22px"} />
-              View request
+            <button className="flex gap-1 items-center transition-all duration-300 bg-orange-300 rounded-lg p-2 cursor-pointer hover:bg-orange-500  ">
+              <LiaExchangeAltSolid size={"22px"} />
+              Exchange
             </button>
-            <button className="flex gap-1 items-center transition-all duration-300 bg-red-500 rounded-lg p-2 cursor-pointer hover:bg-red-700 hover:text-white">
-              <AiOutlineDelete size={"22px"} />
-              Delete
+            <button className="flex gap-1 items-center transition-all duration-300 bg-red-300 rounded-lg p-2 cursor-pointer hover:bg-red-500 ">
+              <GoReport size={"22px"} />
+              Report
             </button>
           </div>
         </div>

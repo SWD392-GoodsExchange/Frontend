@@ -1,3 +1,4 @@
+import { HubConnectionBuilder } from "@microsoft/signalr";
 import * as signalR from "@microsoft/signalr";
 import { useEffect } from "react";
 
@@ -6,59 +7,39 @@ type Props = {
 };
 
 export interface NotificationDto {
-  NotificationId: number;
+  avatarSender: string;
+  notificationId: number;
 
-  SenderId: string;
+  senderId: string;
 
-  SenderUsername: string;
+  senderUsername: string;
 
-  RecipientId: string;
+  recipientId: string;
 
-  RecipientUsername: string;
+  recipientUsername: string;
 
-  OnwerProductId: string;
+  onwerProductId: string;
 
-  ExchangerProductIds: string;
+  exchangerProductIds: string;
 
-  Content: string;
+  content: string;
+  e;
+  dateRead: Date;
 
-  DateRead: Date;
-
-  CreatedDate: Date;
-  Type: string;
+  createdDate: Date;
+  type: string;
 }
 
-const SignalRServices = ({ token }: Props) => {
-  useEffect(() => {
-    const connection = new signalR.HubConnectionBuilder()
-      .withUrl(
-        `https://localhost:5001/hubs/notification?access_token=${token}`,
-        {
-          accessTokenFactory: () => {
-            // Truy xuất và trả về thông tin xác thực (ví dụ: token) từ trạng thái ứng dụng hoặc lưu trữ trên máy chủ
-            const accessToken = token != null ? token : "";
-            return accessToken;
-          },
-        }
-      )
-      .build();
-    connection.on("NotificationOfUser", (message: string) => {
-      console.log("NotificationOfUser", message);
-    });
+const connection = new HubConnectionBuilder()
+  .withUrl(
+    `https://localhost:5001/hubs/notification?access_token=${localStorage.getItem(
+      "jwtToken"
+    )}`,
+    {
+      skipNegotiation: true,
+      transport: signalR.HttpTransportType.WebSockets,
+    }
+  )
+  .build();
 
-    connection
-      .start()
-      .then(() => {
-        console.log("SignalR connected");
-
-        // Xử lý các sự kiện và phương thức SignalR tại đây
-
-        // Ví dụ:
-      })
-      .catch((error: any) => console.log(`SignalR error: ${error}`));
-  }, [token]);
-
-  return null;
-};
-
-export default SignalRServices;
+export default connection;

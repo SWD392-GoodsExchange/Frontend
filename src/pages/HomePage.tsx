@@ -9,7 +9,6 @@ import Menu from "../components/Menu/Menu";
 import Top5PostProduct from "../components/TopAccount/Top5PostProduct";
 import Top5Transaction from "../components/TopAccount/Top5Transaction";
 import Weather from "../components/Weather";
-import SignalRServices from "../services/signalR/signalRServices";
 
 const HomePage = () => {
   const [auth, setAuth] = useState<string | null>();
@@ -19,9 +18,6 @@ const HomePage = () => {
   }, [auth]);
   return (
     <div className="mt-[100px]">
-      {auth == "true" && (
-        <SignalRServices token={localStorage.getItem("jwtToken")} />
-      )}
       <Grid
         className="flex justify-between text-center text-black"
         container

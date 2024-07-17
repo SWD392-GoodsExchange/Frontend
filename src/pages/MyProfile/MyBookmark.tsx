@@ -5,6 +5,7 @@ import BookmarkFilter from "../../components/Bookmark/BookmarkFilter";
 import BookmarkList from "../../components/Bookmark/BookmarkList";
 import { ProductResponse } from "../../interfaces/productResponse";
 import bookMarkApi from "../../services/bookMarkApi";
+import { ProductResponse } from "../../interfaces/productResponse";
 
 const MyBookmark = () => {
   const [bookmarks, setBookMarks] = useState<ProductResponse[]>();
@@ -14,7 +15,7 @@ const MyBookmark = () => {
       setBookMarks(bookmarkList.data);
     };
     fetchData();
-  }, []);
+  }, [bookmarks]);
   return (
     <div className="text-black mt-[100px]">
       <Grid container xs={12}>
