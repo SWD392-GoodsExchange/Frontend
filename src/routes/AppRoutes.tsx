@@ -10,7 +10,6 @@ import MemberInformation from "../pages/MyProfile/MemberInformation";
 import MyBookmark from "../pages/MyProfile/MyBookmark";
 import MyProduct from "../pages/MyProfile/MyProduct";
 import MyProfile from "../pages/MyProfile/MyProfile";
-import BillPage from "../pages/purchase/billPage";
 import OrderHistoryPage from "../pages/purchase/orderHistoryPage";
 import ProductCardPage from "../pages/purchase/productCardPage";
 import ManageOrderPage from "../pages/Shopping/manageOrderPage";
@@ -31,11 +30,10 @@ const AppRoutes = () => {
       <Route path="/trade" element={<ProductList />} />
       <Route path="/products/:productId" element={<ProductCardPage />} />
       <Route path="/Purchase/PayItem/:productId" element={<PayItemPage />} />
-      <Route path="/order/history" element={<OrderHistoryPage />} />
+      <Route path="my-profile/orderHistory" element={<OrderHistoryPage />} />
       <Route path="/Purchase/ShoppingCart" element={<ShoppingCart />} />
       <Route path="/Purchase/Bookmark" element={<ManageOrderPage />} />
       <Route path="/manager/manageMember" element={<ManageMemberPage />} />
-      <Route path="/manager/manageMember" element={<BillPage />} />
     </Routes>
   );
 };

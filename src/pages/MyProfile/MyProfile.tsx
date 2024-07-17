@@ -1,16 +1,14 @@
-import React, { useEffect, useState } from "react";
-import Avatar from "../../components/Avatar/Avatar";
-import { IoIosArrowBack } from "react-icons/io";
-import { CiEdit } from "react-icons/ci";
-import { CgBookmark, CgProfile } from "react-icons/cg";
-import { AiFillProduct } from "react-icons/ai";
-import { GoHistory } from "react-icons/go";
 import { Divider } from "@mui/material";
-import { GoChevronRight } from "react-icons/go";
+import { useEffect, useState } from "react";
+import { AiFillProduct } from "react-icons/ai";
+import { CgBookmark, CgProfile } from "react-icons/cg";
+import { CiEdit } from "react-icons/ci";
+import { GoChevronRight, GoHistory } from "react-icons/go";
+import { IoIosArrowBack } from "react-icons/io";
 import { Link, useNavigate } from "react-router-dom";
-import Navbar from "../../components/navbar/Navbar";
-import authApi from "../../services/authApi";
+import Avatar from "../../components/Avatar/Avatar";
 import { MemberInformations } from "../../interfaces/Auth/MemberInformations";
+import authApi from "../../services/authApi";
 
 const MyProfile = () => {
   const [memberInfor, setMemberInfor] = useState<MemberInformations>();
@@ -89,14 +87,16 @@ const MyProfile = () => {
             </li>
           </Link>
           <Divider variant="fullWidth" />
-          <li className="pl-4 py-5  flex items-center justify-between pr-5  hover:bg-orange-100 hover:rounded-b-2xl cursor-pointer">
-            <p className="flex gap-3 items-center">
-              <GoHistory color="grey" size={"22px"} /> Order History
-            </p>
-            <div>
-              <GoChevronRight />
-            </div>
-          </li>
+          <Link to="orderHistory">
+            <li className="pl-4 py-5  flex items-center justify-between pr-5  hover:bg-orange-100 hover:rounded-b-2xl cursor-pointer">
+              <p className="flex gap-3 items-center">
+                <GoHistory color="grey" size={"22px"} /> Order History
+              </p>
+              <div>
+                <GoChevronRight />
+              </div>
+            </li>
+          </Link>
         </ul>
       </div>
     </div>

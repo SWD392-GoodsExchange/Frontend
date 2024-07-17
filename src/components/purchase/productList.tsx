@@ -10,24 +10,45 @@ import {
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { MemberInfor } from "../../interfaces/memberResponse";
 import { ProductResponse } from "../../interfaces/productResponse";
+import authApi from "../../services/authApi";
 import productApi from "../../services/productApi";
 
 const ProductList = () => {
   const navigate = useNavigate();
   const [products, setProducts] = useState<ProductResponse[]>([]);
   console.log("first", products);
+  const [memberInfor, setMemberInfor] = useState<MemberInfor>();
 
   const [clickedViewDetailId, setClickedViewDetailId] = useState<number | null>(
     null
   );
 
+  const fetchMemberInfor = async () => {
+    const response: any = await authApi.getInformationMember();
+    console.log("responseMember", response);
+    if (response && response.length > 0) {
+      setMemberInfor(response);
+    }
+  };
+
+  useEffect(() => {
+    const initUseEffect = async () => {
+      await fetchMemberInfor();
+    };
+    initUseEffect();
+  });
+
   const fetchProductsList = async () => {
     const response: any = (await productApi.getAllProduct()).data.data;
     console.log("FetchData:", response);
-    if (response && response.length > 0) {
-      setProducts(response);
-    }
+
+    // Filter products based on feId match
+    const filteredProducts = response.filter((product: ProductResponse) => {
+      return product.feId !== memberInfor?.feId;
+    });
+    setProducts(filteredProducts);
   };
 
   useEffect(() => {

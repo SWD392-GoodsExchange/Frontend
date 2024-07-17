@@ -12,6 +12,16 @@ export interface MemberResponse {
   Status: string;
 }
 
+export interface Member {
+  feId: string;
+  userName: string;
+  address: string;
+  gender: string;
+  email: string;
+  phone: string;
+  dob: Date;
+}
+
 export interface MemberInfor {
   feId: string;
   username: string;

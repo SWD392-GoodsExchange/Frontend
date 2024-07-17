@@ -13,7 +13,9 @@ import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
 import Bookmarks from "../../assets/Bookmarks.png";
 import ShoppingCart from "../../assets/ShoppingCart.png";
+import { Bookmark } from "../../interfaces/product/bookmarkProduct";
 import { ProductResponse } from "../../interfaces/productResponse";
+import bookMarkApi from "../../services/bookMarkApi";
 import productApi from "../../services/productApi";
 
 const ImageContainer = styled(Box)({
@@ -51,16 +53,6 @@ const ProductCard = () => {
     return <Typography>Product not found</Typography>;
   }
 
-  const settings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    autoplay: true,
-    autoplaySpeed: 3000,
-  };
-
   const handlePurchase = (
     productId: number,
     productResponse: ProductResponse
@@ -72,6 +64,22 @@ const ProductCard = () => {
       navigate(`/Purchase/PayItem/${productId}`, {
         state: productResponse,
       });
+    }
+  };
+
+  const handleBookmarkClick = async () => {
+    // Example data for bookmarking, adjust as needed
+    const data: Bookmark = {
+      feId: product.feId, // Adjust according to your Bookmark interface
+      productId: product.productId,
+    };
+    try {
+      const response: any = await bookMarkApi.bookMark(data);
+      console.log("Bookmark response:", response);
+      // Handle success or show message
+    } catch (error) {
+      console.error("Bookmark error:", error);
+      // Handle error (e.g., show error message)
     }
   };
 
@@ -203,6 +211,7 @@ const ProductCard = () => {
             variant="outlined"
             size="small"
             sx={{ background: "#CCCCCC", color: "black", width: "200px" }}
+            onClick={handleBookmarkClick}
           >
             <img
               src={Bookmarks}
