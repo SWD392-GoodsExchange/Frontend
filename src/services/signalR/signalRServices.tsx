@@ -1,11 +1,8 @@
-import React, { useEffect, useState } from "react";
+import { HubConnectionBuilder } from "@microsoft/signalr";
 import * as signalR from "@microsoft/signalr";
 
-type Props = {
-  token: string | null;
-};
-
 export interface NotificationDto {
+  avatarSender: string;
   notificationId: number;
 
   senderId: string;
@@ -21,36 +18,23 @@ export interface NotificationDto {
   exchangerProductIds: string;
 
   content: string;
-
+  e;
   dateRead: Date;
 
   createdDate: Date;
   type: string;
 }
 
-const SignalRServices = ({ token }: Props) => {
-  useEffect(() => {
-    const connection = new signalR.HubConnectionBuilder()
-      .withUrl(`https://localhost:5001/hubs/notification?access_token=${token}`)
-      .build();
+const connection = new HubConnectionBuilder()
+  .withUrl(
+    `https://localhost:5001/hubs/notification?access_token=${localStorage.getItem(
+      "jwtToken"
+    )}`,
+    {
+      skipNegotiation: true,
+      transport: signalR.HttpTransportType.WebSockets,
+    }
+  )
+  .build();
 
-    connection
-      .start()
-      .then(() => {
-        console.log("SignalR connected");
-
-        connection.on("NotificationOfUser", (notifications) => {
-          console.log("NotificationOfUser:", notifications);
-        });
-      })
-      .catch((error) => console.log(`SignalR error: ${error}`));
-
-    return () => {
-      connection.stop();
-    };
-  }, [token]);
-
-  return null;
-};
-
-export default SignalRServices;
+export default connection;

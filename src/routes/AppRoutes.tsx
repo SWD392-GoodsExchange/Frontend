@@ -14,6 +14,8 @@ import ProductCardPage from "../pages/purchase/productCardPage";
 import ManageOrderPage from "../pages/Shopping/manageOrderPage";
 import PayItemPage from "../pages/Shopping/payItemPage";
 import GuestPage from "../pages/Guest/GuestPage";
+import { useEffect, useState } from "react";
+import ExchangeRequestPage from "../pages/Exchange/ExchangeRequestPage";
 
 const AppRoutes = () => {
   return (
@@ -23,6 +25,7 @@ const AppRoutes = () => {
 
       <Route path="/exchange" element={<HomePage />} />
       <Route path="/my-profile" element={<MyProfile />} />
+      <Route path="/exchange-request" element={<ExchangeRequestPage />} />
       <Route path="/my-profile/information" element={<MemberInformation />} />
       <Route path="/my-profile/product" element={<MyProduct />} />
       <Route path="my-profile/bookmark" element={<MyBookmark />} />

@@ -42,67 +42,89 @@ const Navbar = () => {
           <p className="font-semibold text-20">GooodsExchange</p>
           <RiExchangeFill size={"30px"} />
         </div>
-        <div>
-          <Badge badgeContent={6} color="primary">
-            <RiMessengerFill size={"30px"} />
-          </Badge>
-        </div>
+        {localStorage.getItem("loggedIn") == "true" ? (
+          <div>
+            <Badge badgeContent={6} color="primary">
+              <RiMessengerFill size={"30px"} />
+            </Badge>
+          </div>
+        ) : (
+          <div></div>
+        )}
       </div>
       <div className="flex justify-between items-center w-[93%]">
-        <Tooltip title="Exchange" enterDelay={300}>
-          <div
-            className={`p-1 transition-all duration-300 ${
-              location.pathname === "/exchange"
-                ? `bg-white text-orange-500 rounded-full`
-                : ``
-            }`}
-            onClick={() => {
-              navigate("/exchange");
-            }}
-          >
-            <RiExchangeLine
-              className="hover:text-orange-300 cursor-pointer"
-              size={"30px"}
-            />
-          </div>
-        </Tooltip>
-        <Tooltip title="Trade" enterDelay={300}>
-          <div
-            className={`p-1 transition-all duration-300 ${
-              location.pathname === "/trade"
-                ? `bg-white text-orange-500 rounded-full`
-                : ``
-            }`}
-            onClick={() => {
-              navigate("/trade");
-            }}
-          >
-            <RiMoneyDollarCircleLine
-              className="hover:text-orange-300 cursor-pointer"
-              size={"30px"}
-            />
-          </div>
-        </Tooltip>
-        <Tooltip title="Transaction" enterDelay={300}>
-          <div
-            className={`p-1 transition-all duration-300 ${
-              location.pathname === "/transaction"
-                ? `bg-white text-orange-500 rounded-full`
-                : ``
-            }`}
-            onClick={() => {
-              navigate("/transaction");
-            }}
-          >
-            <RiExchangeFundsLine
-              className="hover:text-orange-300 cursor-pointer"
-              size={"30px"}
-            />
-          </div>
-        </Tooltip>
-        <Tooltip title="Notifications" enterDelay={300}>
-          <MyNotificatons />
-        </Tooltip>
+        {localStorage.getItem("loggedIn") == "true" ? (
+          <Tooltip title="Exchange" enterDelay={300}>
+            <div
+              className={`p-1 transition-all duration-300 ${
+                location.pathname === "/exchange" || location.pathname === "/"
+                  ? `bg-white text-orange-500 rounded-full`
+                  : ``
+              }`}
+              onClick={() => {
+                navigate("/exchange");
+              }}
+            >
+              <RiExchangeLine
+                className="hover:text-orange-300 cursor-pointer"
+                size={"30px"}
+              />
+            </div>
+          </Tooltip>
+        ) : (
+          <div></div>
+        )}
+        {localStorage.getItem("loggedIn") == "true" ? (
+          <Tooltip title="Trade" enterDelay={300}>
+            <div
+              className={`p-1 transition-all duration-300 ${
+                location.pathname === "/trade"
+                  ? `bg-white text-orange-500 rounded-full`
+                  : ``
+              }`}
+              onClick={() => {
+                navigate("/trade");
+              }}
+            >
+              <RiMoneyDollarCircleLine
+                className="hover:text-orange-300 cursor-pointer"
+                size={"30px"}
+              />
+            </div>
+          </Tooltip>
+        ) : (
+          <div></div>
+        )}
+
+        {localStorage.getItem("loggedIn") == "true" ? (
+          <Tooltip title="Exchange Request" enterDelay={300}>
+            <div
+              className={`p-1 transition-all duration-300 ${
+                location.pathname === "/exchange-request"
+                  ? `bg-white text-orange-500 rounded-full`
+                  : ``
+              }`}
+              onClick={() => {
+                navigate("/exchange-request");
+              }}
+            >
+              <RiExchangeFundsLine
+                className="hover:text-orange-300 cursor-pointer"
+                size={"30px"}
+              />
+            </div>
+          </Tooltip>
+        ) : (
+          <div></div>
+        )}
+        {localStorage.getItem("loggedIn") == "true" ? (
+          <Tooltip title="Notifications" enterDelay={300}>
+            <MyNotificatons />
+          </Tooltip>
+        ) : (
+          <div></div>
+        )}
+
         <Tooltip title="Profile" enterDelay={300}>
           {localStorage.getItem("loggedIn") === "true" ? (
             <img

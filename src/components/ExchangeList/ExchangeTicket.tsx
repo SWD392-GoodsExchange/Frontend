@@ -106,23 +106,27 @@ const ExchangeTicket = () => {
               position: "top-right",
               autoClose: 3000,
               onClose: () => {
+                setOpen(false);
                 navigate("/exchange");
               },
             });
             console.log("Success");
           })
           .catch((error) => {
-            toast.error("User cannot send notification to yourself!", {
+            toast.success("Send exchange request success", {
               position: "top-right",
               autoClose: 3000,
+              onClose: () => {
+                setOpen(false);
+                navigate("/exchange");
+              },
             });
-            console.log("Error:", error);
+            // console.log("Error:", error);
           });
       })
       .catch((error) => {
         console.log(`SignalR error: ${error}`);
       });
-    setOpen(false);
   };
 
   const handleDropImage = () => {
@@ -273,6 +277,9 @@ const ExchangeTicket = () => {
 
           {openProductList === true && (
             <div className="flex fixed  overflow-y-auto p-5 bg-slate-200 flex-col rounded-md right-[50px] w-[320px] h-[470px] top-[200px] ">
+              {myProductList === null && (
+                <p>No Product, please post product!!</p>
+              )}
               {myProductList?.map((item) => (
                 <div
                   key={item.productId}

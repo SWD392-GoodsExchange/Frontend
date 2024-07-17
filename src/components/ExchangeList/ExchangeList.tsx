@@ -41,7 +41,7 @@ const ExchangeList = () => {
   });
 
   const bookMarkProduct = (productId: number) => {
-    if (listProductBookmarked?.includes(productId) == true) {
+    if (listProductBookmarked?.includes(productId) === true) {
       bookMarkApi
         .deleteBookMark(productId)
         .then((response) => console.log(response))

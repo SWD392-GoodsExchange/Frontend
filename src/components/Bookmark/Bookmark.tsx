@@ -7,6 +7,8 @@ import { LiaExchangeAltSolid } from "react-icons/lia";
 import { GoReport } from "react-icons/go";
 import { GoBookmarkSlash } from "react-icons/go";
 import bookMarkApi from "../../services/bookMarkApi";
+import { useNavigate } from "react-router-dom";
+import { ProductResponse } from "../../interfaces/productResponse";
 
 type Props = {
   productId: number;
@@ -30,6 +32,15 @@ export interface Images {
 }
 
 const Bookmark = (props: Props) => {
+  const navigate = useNavigate();
+  const onClickExchange = (
+    productId: number,
+    productObject: ProductResponse
+  ) => {
+    navigate(`/exchange-ticket/${productId}`, {
+      state: productObject,
+    });
+  };
   const deleteBookmark = (productId: number) => {
     bookMarkApi
       .deleteBookMark(productId)
@@ -82,7 +93,12 @@ const Bookmark = (props: Props) => {
             <GoBookmarkSlash size={"22px"} />
             UnBookmark
           </button>
-          <button className="flex gap-1 items-center transition-all duration-300 bg-orange-300 rounded-lg p-2 cursor-pointer hover:bg-orange-500  ">
+          <button
+            onClick={() => {
+              onClickExchange(props.productId, props);
+            }}
+            className="flex gap-1 items-center transition-all duration-300 bg-orange-300 rounded-lg p-2 cursor-pointer hover:bg-orange-500  "
+          >
             <LiaExchangeAltSolid size={"22px"} />
             Exchange
           </button>

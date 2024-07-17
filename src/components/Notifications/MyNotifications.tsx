@@ -5,42 +5,70 @@ import MenuItem from "@mui/material/MenuItem";
 import { Badge } from "@mui/material";
 import { RiNotification4Line } from "react-icons/ri";
 import OtherAvatar from "../../assets/bear.png";
+import { HubConnectionBuilder } from "@microsoft/signalr";
 import * as signalR from "@microsoft/signalr";
 import { NotificationDto } from "../../services/signalR/signalRServices";
+import exchangeApi from "../../services/exchangeApi";
 
 const MyNotificatons = () => {
+  const [connection, setConnection] =
+    React.useState<signalR.HubConnection | null>(null);
   const [notifications, setNotifications] = React.useState<NotificationDto[]>();
+  const [numberUnreadNotificaiton, setNumberUnreadNotification] =
+    React.useState<number>();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
+
   React.useEffect(() => {
-    const connection = new signalR.HubConnectionBuilder()
+    const newConnection = new HubConnectionBuilder()
       .withUrl(
         `https://localhost:5001/hubs/notification?access_token=${localStorage.getItem(
           "jwtToken"
-        )}`
+        )}`,
+        {
+          skipNegotiation: true,
+          transport: signalR.HttpTransportType.WebSockets,
+        }
       )
       .build();
 
-    connection
-      .start()
-      .then(() => {
-        console.log("SignalR connected");
+    setConnection(newConnection);
+  }, []);
 
-        connection.on("NotificationOfUser", (notifications) => {
-          console.log("NotificationOfUser:", notifications);
-          setNotifications(notifications);
-        });
-      })
-      .catch((error: any) => console.log(`SignalR error: ${error}`));
-  }, [localStorage.getItem("jwtToken")]);
+  React.useEffect(() => {
+    if (connection) {
+      if (connection.state === "Disconnected") {
+        connection
+          .start()
+          .then(() => {
+            console.log("SignalR connected");
+          })
+          .catch((error: any) => {
+            console.log(`SignalR error: ${error}`);
+          });
+      }
+      connection.on("UnreadNotificationNumber", (NewNotification: number) => {
+        console.log(NewNotification);
+        setNumberUnreadNotification(NewNotification);
+      });
+    }
+  }, [connection, notifications]);
   const handleClose = () => {
     setAnchorEl(null);
   };
 
-  const subNotifications = notifications?.slice(0, 5);
+  React.useEffect(() => {
+    const fetchNoti = async () => {
+      const notifications: any = await exchangeApi.getNotification();
+      setNotifications(notifications.data);
+    };
+    fetchNoti();
+  }, [notifications]);
+
+  const subNotifications = notifications?.slice(0, 7);
   return (
     <>
       <div>
@@ -54,7 +82,7 @@ const MyNotificatons = () => {
           aria-expanded={open ? "true" : undefined}
           onClick={handleClick}
         >
-          <Badge badgeContent={notifications?.length} color="primary">
+          <Badge badgeContent={""} color="primary">
             <RiNotification4Line
               className="hover:text-orange-300 cursor-pointer"
               size={"30px"}
@@ -107,13 +135,18 @@ const MyNotificatons = () => {
                   alignItems: "center",
                 }}
               >
-                <img src={OtherAvatar} width={50} height={50} />
+                <img src={item.avatarSender} width={50} height={50} />
                 <div>
                   <p className="font-bold">
                     {item.senderUsername}{" "}
-                    <span className="font-light italic">{item.senderId}</span>
+                    <span className="font-light italic text-13">
+                      {item.senderId}
+                    </span>
                   </p>
                   <p>{item.content}</p>
+                  <p className="font-thin text-13">
+                    {item.createdDate.toLocaleString()}
+                  </p>
                 </div>
               </MenuItem>
             ))
