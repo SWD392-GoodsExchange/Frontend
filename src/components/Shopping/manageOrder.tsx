@@ -34,6 +34,7 @@ const ManageOrder = () => {
   useEffect(() => {
     if (member?.FeID) {
       productApi.getAllProductByFeid(member.FeID || null).then((response) => {
+        console.log("response:", response);
         setProducts(response.data);
       });
     }
@@ -41,7 +42,7 @@ const ManageOrder = () => {
 
   const fetchProductList = async () => {
     const res: any = await productApi.getAllProductByFeid(member?.FeID || null);
-    console.log("ValuationList:", res);
+    console.log("bookmark:", res);
     if (res && res.length > 0) {
       setProducts(res);
     }

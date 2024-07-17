@@ -1,4 +1,7 @@
-import { CreateBookmark } from "../interfaces/product/bookmarkProduct";
+import {
+  Bookmark,
+  CreateBookmark,
+} from "../interfaces/product/bookmarkProduct";
 import axiosClient from "./axiosClient";
 
 const bookMarkApi = {
@@ -9,6 +12,11 @@ const bookMarkApi = {
   getAllBookmark() {
     const url = "/members/bookmark";
     return axiosClient.get(url);
+  },
+
+  bookMark(data: Bookmark) {
+    const url = "/members/bookmark";
+    return axiosClient.post(url, data);
   },
 };
 

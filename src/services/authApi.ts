@@ -7,7 +7,7 @@ const authApi = {
     return axiosClient.post(url, loginRequest);
   },
   getInformationMember() {
-    const url = "/members/information";
+    const url = "/Members/information";
     return axiosClient.get(url);
   },
 };
