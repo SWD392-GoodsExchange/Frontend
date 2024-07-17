@@ -1,4 +1,3 @@
-// ManageOrder.js
 import DeleteIcon from "@mui/icons-material/Delete";
 import {
   Card,
@@ -18,6 +17,9 @@ import {
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick-theme.css";
+import "slick-carousel/slick/slick.css";
 import { MemberResponse } from "../../interfaces/memberResponse";
 import { ProductResponse } from "../../interfaces/productResponse";
 import productApi from "../../services/productApi";
@@ -29,27 +31,29 @@ const ManageOrder = () => {
     {}
   );
 
+  useEffect(() => {
+    if (member?.FeID) {
+      productApi.getAllProductByFeid(member.FeID || null).then((response) => {
+        console.log("response:", response);
+        setProducts(response.data);
+      });
+    }
+  }, [member]);
+
   const fetchProductList = async () => {
-    const res: any = await productApi;
-    console.log("ValuationList:", res);
+    const res: any = await productApi.getAllProductByFeid(member?.FeID || null);
+    console.log("bookmark:", res);
     if (res && res.length > 0) {
       setProducts(res);
     }
   };
+
   useEffect(() => {
     const initUseEffect = async () => {
       await fetchProductList();
     };
     initUseEffect();
   }, []);
-
-  useEffect(() => {
-    if (member?.FeID) {
-      productApi.getAllProductByFeid(member.FeID || null).then((response) => {
-        setProducts(response.data);
-      });
-    }
-  }, [member]);
 
   const handleCheckboxChange = (productId: number) => {
     setCheckedItems({
@@ -69,6 +73,14 @@ const ManageOrder = () => {
 
   const handleChange = (event: any, newValue: number) => {
     setValue(newValue);
+  };
+
+  const sliderSettings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
   };
 
   return (
@@ -108,12 +120,19 @@ const ManageOrder = () => {
                     onChange={() => handleCheckboxChange(product.productId)}
                   />
                   <Card style={{ display: "flex", width: "100%" }}>
-                    <CardMedia
-                      component="img"
-                      style={{ width: 151 }}
-                      image={product.images.imageUrl}
-                      alt="Product Image"
-                    />
+                    <div style={{ width: 151 }}>
+                      <Slider {...sliderSettings}>
+                        {product.images.map((image) => (
+                          <CardMedia
+                            key={image.publicId}
+                            component="img"
+                            style={{ width: 151 }}
+                            image={image.imageUrl}
+                            alt="Product Image"
+                          />
+                        ))}
+                      </Slider>
+                    </div>
                     <CardContent style={{ flex: "1 0 auto" }}>
                       <Link to={`/product/${product.productId}`}>
                         <Typography component="h5" variant="h5">

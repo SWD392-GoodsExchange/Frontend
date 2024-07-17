@@ -1,8 +1,9 @@
 import { Grid } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import BookMarkNav from "../../components/Bookmark/BookMarkNav";
-import BookmarkList from "../../components/Bookmark/BookmarkList";
 import BookmarkFilter from "../../components/Bookmark/BookmarkFilter";
+import BookmarkList from "../../components/Bookmark/BookmarkList";
+import { ProductResponse } from "../../interfaces/productResponse";
 import bookMarkApi from "../../services/bookMarkApi";
 import { ProductResponse } from "../../interfaces/productResponse";
 

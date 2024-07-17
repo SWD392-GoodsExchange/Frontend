@@ -22,8 +22,9 @@ import {
   TextField,
   styled,
 } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Member } from "../../interfaces/memberResponse";
+import memberApi from "../../services/memberApi";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.MuiTableCell-head`]: {
@@ -52,196 +53,23 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 const ManageMember = () => {
-  const [members, setMembers] = useState<Member[]>([
-    {
-      FeID: "FE1",
-      RoleID: 1,
-      Username: "Le Quang Dung",
-      Password: "12345",
-      Dob: "12/01/2021",
-      Address: "Dong Nai",
-      Gender: "Male",
-      Email: "dungngo23@gmail.com",
-      Phone: "0798002647",
-      CreatedTime: "12/01/2019",
-      Status: "Active",
-    },
-    {
-      FeID: "FE2",
-      RoleID: 2,
-      Username: "Le Quang Luan",
-      Password: "12345",
-      Dob: "12/01/2021",
-      Address: "Dong Nai",
-      Gender: "Male",
-      Email: "luanle@gmail.com",
-      Phone: "0798002647",
-      CreatedTime: "12/01/2019",
-      Status: "Active",
-    },
-    {
-      FeID: "FE4",
-      RoleID: 1,
-      Username: "Le Quang Kien",
-      Password: "12345",
-      Dob: "12/01/2021",
-      Address: "Dong Nai",
-      Gender: "Male",
-      Email: "dungngo23@gmail.com",
-      Phone: "0798002647",
-      CreatedTime: "12/01/2019",
-      Status: "Active",
-    },
-    {
-      FeID: "FE5",
-      RoleID: 2,
-      Username: "Le Quang Tien",
-      Password: "12345",
-      Dob: "12/01/2021",
-      Address: "Dong Nai",
-      Gender: "Male",
-      Email: "luanle@gmail.com",
-      Phone: "0798002647",
-      CreatedTime: "12/01/2019",
-      Status: "Active",
-    },
-    {
-      FeID: "FE6",
-      RoleID: 3,
-      Username: "Nguyen Tien Dung",
-      Password: "12345",
-      Dob: "01/03/1990",
-      Address: "Ho Chi Minh",
-      Gender: "Male",
-      Email: "nguyenvana@gmail.com",
-      Phone: "0987000001",
-      CreatedTime: "11/01/2020",
-      Status: "Active",
-    },
-    {
-      FeID: "FE7",
-      RoleID: 4,
-      Username: "Nguyen Tien Luan",
-      Password: "12345",
-      Dob: "04/05/1985",
-      Address: "Ha Noi",
-      Gender: "Female",
-      Email: "tranthib@gmail.com",
-      Phone: "0987000002",
-      CreatedTime: "10/01/2020",
-      Status: "Active",
-    },
-    {
-      FeID: "FE8",
-      RoleID: 2,
-      Username: "Pham Huy Kien",
-      Password: "12345",
-      Dob: "12/12/1988",
-      Address: "Da Nang",
-      Gender: "Male",
-      Email: "phamvanc@gmail.com",
-      Phone: "0987000003",
-      CreatedTime: "09/01/2020",
-      Status: "Inactive",
-    },
-    {
-      FeID: "FE9",
-      RoleID: 1,
-      Username: "Ngo Tan Tien",
-      Password: "12345",
-      Dob: "22/07/1992",
-      Address: "Hai Phong",
-      Gender: "Female",
-      Email: "hoangthid@gmail.com",
-      Phone: "0987000004",
-      CreatedTime: "08/01/2020",
-      Status: "Active",
-    },
-    {
-      FeID: "FE10",
-      RoleID: 3,
-      Username: "Nguyen Hoang Huy",
-      Password: "12345",
-      Dob: "30/06/1995",
-      Address: "Can Tho",
-      Gender: "Male",
-      Email: "vuvane@gmail.com",
-      Phone: "0987000005",
-      CreatedTime: "07/01/2020",
-      Status: "Inactive",
-    },
-    {
-      FeID: "FE11",
-      RoleID: 4,
-      Username: "Nguyen Kien Dung",
-      Password: "12345",
-      Dob: "14/02/1993",
-      Address: "Quang Ninh",
-      Gender: "Female",
-      Email: "lethif@gmail.com",
-      Phone: "0987000006",
-      CreatedTime: "06/01/2020",
-      Status: "Active",
-    },
-    {
-      FeID: "FE12",
-      RoleID: 2,
-      Username: "Tran Thi Thy",
-      Password: "12345",
-      Dob: "19/11/1986",
-      Address: "Vung Tau",
-      Gender: "Male",
-      Email: "tranvang@gmail.com",
-      Phone: "0987000007",
-      CreatedTime: "05/01/2020",
-      Status: "Inactive",
-    },
-    {
-      FeID: "FE13",
-      RoleID: 1,
-      Username: "Nguyen Thi Thy",
-      Password: "12345",
-      Dob: "25/09/1987",
-      Address: "Da Lat",
-      Gender: "Female",
-      Email: "nguyenthih@gmail.com",
-      Phone: "0987000008",
-      CreatedTime: "04/01/2020",
-      Status: "Active",
-    },
-    {
-      FeID: "FE14",
-      RoleID: 3,
-      Username: "Pham Van Van",
-      Password: "12345",
-      Dob: "18/10/1991",
-      Address: "Hue",
-      Gender: "Male",
-      Email: "phamvani@gmail.com",
-      Phone: "0987000009",
-      CreatedTime: "03/01/2020",
-      Status: "Inactive",
-    },
-    {
-      FeID: "FE15",
-      RoleID: 4,
-      Username: "Pham Thi Thy",
-      Password: "12345",
-      Dob: "11/08/1994",
-      Address: "Binh Dinh",
-      Gender: "Female",
-      Email: "tranthij@gmail.com",
-      Phone: "0987000010",
-      CreatedTime: "02/01/2020",
-      Status: "Active",
-    },
-  ]);
+  const [members, setMembers] = useState<Member[]>([]);
   const [searchKeyword, setSearchKeyword] = useState<string>("");
   const [filterStatus, setFilterStatus] = useState<string>("");
   const [page, setPage] = useState<number>(0);
   const [rowsPerPage, setRowsPerPage] = useState<number>(5);
   const [editMember, setEditMember] = useState<Member | null>(null);
   const [newMember, setNewMember] = useState<Member | null>(null);
+
+  const fetchMember = async () => {
+    const response = (await memberApi.getAllMember()).data.data;
+    console.log("member", response);
+    setMembers(response);
+  };
+
+  useEffect(() => {
+    fetchMember();
+  }, []);
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchKeyword(event.target.value);
@@ -264,17 +92,13 @@ const ManageMember = () => {
 
   const handleAddMember = () => {
     setNewMember({
-      FeID: "",
-      RoleID: 0,
-      Username: "",
-      Password: "",
-      Dob: "",
-      Address: "",
-      Gender: "",
-      Email: "",
-      Phone: "",
-      CreatedTime: "",
-      Status: "",
+      feId: "",
+      userName: "",
+      address: "",
+      gender: "",
+      email: "",
+      phone: "",
+      dob: new Date(),
     });
   };
 
@@ -289,7 +113,7 @@ const ManageMember = () => {
   const handleSaveMember = () => {
     if (editMember) {
       setMembers((prevMembers) =>
-        prevMembers.map((m) => (m.FeID === editMember.FeID ? editMember : m))
+        prevMembers.map((m) => (m.feId === editMember.feId ? editMember : m))
       );
       setEditMember(null);
     } else if (newMember) {
@@ -326,20 +150,19 @@ const ManageMember = () => {
   };
 
   const handleDeleteMember = (memberId: string) => {
-    setMembers((prevMembers) => prevMembers.filter((m) => m.FeID !== memberId));
+    setMembers((prevMembers) => prevMembers.filter((m) => m.feId !== memberId));
   };
 
   const filteredMembers = members.filter((member) => {
     const keyword = searchKeyword.toLowerCase();
-    const usernameLower = member.Username.toLowerCase();
-    const emailLower = member.Email.toLowerCase();
-    const phone = member.Phone;
+    const usernameLower = member.userName.toLowerCase();
+    const emailLower = member.email.toLowerCase();
+    const phone = member.phone;
 
     return (
-      (usernameLower.includes(keyword) ||
-        emailLower.includes(keyword) ||
-        phone.includes(searchKeyword)) &&
-      (filterStatus === "" || member.Status === filterStatus)
+      usernameLower.includes(keyword) ||
+      emailLower.includes(keyword) ||
+      phone.includes(searchKeyword)
     );
   });
 
@@ -364,7 +187,7 @@ const ManageMember = () => {
             size="small"
             onChange={handleSearchChange}
             value={searchKeyword}
-            sx={{ marginRight: 2,width:"300px" }}
+            sx={{ marginRight: 2, width: "300px" }}
           />
           <FormControl variant="outlined" size="small">
             <InputLabel>Status</InputLabel>
@@ -406,28 +229,27 @@ const ManageMember = () => {
               <StyledTableCell>Address</StyledTableCell>
               <StyledTableCell>Email</StyledTableCell>
               <StyledTableCell>Phone</StyledTableCell>
-              <StyledTableCell>Created Time</StyledTableCell>
-              <StyledTableCell>Status</StyledTableCell>
               <StyledTableCell>Actions</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {displayedMembers.map((member, index) => (
-              <StyledTableRow key={member.FeID}>
+              <StyledTableRow key={member.feId}>
                 <StyledTableCell>
                   {page * rowsPerPage + index + 1}
                 </StyledTableCell>
                 <StyledTableCell component="th" scope="row">
-                  {member.FeID}
+                  {member.feId}
                 </StyledTableCell>
-                <StyledTableCell>{member.Username}</StyledTableCell>
-                <StyledTableCell>{member.Gender}</StyledTableCell>
-                <StyledTableCell>{member.Dob}</StyledTableCell>
-                <StyledTableCell>{member.Address}</StyledTableCell>
-                <StyledTableCell>{member.Email}</StyledTableCell>
-                <StyledTableCell>{member.Phone}</StyledTableCell>
-                <StyledTableCell>{member.CreatedTime}</StyledTableCell>
-                <StyledTableCell>{member.Status}</StyledTableCell>
+                <StyledTableCell>{member.userName}</StyledTableCell>
+                <StyledTableCell>{member.gender}</StyledTableCell>
+                <StyledTableCell>
+                  {new Date(member.dob).toLocaleDateString()}
+                </StyledTableCell>
+                <StyledTableCell>{member.address}</StyledTableCell>
+                <StyledTableCell>{member.email}</StyledTableCell>
+                <StyledTableCell>{member.phone}</StyledTableCell>
+
                 <StyledTableCell>
                   <Button
                     variant="contained"
@@ -445,7 +267,7 @@ const ManageMember = () => {
                   <Button
                     variant="contained"
                     size="small"
-                    onClick={() => handleDeleteMember(member.FeID)}
+                    onClick={() => handleDeleteMember(member.feId)}
                     sx={{ backgroundColor: "ButtonShadow", color: "black" }}
                   >
                     Delete
@@ -480,7 +302,7 @@ const ManageMember = () => {
               type="text"
               fullWidth
               name="Username"
-              value={editMember.Username}
+              value={editMember.userName}
               onChange={handleInputChange}
             />
             <TextField
@@ -489,7 +311,7 @@ const ManageMember = () => {
               type="text"
               fullWidth
               name="Gender"
-              value={editMember.Gender}
+              value={editMember.gender}
               onChange={handleInputChange}
             />
             <TextField
@@ -498,7 +320,7 @@ const ManageMember = () => {
               type="text"
               fullWidth
               name="Dob"
-              value={editMember.Dob}
+              value={editMember.dob}
               onChange={handleInputChange}
             />
             <TextField
@@ -507,7 +329,7 @@ const ManageMember = () => {
               type="text"
               fullWidth
               name="Address"
-              value={editMember.Address}
+              value={editMember.address}
               onChange={handleInputChange}
             />
             <TextField
@@ -516,7 +338,7 @@ const ManageMember = () => {
               type="email"
               fullWidth
               name="Email"
-              value={editMember.Email}
+              value={editMember.email}
               onChange={handleInputChange}
             />
             <TextField
@@ -525,16 +347,7 @@ const ManageMember = () => {
               type="text"
               fullWidth
               name="Phone"
-              value={editMember.Phone}
-              onChange={handleInputChange}
-            />
-            <TextField
-              margin="dense"
-              label="Status"
-              type="text"
-              fullWidth
-              name="Status"
-              value={editMember.Status}
+              value={editMember.phone}
               onChange={handleInputChange}
             />
           </DialogContent>
@@ -562,7 +375,7 @@ const ManageMember = () => {
               type="text"
               fullWidth
               name="Username"
-              value={newMember.Username}
+              value={newMember.userName}
               onChange={handleInputChange}
             />
             <TextField
@@ -571,7 +384,7 @@ const ManageMember = () => {
               type="text"
               fullWidth
               name="Gender"
-              value={newMember.Gender}
+              value={newMember.gender}
               onChange={handleInputChange}
             />
             <TextField
@@ -580,7 +393,7 @@ const ManageMember = () => {
               type="text"
               fullWidth
               name="Dob"
-              value={newMember.Dob}
+              value={newMember.dob}
               onChange={handleInputChange}
             />
             <TextField
@@ -589,7 +402,7 @@ const ManageMember = () => {
               type="text"
               fullWidth
               name="Address"
-              value={newMember.Address}
+              value={newMember.address}
               onChange={handleInputChange}
             />
             <TextField
@@ -598,7 +411,7 @@ const ManageMember = () => {
               type="email"
               fullWidth
               name="Email"
-              value={newMember.Email}
+              value={newMember.email}
               onChange={handleInputChange}
             />
             <TextField
@@ -607,16 +420,7 @@ const ManageMember = () => {
               type="text"
               fullWidth
               name="Phone"
-              value={newMember.Phone}
-              onChange={handleInputChange}
-            />
-            <TextField
-              margin="dense"
-              label="Status"
-              type="text"
-              fullWidth
-              name="Status"
-              value={newMember.Status}
+              value={newMember.phone}
               onChange={handleInputChange}
             />
           </DialogContent>

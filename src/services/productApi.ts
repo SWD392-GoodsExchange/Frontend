@@ -21,6 +21,21 @@ const productApi = {
       },
     });
   },
+
+  getAllProduct() {
+    const url = "/Products";
+    return axiosClient.get(url);
+  },
+
+  getProductByPId(productId: number) {
+    const url = `/Products/${productId}`;
+    return axiosClient.get(url);
+  },
+
+  getProductByProductId(productId: number) {
+    const url = `/Products/${productId}`;
+    return axiosClient.get(url);
+  },
 };
 
 export default productApi;

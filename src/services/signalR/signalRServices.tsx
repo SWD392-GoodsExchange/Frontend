@@ -1,5 +1,10 @@
 import { HubConnectionBuilder } from "@microsoft/signalr";
 import * as signalR from "@microsoft/signalr";
+import { useEffect } from "react";
+
+type Props = {
+  token: string | null;
+};
 
 export interface NotificationDto {
   avatarSender: string;

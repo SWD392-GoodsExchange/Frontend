@@ -7,18 +7,22 @@ import {
   Typography,
 } from "@mui/material";
 import { styled } from "@mui/system";
-import { useParams } from "react-router-dom";
-import Slider from "react-slick";
+import { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
 import Bookmarks from "../../assets/Bookmarks.png";
 import ShoppingCart from "../../assets/ShoppingCart.png";
+import { Bookmark } from "../../interfaces/product/bookmarkProduct";
+import { ProductResponse } from "../../interfaces/productResponse";
+import bookMarkApi from "../../services/bookMarkApi";
+import productApi from "../../services/productApi";
 
 const ImageContainer = styled(Box)({
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
-  padding: "16px",
+  height: "300px",
   backgroundColor: "#f5f5f5",
 });
 
@@ -29,63 +33,70 @@ const PriceContainer = styled(Box)({
   marginTop: "8px",
 });
 
-const products = [
-  {
-    id: 1,
-    title: "Yellow Pencil with Love Heart",
-    categoryName: "Study Stuff",
-    usageInfor: "To write and note down information",
-    origin: "Vietnam",
-    price: 198000,
-    images: [
-      "https://via.placeholder.com/150",
-      "https://via.placeholder.com/150",
-      "https://via.placeholder.com/150",
-    ],
-  },
-  // other products here
-];
-
 const ProductCard = () => {
-  const { id } = useParams<{ id: string }>();
+  const { state } = useLocation();
+  const navigate = useNavigate();
+  const [product, setProduct] = useState<ProductResponse | null>(null);
+  const [clickedPurchaseId, setClickedPurchaseId] = useState<number | null>(
+    null
+  );
 
-  if (!id) {
-    return <Typography>Product ID not found in the URL</Typography>;
-  }
-
-  const productId = parseInt(id);
-  const product = products.find((product) => product.id === productId);
+  useEffect(() => {
+    const fetchProduct = async () => {
+      const response = await productApi.getProductByPId(state.productId);
+      setProduct(response.data);
+    };
+    fetchProduct();
+  }, [state.productId]);
 
   if (!product) {
     return <Typography>Product not found</Typography>;
   }
 
-  const settings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    autoplay: true,
-    autoplaySpeed: 3000,
+  const handlePurchase = (
+    productId: number,
+    productResponse: ProductResponse
+  ) => {
+    if (clickedPurchaseId === productId) {
+      setClickedPurchaseId(null);
+    } else {
+      setClickedPurchaseId(productId);
+      navigate(`/Purchase/PayItem/${productId}`, {
+        state: productResponse,
+      });
+    }
+  };
+
+  const handleBookmarkClick = async () => {
+    // Example data for bookmarking, adjust as needed
+    const data: Bookmark = {
+      feId: product.feId, // Adjust according to your Bookmark interface
+      productId: product.productId,
+    };
+    try {
+      const response: any = await bookMarkApi.bookMark(data);
+      console.log("Bookmark response:", response);
+      // Handle success or show message
+    } catch (error) {
+      console.error("Bookmark error:", error);
+      // Handle error (e.g., show error message)
+    }
   };
 
   return (
     <Grid container spacing={3} sx={{ padding: "20px", paddingLeft: "30px" }}>
-      <Grid item xs={4} sx={{}}>
-        <Slider {...settings}>
-          {product.images.map((image, index) => (
-            <ImageContainer key={index}>
-              <CardMedia
-                component="img"
-                alt={`Product Image ${index + 1}`}
-                image={image}
-                title={`Product Image ${index + 1}`}
-                sx={{ width: "100%", objectFit: "contain", height: "100%" }}
-              />
-            </ImageContainer>
+      <Grid item xs={4}>
+        <ImageContainer>
+          {product.images.map((image) => (
+            <CardMedia
+              key={image.publicId}
+              component="img"
+              style={{ width: 151, height: "100%" }}
+              image={image.imageUrl}
+              alt="Product Image"
+            />
           ))}
-        </Slider>
+        </ImageContainer>
       </Grid>
       <Grid item xs={8}>
         <CardContent>
@@ -143,16 +154,16 @@ const ProductCard = () => {
               size="small"
               sx={{ fontSize: "10px", width: "150px", fontWeight: "bold" }}
             >
-              Posted by: Anchor Le
+              Posted by: {product.userName}
             </Button>
             <Button
               variant="text"
               size="small"
               sx={{ fontSize: "10px", width: "150px", fontWeight: "bold" }}
             >
-              Create time: 13:59:48 05/01/2024
+              Create time: {new Date(product.createdTime).toLocaleDateString()}
             </Button>
-            <Box>
+            <Box sx={{ marginTop: "10px" }}>
               <Button
                 variant="outlined"
                 size="small"
@@ -191,32 +202,36 @@ const ProductCard = () => {
               >
                 Description:
               </Typography>
-              <Typography variant="body2">{product.usageInfor}</Typography>
+              <Typography variant="body2">{product.description}</Typography>
             </Box>
           </Box>
         </CardContent>
-        <Box sx={{ paddingLeft: "350px" }}>
+        <Box sx={{ paddingLeft: "250px", display: "flex", gap: "10px" }}>
           <Button
-            variant="contained"
-            color="primary"
+            variant="outlined"
             size="small"
-            sx={{ marginRight: "8px" }}
+            sx={{ background: "#CCCCCC", color: "black", width: "200px" }}
+            onClick={handleBookmarkClick}
           >
-            <img src={Bookmarks} width="20" height="20" alt="ShoppingCart" />
-            <Typography sx={{ fontSize: "14px", paddingLeft: "5px" }}>
-              Bookmark
-            </Typography>
+            <img
+              src={Bookmarks}
+              alt="Bookmarks"
+              style={{ width: "20px", marginRight: "5px" }}
+            />
+            Bookmark
           </Button>
           <Button
-            variant="contained"
-            color="primary"
+            variant="outlined"
             size="small"
-            sx={{ marginRight: "8px" }}
+            sx={{ background: "#CCCCCC", color: "black", width: "200px" }}
+            onClick={() => handlePurchase(product.productId, product)}
           >
-            <img src={ShoppingCart} width="20" height="20" alt="ShoppingCart" />
-            <Typography sx={{ fontSize: "14px", paddingLeft: "5px" }}>
-              Purchase
-            </Typography>
+            <img
+              src={ShoppingCart}
+              alt="Shopping Cart"
+              style={{ width: "20px", marginRight: "5px" }}
+            />
+            Purchase
           </Button>
         </Box>
       </Grid>
