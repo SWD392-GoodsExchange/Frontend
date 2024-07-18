@@ -1,7 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 
 import ExchangeTicket from "../components/ExchangeList/ExchangeTicket";
-import ProductList from "../components/purchase/productList";
 import ShoppingCart from "../components/Shopping/shoppingCart";
 import GuestPage from "../pages/Guest/GuestPage";
 import HomePage from "../pages/HomePage";
@@ -13,6 +12,7 @@ import MyProduct from "../pages/MyProfile/MyProduct";
 import MyProfile from "../pages/MyProfile/MyProfile";
 import OrderHistoryPage from "../pages/purchase/orderHistoryPage";
 import ProductCardPage from "../pages/purchase/productCardPage";
+import ProductListPage from "../pages/purchase/productListPage";
 import ReportPage from "../pages/reportPage";
 import ManageOrderPage from "../pages/Shopping/manageOrderPage";
 import PayItemPage from "../pages/Shopping/payItemPage";
@@ -29,7 +29,7 @@ const AppRoutes = () => {
       <Route path="my-profile/bookmark" element={<MyBookmark />} />
       <Route path="/exchange-ticket/:productId" element={<ExchangeTicket />} />
 
-      <Route path="/trade" element={<ProductList />} />
+      <Route path="/trade" element={<ProductListPage />} />
       <Route path="/products/:productId" element={<ProductCardPage />} />
       <Route path="/Purchase/PayItem/:productId" element={<PayItemPage />} />
       <Route path="my-profile/orderHistory" element={<OrderHistoryPage />} />

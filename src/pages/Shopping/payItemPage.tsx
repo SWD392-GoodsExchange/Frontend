@@ -1,4 +1,4 @@
-import { Box, Grid, Paper } from "@mui/material";
+import { Grid, Paper } from "@mui/material";
 
 import PayItem from "../../components/Shopping/payItem";
 import BackButton from "../back/backButton";
@@ -6,18 +6,15 @@ import BackButton from "../back/backButton";
 const PayItemPage = () => {
   return (
     <Grid>
-      <Box sx={{ paddingTop: "100px", marginLeft: "5px" }}>
-        <BackButton />
-      </Box>
       <Paper
         sx={{
           backgroundColor: "white",
-          marginTop: "100px",
-          paddingTop: "15px",
-          height: "800px",
+          marginTop: "60px",
+          paddingTop: "55px",
+          height: "713px",
         }}
       >
-        {/* <Navbar /> */}
+        <BackButton />
         <PayItem />
       </Paper>
     </Grid>
