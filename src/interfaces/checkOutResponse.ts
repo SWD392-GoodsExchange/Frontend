@@ -15,7 +15,7 @@ export interface OrderDetail {
 }
 
 export interface CheckoutResponse {
-  memberId: string;
+  productId: number;
   orderDetails: OrderDetail[];
 }
 

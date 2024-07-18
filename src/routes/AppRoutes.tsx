@@ -1,21 +1,23 @@
 import { Route, Routes } from "react-router-dom";
 
 import ExchangeTicket from "../components/ExchangeList/ExchangeTicket";
-import ProductList from "../components/purchase/productList";
 import ShoppingCart from "../components/Shopping/shoppingCart";
+import AdminPage from "../pages/Admin/AdminPage";
+import ExchangeRequestPage from "../pages/Exchange/ExchangeRequestPage";
+import GuestPage from "../pages/Guest/GuestPage";
 import HomePage from "../pages/HomePage";
 import ManageMemberPage from "../pages/Manager/manageMemberPage";
+import ProductViewPage from "../pages/Manager/productViewPage";
 import MemberInformation from "../pages/MyProfile/MemberInformation";
 import MyBookmark from "../pages/MyProfile/MyBookmark";
 import MyProduct from "../pages/MyProfile/MyProduct";
 import MyProfile from "../pages/MyProfile/MyProfile";
 import OrderHistoryPage from "../pages/purchase/orderHistoryPage";
 import ProductCardPage from "../pages/purchase/productCardPage";
+import ProductListPage from "../pages/purchase/productListPage";
+import ReportPage from "../pages/reportPage";
 import ManageOrderPage from "../pages/Shopping/manageOrderPage";
 import PayItemPage from "../pages/Shopping/payItemPage";
-import GuestPage from "../pages/Guest/GuestPage";
-import ExchangeRequestPage from "../pages/Exchange/ExchangeRequestPage";
-import AdminPage from "../pages/Admin/AdminPage";
 
 const AppRoutes = () => {
   return (
@@ -31,7 +33,7 @@ const AppRoutes = () => {
       <Route path="my-profile/bookmark" element={<MyBookmark />} />
       <Route path="/exchange-ticket/:productId" element={<ExchangeTicket />} />
 
-      <Route path="/trade" element={<ProductList />} />
+      <Route path="/trade" element={<ProductListPage />} />
       <Route path="/products/:productId" element={<ProductCardPage />} />
       <Route path="/Purchase/PayItem/:productId" element={<PayItemPage />} />
       <Route path="/my-profile/order-history" element={<OrderHistoryPage />} />
@@ -40,6 +42,11 @@ const AppRoutes = () => {
       <Route path="/manager/manageMember" element={<ManageMemberPage />} />
       {/* Admin Route */}
       <Route path="/admin" element={<AdminPage />} />
+      <Route path="/manager/report" element={<ReportPage />} />
+      <Route
+        path="/manager/productView/:productId"
+        element={<ProductViewPage />}
+      />
     </Routes>
   );
 };

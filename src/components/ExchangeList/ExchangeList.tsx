@@ -1,9 +1,3 @@
-import React, { useEffect, useState } from "react";
-import Avatar from "../../assets/bear.png";
-import ATM from "../../assets/—Pngtree—credit card_5933595.png";
-import { CiBookmark } from "react-icons/ci";
-import { GoReport } from "react-icons/go";
-import { LiaExchangeAltSolid } from "react-icons/lia";
 import {
   Button,
   Dialog,
@@ -11,17 +5,18 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
-  TextField,
-  Tooltip,
 } from "@mui/material";
+import { useEffect, useState } from "react";
+import { CiBookmark } from "react-icons/ci";
+import { GoBookmarkFill, GoReport } from "react-icons/go";
+import { LiaExchangeAltSolid } from "react-icons/lia";
 import { useNavigate } from "react-router-dom";
-import productApi from "../../services/productApi";
-import Loading from "../Loading";
-import bookMarkApi from "../../services/bookMarkApi";
-import { ProductResponse } from "../../interfaces/productResponse";
-import { GoBookmarkFill } from "react-icons/go";
-import reportApi from "../../services/reportApi";
 import { ToastContainer, toast } from "react-toastify";
+import { ProductResponse } from "../../interfaces/productResponse";
+import bookMarkApi from "../../services/bookMarkApi";
+import productApi from "../../services/productApi";
+import reportApi from "../../services/reportApi";
+import Loading from "../Loading";
 
 const ExchangeList = () => {
   const [products, setproducts] = useState<ProductResponse[]>();

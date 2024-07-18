@@ -17,6 +17,7 @@ import productApi from "../../services/productApi";
 
 const ProductList = () => {
   const navigate = useNavigate();
+  const feId = localStorage.getItem("feId");
   const [products, setProducts] = useState<ProductResponse[]>([]);
   console.log("first", products);
   const [memberInfor, setMemberInfor] = useState<MemberInfor>();
@@ -73,7 +74,7 @@ const ProductList = () => {
   };
 
   return (
-    <Container maxWidth="lg" sx={{ marginTop: "130px" }}>
+    <Container maxWidth="lg" sx={{ marginTop: "80px" }}>
       <Grid container spacing={4}>
         {products.map((product) => (
           <Grid item key={product.productId} xs={12} sm={6} md={4}>
@@ -104,6 +105,8 @@ const ProductList = () => {
                   size="small"
                   color="primary"
                   onClick={() => handleViewDetails(product.productId, product)}
+                  variant="contained"
+                  disabled={product.feId == feId ? true : false}
                 >
                   View Details
                 </Button>
