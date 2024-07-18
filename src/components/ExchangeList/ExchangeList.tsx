@@ -4,18 +4,43 @@ import ATM from "../../assets/—Pngtree—credit card_5933595.png";
 import { CiBookmark } from "react-icons/ci";
 import { GoReport } from "react-icons/go";
 import { LiaExchangeAltSolid } from "react-icons/lia";
-import { Tooltip } from "@mui/material";
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  TextField,
+  Tooltip,
+} from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import productApi from "../../services/productApi";
 import Loading from "../Loading";
 import bookMarkApi from "../../services/bookMarkApi";
 import { ProductResponse } from "../../interfaces/productResponse";
 import { GoBookmarkFill } from "react-icons/go";
+import reportApi from "../../services/reportApi";
+import { ToastContainer, toast } from "react-toastify";
 
 const ExchangeList = () => {
   const [products, setproducts] = useState<ProductResponse[]>();
   const navigate = useNavigate();
   const [bookmarkedList, setBookmarkedList] = useState<ProductResponse[]>();
+  const [openReport, setOpenReport] = React.useState(false);
+  const [productIdReport, setProductIdReport] = useState<number>();
+  const [messageReport, setMessageReport] = useState<string>();
+  const [isSendReport, setIsSendReport] = useState<boolean>(false);
+  const handleClickOpenReport = (productId: number) => {
+    setOpenReport(true);
+    setProductIdReport(productId);
+  };
+
+  const handleCloseReport = () => {
+    setMessageReport("");
+    setIsSendReport(false);
+    setOpenReport(false);
+  };
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -62,8 +87,42 @@ const ExchangeList = () => {
       });
   };
 
+  const onChangeMessageReport = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setMessageReport(e.target.value);
+  };
+
+  const sendReport = () => {
+    setIsSendReport(true);
+    reportApi
+      .createReport({
+        ProductId: productIdReport,
+        Message: messageReport,
+      })
+      .then((response: any) => {
+        if (response.isSuccess == true) {
+          setIsSendReport(false);
+          setMessageReport("");
+          setOpenReport(false);
+          console.log("Success");
+          toast.success("Report success!", {
+            position: "top-center",
+            autoClose: 3000,
+          });
+        }
+      })
+      .catch((error) => {
+        console.log("Report error", error);
+        setOpenReport(false);
+        toast.success("Report fail!", {
+          position: "top-center",
+          autoClose: 3000,
+        });
+      });
+  };
+
   return (
     <>
+      <ToastContainer />
       {products ? (
         products?.map((item) => (
           <div
@@ -133,11 +192,52 @@ const ExchangeList = () => {
                 <LiaExchangeAltSolid size={"22px"} />
                 Exchange
               </button>
-              <button className="flex gap-1 items-center transition-all duration-300 bg-red-300 rounded-lg p-2 cursor-pointer hover:bg-red-500 ">
+              <button
+                onClick={() => {
+                  handleClickOpenReport(item.productId);
+                }}
+                className="flex gap-1 items-center transition-all duration-300 bg-red-300 rounded-lg p-2 cursor-pointer hover:bg-red-500 "
+              >
                 <GoReport size={"22px"} />
                 Report
               </button>
             </div>
+
+            <Dialog open={openReport} onClose={handleCloseReport}>
+              <DialogTitle>Report</DialogTitle>
+              <DialogContent>
+                <DialogContentText>
+                  Write reason which you want send for GoodsExchange to report
+                  this product
+                </DialogContentText>
+                <textarea
+                  value={messageReport}
+                  onChange={onChangeMessageReport}
+                  style={{ height: "auto", width: "80%", marginTop: 5 }}
+                  autoFocus
+                  required
+                  id="report"
+                  name="report"
+                  placeholder="Reason report"
+                />
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={handleCloseReport}>Cancel</Button>
+                {isSendReport === true ? (
+                  <div className="p-3">
+                    <Loading />
+                  </div>
+                ) : (
+                  <Button
+                    disabled={messageReport ? false : true}
+                    onClick={sendReport}
+                    variant="contained"
+                  >
+                    Send
+                  </Button>
+                )}
+              </DialogActions>
+            </Dialog>
           </div>
         ))
       ) : (
