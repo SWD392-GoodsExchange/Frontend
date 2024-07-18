@@ -1,5 +1,5 @@
+import Chart, { ChartTypeRegistry } from "chart.js/auto";
 import React, { useEffect, useRef } from "react";
-import Chart, { ChartConfiguration, ChartTypeRegistry } from "chart.js/auto";
 
 interface LineChartProps {
   data: number[];
