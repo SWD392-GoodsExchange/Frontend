@@ -172,7 +172,7 @@ const ManageMember = () => {
   );
 
   return (
-    <Box sx={{ padding: 2 }}>
+    <Box sx={{ padding: "20px" }}>
       <Box
         sx={{
           marginBottom: 2,
@@ -203,17 +203,19 @@ const ManageMember = () => {
             </Select>
           </FormControl>
         </Box>
-        <Box>
-          <Button
-            variant="contained"
-            sx={{ marginRight: 2 }}
+        <Box sx={{ display: "flex", gap: 2 }}>
+          <button
+            className="p-2 rounded-lg bg-blue-500"
             onClick={handleAddMember}
           >
             New member
-          </Button>
-          <Button variant="contained" onClick={handleExportData}>
+          </button>
+          <button
+            className="p-2 rounded-lg bg-blue-500"
+            onClick={handleExportData}
+          >
             Export Data
-          </Button>
+          </button>
         </Box>
       </Box>
 

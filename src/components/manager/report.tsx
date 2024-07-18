@@ -120,7 +120,7 @@ const Report = () => {
   );
 
   return (
-    <Grid sx={{ paddingLeft: "30px", width: "1100px" }}>
+    <Grid sx={{ padding: "20px" }}>
       <Box
         sx={{
           marginBottom: 2,
