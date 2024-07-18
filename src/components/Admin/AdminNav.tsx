@@ -34,8 +34,27 @@ const AdminNav = (props: Props) => {
           >
             Dashboard
           </li>
-          <li className="cursor-pointer">Manage Member</li>
-          <li className="cursor-pointer">Manage Report</li>
+          <li
+            className={`cursor-pointer ${
+              location.pathname == "/admin/report" && `font-bold underline`
+            }`}
+            onClick={() => {
+              navigate("/admin/report");
+            }}
+          >
+            Manage Member
+          </li>
+          <li
+            className={`cursor-pointer ${
+              location.pathname == "/admin/manageMember" &&
+              `font-bold underline`
+            }`}
+            onClick={() => {
+              navigate("/admin/manageMember");
+            }}
+          >
+            Manage Report
+          </li>
         </ul>
       </div>
       <button className="flex items-center gap-2 ">

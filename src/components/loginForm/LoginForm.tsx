@@ -46,6 +46,7 @@ const LoginForm = ({ setChangeForm, handleClose }: Props) => {
           autoClose: 2000,
           onClose: () => {
             localStorage.clear();
+            localStorage.setItem("roleName", loginResponse.data.roleName);
             localStorage.setItem("loggedIn", "true");
             localStorage.setItem("avatar", loginResponse.data.avatar);
             localStorage.setItem("feId", loginResponse.data.feId);
