@@ -1,18 +1,17 @@
-import React, { useEffect, useState } from "react";
-import Avatar from "../../assets/bear.png";
-import ATM from "../../assets/—Pngtree—credit card_5933595.png";
+import { useEffect, useState } from "react";
 import { CiBookmark } from "react-icons/ci";
 import { GoReport } from "react-icons/go";
 import { LiaExchangeAltSolid } from "react-icons/lia";
-import { Tooltip } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import Avatar from "../../assets/bear.png";
 import productApi from "../../services/productApi";
-import { ProductReponse } from "../../interfaces/productResponse";
-import Loading from "../Loading";
+
+import { ProductResponse } from "../../interfaces/productResponse";
 import bookMarkApi from "../../services/bookMarkApi";
+import Loading from "../Loading";
 
 const ExchangeList = () => {
-  const [products, setproducts] = useState<ProductReponse[]>();
+  const [products, setproducts] = useState<ProductResponse[]>();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -25,7 +24,7 @@ const ExchangeList = () => {
 
   const onClickExchange = (
     productId: number,
-    productObject: ProductReponse
+    productObject: ProductResponse
   ) => {
     navigate(`/exchange-ticket/${productId}`, {
       state: productObject,

@@ -6,12 +6,14 @@ import ShoppingCart from "../components/Shopping/shoppingCart";
 import GuestPage from "../pages/Guest/GuestPage";
 import HomePage from "../pages/HomePage";
 import ManageMemberPage from "../pages/Manager/manageMemberPage";
+import ProductViewPage from "../pages/Manager/productViewPage";
 import MemberInformation from "../pages/MyProfile/MemberInformation";
 import MyBookmark from "../pages/MyProfile/MyBookmark";
 import MyProduct from "../pages/MyProfile/MyProduct";
 import MyProfile from "../pages/MyProfile/MyProfile";
 import OrderHistoryPage from "../pages/purchase/orderHistoryPage";
 import ProductCardPage from "../pages/purchase/productCardPage";
+import ReportPage from "../pages/reportPage";
 import ManageOrderPage from "../pages/Shopping/manageOrderPage";
 import PayItemPage from "../pages/Shopping/payItemPage";
 
@@ -34,6 +36,11 @@ const AppRoutes = () => {
       <Route path="/Purchase/ShoppingCart" element={<ShoppingCart />} />
       <Route path="/Purchase/Bookmark" element={<ManageOrderPage />} />
       <Route path="/manager/manageMember" element={<ManageMemberPage />} />
+      <Route path="/manager/report" element={<ReportPage />} />
+      <Route
+        path="/manager/productView/:productId"
+        element={<ProductViewPage />}
+      />
     </Routes>
   );
 };

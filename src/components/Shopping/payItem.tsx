@@ -44,6 +44,7 @@ const PayItem = () => {
   const fetchMember = async () => {
     try {
       const response: any = await authApi.getInformationMember();
+      console.log("member:", response);
       setMemberInfor(response);
     } catch (error) {
       console.error("Error fetching member information:", error);
@@ -59,6 +60,9 @@ const PayItem = () => {
     const fetchProduct = async () => {
       try {
         const response = await productApi.getProductByPId(state.productId);
+
+        if (products?.feId === memberInfor?.feId) {
+        }
         setProducts(response.data);
       } catch (error) {
         console.error("Error fetching product information:", error);
@@ -114,14 +118,14 @@ const PayItem = () => {
     ];
 
     const checkoutData: CheckoutResponse = {
-      memberId: memberInfor.feId,
+      productId: products.productId,
       orderDetails: orderDetails,
     };
 
     try {
       const response = await purchaseApi.checkOutPayment(checkoutData);
       console.log("Payment response:", response);
-      // Handle success (e.g., navigate to success page)
+      // // Handle success (e.g., navigate to success page)
       window.location.href = response.data;
     } catch (error) {
       console.error("Payment error:", error);
