@@ -34,7 +34,6 @@ import purchaseApi from "../../services/purchaseApi";
 
 const PayItem = () => {
   const { state } = useLocation();
-
   const [products, setProducts] = useState<ProductResponse | null>(null);
   const [memberInfor, setMemberInfor] = useState<MemberInfor | null>(null);
   const [open, setOpen] = useState(false);

@@ -19,10 +19,10 @@ const ExchangeList = () => {
 
   useEffect(() => {
     const fetchProducts = async () => {
-      const productsApi: any = await productApi.getExchangeProducts();
-      setproducts(productsApi.data.data);
       const bookmarkedList: any = await bookMarkApi.getAllBookmark();
       setBookmarkedList(bookmarkedList.data);
+      const productsApi: any = await productApi.getExchangeProducts();
+      setproducts(productsApi.data.data);
     };
     fetchProducts();
   }, [products, bookmarkedList]);
@@ -101,7 +101,7 @@ const ExchangeList = () => {
                 <img
                   className="outline outline-1 w-full rounded-lg"
                   src={image.imageUrl}
-                  width={"300px"}
+                  width={"auto"}
                   height="auto"
                 />
               ))}

@@ -15,6 +15,7 @@ import ManageOrderPage from "../pages/Shopping/manageOrderPage";
 import PayItemPage from "../pages/Shopping/payItemPage";
 import GuestPage from "../pages/Guest/GuestPage";
 import ExchangeRequestPage from "../pages/Exchange/ExchangeRequestPage";
+import AdminPage from "../pages/Admin/AdminPage";
 
 const AppRoutes = () => {
   return (
@@ -37,6 +38,8 @@ const AppRoutes = () => {
       <Route path="/Purchase/ShoppingCart" element={<ShoppingCart />} />
       <Route path="/Purchase/Bookmark" element={<ManageOrderPage />} />
       <Route path="/manager/manageMember" element={<ManageMemberPage />} />
+      {/* Admin Route */}
+      <Route path="/admin" element={<AdminPage />} />
     </Routes>
   );
 };
