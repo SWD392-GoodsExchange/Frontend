@@ -6,7 +6,7 @@ import BackButton from "../back/backButton";
 const PayItemPage = () => {
   return (
     <Grid>
-      <Box sx={{ paddingTop: "100px", marginLeft: "5px" }}>
+      <Box sx={{ paddingTop: "0px", marginLeft: "5px" }}>
         <BackButton />
       </Box>
       <Paper

@@ -3,7 +3,6 @@ import { Route, Routes } from "react-router-dom";
 import ExchangeTicket from "../components/ExchangeList/ExchangeTicket";
 import ProductList from "../components/purchase/productList";
 import ShoppingCart from "../components/Shopping/shoppingCart";
-import GuestPage from "../pages/Guest/GuestPage";
 import HomePage from "../pages/HomePage";
 import ManageMemberPage from "../pages/Manager/manageMemberPage";
 import MemberInformation from "../pages/MyProfile/MemberInformation";
@@ -15,8 +14,8 @@ import ProductCardPage from "../pages/purchase/productCardPage";
 import ManageOrderPage from "../pages/Shopping/manageOrderPage";
 import PayItemPage from "../pages/Shopping/payItemPage";
 import GuestPage from "../pages/Guest/GuestPage";
-import { useEffect, useState } from "react";
 import ExchangeRequestPage from "../pages/Exchange/ExchangeRequestPage";
+import AdminPage from "../pages/Admin/AdminPage";
 
 const AppRoutes = () => {
   return (
@@ -35,10 +34,12 @@ const AppRoutes = () => {
       <Route path="/trade" element={<ProductList />} />
       <Route path="/products/:productId" element={<ProductCardPage />} />
       <Route path="/Purchase/PayItem/:productId" element={<PayItemPage />} />
-      <Route path="my-profile/orderHistory" element={<OrderHistoryPage />} />
+      <Route path="/my-profile/order-history" element={<OrderHistoryPage />} />
       <Route path="/Purchase/ShoppingCart" element={<ShoppingCart />} />
       <Route path="/Purchase/Bookmark" element={<ManageOrderPage />} />
       <Route path="/manager/manageMember" element={<ManageMemberPage />} />
+      {/* Admin Route */}
+      <Route path="/admin" element={<AdminPage />} />
     </Routes>
   );
 };
