@@ -1,26 +1,51 @@
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+} from "@mui/material";
 import { useEffect, useState } from "react";
 import { CiBookmark } from "react-icons/ci";
-import { GoReport } from "react-icons/go";
+import { GoBookmarkFill, GoReport } from "react-icons/go";
 import { LiaExchangeAltSolid } from "react-icons/lia";
 import { useNavigate } from "react-router-dom";
-import Avatar from "../../assets/bear.png";
-import productApi from "../../services/productApi";
-
+import { ToastContainer, toast } from "react-toastify";
 import { ProductResponse } from "../../interfaces/productResponse";
 import bookMarkApi from "../../services/bookMarkApi";
+import productApi from "../../services/productApi";
+import reportApi from "../../services/reportApi";
 import Loading from "../Loading";
 
 const ExchangeList = () => {
   const [products, setproducts] = useState<ProductResponse[]>();
   const navigate = useNavigate();
+  const [bookmarkedList, setBookmarkedList] = useState<ProductResponse[]>();
+  const [openReport, setOpenReport] = React.useState(false);
+  const [productIdReport, setProductIdReport] = useState<number>();
+  const [messageReport, setMessageReport] = useState<string>();
+  const [isSendReport, setIsSendReport] = useState<boolean>(false);
+  const handleClickOpenReport = (productId: number) => {
+    setOpenReport(true);
+    setProductIdReport(productId);
+  };
+
+  const handleCloseReport = () => {
+    setMessageReport("");
+    setIsSendReport(false);
+    setOpenReport(false);
+  };
 
   useEffect(() => {
     const fetchProducts = async () => {
+      const bookmarkedList: any = await bookMarkApi.getAllBookmark();
+      setBookmarkedList(bookmarkedList.data);
       const productsApi: any = await productApi.getExchangeProducts();
       setproducts(productsApi.data.data);
     };
     fetchProducts();
-  }, [products]);
+  }, [products, bookmarkedList]);
 
   const onClickExchange = (
     productId: number,
@@ -31,7 +56,20 @@ const ExchangeList = () => {
     });
   };
 
+  const listProductBookmarked = bookmarkedList?.map((item) => {
+    return item.productId;
+  });
+
   const bookMarkProduct = (productId: number) => {
+    if (listProductBookmarked?.includes(productId) === true) {
+      bookMarkApi
+        .deleteBookMark(productId)
+        .then((response) => console.log(response))
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+
     bookMarkApi
       .createBookMark({
         ProductId: productId.toString(),
@@ -44,8 +82,42 @@ const ExchangeList = () => {
       });
   };
 
+  const onChangeMessageReport = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setMessageReport(e.target.value);
+  };
+
+  const sendReport = () => {
+    setIsSendReport(true);
+    reportApi
+      .createReport({
+        ProductId: productIdReport,
+        Message: messageReport,
+      })
+      .then((response: any) => {
+        if (response.isSuccess == true) {
+          setIsSendReport(false);
+          setMessageReport("");
+          setOpenReport(false);
+          console.log("Success");
+          toast.success("Report success!", {
+            position: "top-center",
+            autoClose: 3000,
+          });
+        }
+      })
+      .catch((error) => {
+        console.log("Report error", error);
+        setOpenReport(false);
+        toast.success("Report fail!", {
+          position: "top-center",
+          autoClose: 3000,
+        });
+      });
+  };
+
   return (
     <>
+      <ToastContainer />
       {products ? (
         products?.map((item) => (
           <div
@@ -53,7 +125,7 @@ const ExchangeList = () => {
             className="px-3 py-3 my-1 flex flex-col items-start gap-2 bg-white w-[100%] rounded-md shadow-2xl"
           >
             <div className="flex gap-3">
-              <img src={Avatar} width={50} height={50} />
+              <img src={item.avatar} width={50} height={50} />
               <div className="flex flex-col items-start">
                 <h4 className="font-bold">{item.userName}</h4>
                 <p className="font-light">
@@ -83,7 +155,7 @@ const ExchangeList = () => {
                 <img
                   className="outline outline-1 w-full rounded-lg"
                   src={image.imageUrl}
-                  width={"300px"}
+                  width={"auto"}
                   height="auto"
                 />
               ))}
@@ -94,9 +166,16 @@ const ExchangeList = () => {
                 onClick={() => {
                   bookMarkProduct(item.productId);
                 }}
-                className="flex gap-1 items-center transition-all duration-300 bg-purple-300 rounded-lg p-2 cursor-pointer hover:bg-purple-500"
+                className={`${
+                  listProductBookmarked?.includes(item.productId) == true &&
+                  `text-white bg-purple-500 font-bold`
+                } flex gap-1 items-center transition-all duration-300 bg-purple-300 rounded-lg p-2 cursor-pointer hover:bg-purple-500`}
               >
-                <CiBookmark size={"22px"} />
+                {listProductBookmarked?.includes(item.productId) == true ? (
+                  <GoBookmarkFill size={"22px"} />
+                ) : (
+                  <CiBookmark size={"22px"} />
+                )}
                 Bookmark
               </button>
               <button
@@ -108,11 +187,52 @@ const ExchangeList = () => {
                 <LiaExchangeAltSolid size={"22px"} />
                 Exchange
               </button>
-              <button className="flex gap-1 items-center transition-all duration-300 bg-red-300 rounded-lg p-2 cursor-pointer hover:bg-red-500 ">
+              <button
+                onClick={() => {
+                  handleClickOpenReport(item.productId);
+                }}
+                className="flex gap-1 items-center transition-all duration-300 bg-red-300 rounded-lg p-2 cursor-pointer hover:bg-red-500 "
+              >
                 <GoReport size={"22px"} />
                 Report
               </button>
             </div>
+
+            <Dialog open={openReport} onClose={handleCloseReport}>
+              <DialogTitle>Report</DialogTitle>
+              <DialogContent>
+                <DialogContentText>
+                  Write reason which you want send for GoodsExchange to report
+                  this product
+                </DialogContentText>
+                <textarea
+                  value={messageReport}
+                  onChange={onChangeMessageReport}
+                  style={{ height: "auto", width: "80%", marginTop: 5 }}
+                  autoFocus
+                  required
+                  id="report"
+                  name="report"
+                  placeholder="Reason report"
+                />
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={handleCloseReport}>Cancel</Button>
+                {isSendReport === true ? (
+                  <div className="p-3">
+                    <Loading />
+                  </div>
+                ) : (
+                  <Button
+                    disabled={messageReport ? false : true}
+                    onClick={sendReport}
+                    variant="contained"
+                  >
+                    Send
+                  </Button>
+                )}
+              </DialogActions>
+            </Dialog>
           </div>
         ))
       ) : (

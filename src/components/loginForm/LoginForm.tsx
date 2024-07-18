@@ -39,23 +39,27 @@ const LoginForm = ({ setChangeForm, handleClose }: Props) => {
         FeId: feId,
         Password: password,
       });
+      console.log(loginResponse);
       if (loginResponse.isSuccess) {
         toast.success("Login successfully!", {
           position: "top-center",
           autoClose: 2000,
+          onClose: () => {
+            localStorage.clear();
+            localStorage.setItem("loggedIn", "true");
+            localStorage.setItem("avatar", loginResponse.data.avatar);
+            localStorage.setItem("feId", loginResponse.data.feId);
+            localStorage.setItem("userName", loginResponse.data.userName);
+            localStorage.setItem("jwtToken", loginResponse.data.jwtToken);
+            localStorage.setItem(
+              "refreshToken",
+              loginResponse.data.refreshToken
+            );
+            setIsLogged(true);
+            handleClose();
+            navigate("/exchange");
+          },
         });
-        localStorage.clear();
-        localStorage.setItem("loggedIn", "true");
-        localStorage.setItem("avatar", loginResponse.data.avatar);
-        localStorage.setItem("feId", loginResponse.data.feId);
-        localStorage.setItem("userName", loginResponse.data.userName);
-        localStorage.setItem("jwtToken", loginResponse.data.jwtToken);
-        localStorage.setItem("refreshToken", loginResponse.data.refreshToken);
-        setIsLogged(true);
-        setTimeout(() => {
-          handleClose();
-          navigate("/exchange");
-        }, 3000);
       } else {
         toast.error("Invalid FeId or password", {
           position: "top-center",
@@ -69,9 +73,6 @@ const LoginForm = ({ setChangeForm, handleClose }: Props) => {
   return (
     <div className="flex flex-col md:w-auto">
       <ToastContainer />
-      {/* {isLogged == true && (
-        <SignalRServices token={localStorage.getItem("jwtToken")} />
-      )} */}
       <div className="flex flex-col items-center justify-center gap-5">
         <div className="flex flex-col justify-center items-center text-20">
           <RiExchangeFill

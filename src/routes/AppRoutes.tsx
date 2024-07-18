@@ -2,6 +2,8 @@ import { Route, Routes } from "react-router-dom";
 
 import ExchangeTicket from "../components/ExchangeList/ExchangeTicket";
 import ShoppingCart from "../components/Shopping/shoppingCart";
+import AdminPage from "../pages/Admin/AdminPage";
+import ExchangeRequestPage from "../pages/Exchange/ExchangeRequestPage";
 import GuestPage from "../pages/Guest/GuestPage";
 import HomePage from "../pages/HomePage";
 import ManageMemberPage from "../pages/Manager/manageMemberPage";
@@ -20,10 +22,12 @@ import PayItemPage from "../pages/Shopping/payItemPage";
 const AppRoutes = () => {
   return (
     <Routes>
+      {/* <Route path="/" element={<GuestPage />} /> */}
       <Route path="/" element={<GuestPage />} />
 
       <Route path="/exchange" element={<HomePage />} />
       <Route path="/my-profile" element={<MyProfile />} />
+      <Route path="/exchange-request" element={<ExchangeRequestPage />} />
       <Route path="/my-profile/information" element={<MemberInformation />} />
       <Route path="/my-profile/product" element={<MyProduct />} />
       <Route path="my-profile/bookmark" element={<MyBookmark />} />
@@ -32,10 +36,12 @@ const AppRoutes = () => {
       <Route path="/trade" element={<ProductListPage />} />
       <Route path="/products/:productId" element={<ProductCardPage />} />
       <Route path="/Purchase/PayItem/:productId" element={<PayItemPage />} />
-      <Route path="my-profile/orderHistory" element={<OrderHistoryPage />} />
+      <Route path="/my-profile/order-history" element={<OrderHistoryPage />} />
       <Route path="/Purchase/ShoppingCart" element={<ShoppingCart />} />
       <Route path="/Purchase/Bookmark" element={<ManageOrderPage />} />
       <Route path="/manager/manageMember" element={<ManageMemberPage />} />
+      {/* Admin Route */}
+      <Route path="/admin" element={<AdminPage />} />
       <Route path="/manager/report" element={<ReportPage />} />
       <Route
         path="/manager/productView/:productId"

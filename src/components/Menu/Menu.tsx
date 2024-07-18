@@ -22,9 +22,9 @@ import "react-toastify/dist/ReactToastify.css";
 const Menu = () => {
   const navigate = useNavigate();
   const handleLogout = () => {
+    localStorage.clear();
+    localStorage.setItem("loggedIn", "false");
     setTimeout(() => {
-      localStorage.clear();
-      localStorage.setItem("loggedIn", "false");
       navigate("/");
     }, 3000);
   };

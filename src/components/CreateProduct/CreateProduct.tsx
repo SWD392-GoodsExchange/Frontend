@@ -274,6 +274,7 @@ const CreateProduct = () => {
                   <input
                     value={formPostProduct.Price}
                     name="Price"
+                    onChange={handleChangeForm}
                     disabled={formPostProduct.Type === "Trade" ? false : true}
                     className={`bg-slate-200 p-2 rounded-md ${
                       formPostProduct.Type === "Trade"

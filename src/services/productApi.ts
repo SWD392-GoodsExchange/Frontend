@@ -6,7 +6,11 @@ const productApi = {
     return axiosClient.get(url);
   },
   getAllProductByFeid(FeId: string | null) {
-    const url = `/products/${FeId}`;
+    const url = `/products/fe/${FeId}`;
+    return axiosClient.get(url);
+  },
+  getAllProductExchangeByFeid(FeId: string | null) {
+    const url = `/products/fe/${FeId}?Type=Exchange`;
     return axiosClient.get(url);
   },
   createProduct(data: FormData) {

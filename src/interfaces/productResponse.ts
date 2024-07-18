@@ -12,6 +12,7 @@ export interface ProductResponse {
   productId: number;
   feId: string;
   userName: string;
+  avatar: string;
   categoryName: string;
   description: string;
   origin: string;
