@@ -53,7 +53,6 @@ const PayItem = () => {
   useEffect(() => {
     fetchMember();
   }, []);
-
   console.log("FeId", memberInfor?.feId);
   useEffect(() => {
     const fetchProduct = async () => {
@@ -97,6 +96,7 @@ const PayItem = () => {
 
   console.log("products", products);
   console.log("memberInfor", memberInfor);
+  console.log("feId", memberInfor?.feId);
 
   const handlePayment = async () => {
     fetchMember();
@@ -155,9 +155,12 @@ const PayItem = () => {
               <Typography>{memberInfor?.phone}</Typography>
             </Box>
           </Box>
-          <Button variant="contained" onClick={handleClickOpen}>
+          <button
+            className="p-3 bg-blue-500 rounded-lg text-white hover:bg-blue-700"
+            onClick={handleClickOpen}
+          >
             Change Address
-          </Button>
+          </button>
           <Dialog open={open} onClose={handleClose}>
             <DialogTitle>Delivery Address Change</DialogTitle>
             <DialogContent>
