@@ -6,6 +6,7 @@ import { RiExchangeFill } from "react-icons/ri";
 import { IoIosMale } from "react-icons/io";
 import { IoIosFemale } from "react-icons/io";
 import authApi from "../../services/authApi";
+import { ToastContainer, toast } from "react-toastify";
 
 type Props = {
   setChangeForm: React.Dispatch<React.SetStateAction<string>>;
@@ -57,10 +58,45 @@ const SignUp = ({ setChangeForm }: Props) => {
     setDob(e.target.value);
   };
 
-  const handleSignUp = () => {};
+  const handleSignUp = () => {
+    authApi
+      .signUp({
+        FeId: feId,
+        Address: address,
+        Email: email,
+        Gender: gender,
+        Password: password,
+        Phone: phone,
+        UserName: userName,
+      })
+      .then((response: any) => {
+        if (response.isSuccess) {
+          toast.success("Signup success", {
+            position: "top-center",
+            autoClose: 3000,
+            onClose: () => {
+              setChangeForm("Signin");
+            },
+          });
+        } else {
+          toast.error(response.message, {
+            position: "top-center",
+            autoClose: 3000,
+          });
+        }
+      })
+      .catch((error) => {
+        toast.error(error, {
+          position: "top-center",
+          autoClose: 3000,
+        });
+        console.log(error);
+      });
+  };
 
   return (
     <div className="flex flex-col md:w-auto">
+      <ToastContainer />
       <div className="flex flex-col items-center justify-center gap-8">
         <div className="flex flex-col justify-center items-center text-20">
           <RiExchangeFill
@@ -156,7 +192,7 @@ const SignUp = ({ setChangeForm }: Props) => {
             onChange={onChangePhone}
           />
         </div>
-        <div className="flex flex-col gap-2">
+        {/* <div className="flex flex-col gap-2">
           <p>Date of birth</p>
           <input
             value={dob}
@@ -164,31 +200,17 @@ const SignUp = ({ setChangeForm }: Props) => {
             type="date"
             onChange={onChangeDob}
           />
-        </div>
+        </div> */}
       </div>
       <button
         onClick={handleSignUp}
         className={`mt-10 p-3 ${
-          feId &&
-          email &&
-          userName &&
-          password &&
-          address &&
-          gender &&
-          phone &&
-          dob
+          feId && email && userName && password && address && gender && phone
             ? "bg-orange-600"
             : "bg-orange-300 cursor-not-allowed "
         } text-white rounded-md`}
         disabled={
-          feId &&
-          email &&
-          userName &&
-          password &&
-          address &&
-          gender &&
-          phone &&
-          dob
+          feId && email && userName && password && address && gender && phone
             ? false
             : true
         }
