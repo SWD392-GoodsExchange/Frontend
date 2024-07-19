@@ -9,6 +9,13 @@ type Props = {};
 const AdminNav = (props: Props) => {
   const location = useLocation();
   const navigate = useNavigate();
+  const handleLogout = () => {
+    localStorage.clear();
+    localStorage.setItem("loggedIn", "false");
+    setTimeout(() => {
+      navigate("/");
+    }, 3000);
+  };
   return (
     <div className="flex flex-col h-[100%] items-center rounded-tl-3xl rounded-bl-3xl bg-[#e2d1bd] py-[20px]">
       <p className="flex items-center gap-2 font-semibold text-20">
@@ -16,10 +23,15 @@ const AdminNav = (props: Props) => {
         GoodsExchange
       </p>
       <div className="mt-[30px] flex flex-col items-center">
-        <img src={Avt} alt="" width={60} height={60} />
+        <img
+          src={localStorage.getItem("avatar")}
+          alt=""
+          width={60}
+          height={60}
+        />
         <div className="flex flex-col items-center mt-[10px] gap-1">
-          <p className="font-bold">Ngo Quang Dung</p>
-          <p className="font-light">Admin</p>
+          <p className="font-bold">{localStorage.getItem("userName")}</p>
+          <p className="font-light">{localStorage.getItem("roleName")}</p>
         </div>
       </div>
       <div className="my-[80px]">
@@ -36,16 +48,6 @@ const AdminNav = (props: Props) => {
           </li>
           <li
             className={`cursor-pointer ${
-              location.pathname == "/admin/report" && `font-bold underline`
-            }`}
-            onClick={() => {
-              navigate("/admin/report");
-            }}
-          >
-            Manage Member
-          </li>
-          <li
-            className={`cursor-pointer ${
               location.pathname == "/admin/manageMember" &&
               `font-bold underline`
             }`}
@@ -53,11 +55,21 @@ const AdminNav = (props: Props) => {
               navigate("/admin/manageMember");
             }}
           >
+            Manage Member
+          </li>
+          <li
+            className={`cursor-pointer ${
+              location.pathname == "/admin/report" && `font-bold underline`
+            }`}
+            onClick={() => {
+              navigate("/admin/report");
+            }}
+          >
             Manage Report
           </li>
         </ul>
       </div>
-      <button className="flex items-center gap-2 ">
+      <button onClick={handleLogout} className="flex items-center gap-2 ">
         <div className="p-3 bg-black rounded-full">
           <FiLogOut color="white" />
         </div>

@@ -11,6 +11,10 @@ const reportApi = {
     const url = "/reports/";
     return axiosClient.post(url, data);
   },
+  totalReport() {
+    const url = "/reports/totalReports";
+    return axiosClient.get(url);
+  },
 };
 
 export default reportApi;

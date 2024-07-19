@@ -1,4 +1,5 @@
 import { LoginRequest } from "../interfaces/Auth/Login";
+import { SignUpRequest } from "../interfaces/Auth/SingUp";
 import axiosClient from "./axiosClient";
 
 const authApi = {
@@ -9,6 +10,10 @@ const authApi = {
   getInformationMember() {
     const url = "/Members/information";
     return axiosClient.get(url);
+  },
+  signUp(data: SignUpRequest) {
+    const url = "/members/register";
+    return axiosClient.post(url, data);
   },
 };
 

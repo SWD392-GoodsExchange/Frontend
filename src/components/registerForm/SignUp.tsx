@@ -5,6 +5,7 @@ import { RxEyeClosed } from "react-icons/rx";
 import { RiExchangeFill } from "react-icons/ri";
 import { IoIosMale } from "react-icons/io";
 import { IoIosFemale } from "react-icons/io";
+import authApi from "../../services/authApi";
 
 type Props = {
   setChangeForm: React.Dispatch<React.SetStateAction<string>>;
@@ -56,6 +57,8 @@ const SignUp = ({ setChangeForm }: Props) => {
     setDob(e.target.value);
   };
 
+  const handleSignUp = () => {};
+
   return (
     <div className="flex flex-col md:w-auto">
       <div className="flex flex-col items-center justify-center gap-8">
@@ -74,6 +77,7 @@ const SignUp = ({ setChangeForm }: Props) => {
         <div className="flex flex-col gap-2">
           <p>FeID</p>
           <input
+            value={feId}
             className="p-3 bg-slate-500 text-white rounded-md outline-none"
             type="text"
             onChange={onChangeFeiD}
@@ -82,6 +86,7 @@ const SignUp = ({ setChangeForm }: Props) => {
         <div className="flex flex-col gap-2">
           <p>Email</p>
           <input
+            value={email}
             className="p-3 bg-slate-500 text-white rounded-md outline-none"
             type="email"
             onChange={onChangeEmail}
@@ -90,6 +95,7 @@ const SignUp = ({ setChangeForm }: Props) => {
         <div className="flex flex-col gap-2">
           <p>User name</p>
           <input
+            value={userName}
             className="p-3 bg-slate-500 text-white rounded-md outline-none"
             type="text"
             onChange={handleChangeUserName}
@@ -99,6 +105,7 @@ const SignUp = ({ setChangeForm }: Props) => {
           <p>Password</p>
           <label className="flex items-center bg-slate-500 text-white rounded-md ">
             <input
+              value={password}
               id="password-input"
               className="p-3 w-[90%] mr-3 bg-slate-500 text-white rounded-md outline-none"
               type={showPassword ? "text" : "password"}
@@ -122,6 +129,7 @@ const SignUp = ({ setChangeForm }: Props) => {
         <div className="flex flex-col gap-2">
           <p>Address</p>
           <input
+            value={address}
             className="p-3 bg-slate-500 text-white rounded-md outline-none"
             type="text"
             onChange={onChangeAddress}
@@ -130,6 +138,7 @@ const SignUp = ({ setChangeForm }: Props) => {
         <div className="flex flex-col gap-2">
           <p>Gender</p>
           <select
+            value={gender}
             className="p-3 bg-slate-500 text-white rounded-md outline-none "
             onChange={onChangeGender}
           >
@@ -141,6 +150,7 @@ const SignUp = ({ setChangeForm }: Props) => {
         <div className="flex flex-col gap-2">
           <p>Phone</p>
           <input
+            value={phone}
             className="p-3 bg-slate-500 text-white rounded-md outline-none"
             type="string"
             onChange={onChangePhone}
@@ -149,6 +159,7 @@ const SignUp = ({ setChangeForm }: Props) => {
         <div className="flex flex-col gap-2">
           <p>Date of birth</p>
           <input
+            value={dob}
             className="p-3 bg-slate-500 text-white rounded-md outline-none"
             type="date"
             onChange={onChangeDob}
@@ -156,6 +167,7 @@ const SignUp = ({ setChangeForm }: Props) => {
         </div>
       </div>
       <button
+        onClick={handleSignUp}
         className={`mt-10 p-3 ${
           feId &&
           email &&

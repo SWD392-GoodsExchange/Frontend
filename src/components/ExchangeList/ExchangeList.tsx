@@ -94,13 +94,13 @@ const ExchangeList = () => {
         Message: messageReport,
       })
       .then((response: any) => {
-        if (response.isSuccess == true) {
+        if (response.isSuccess === true) {
           setIsSendReport(false);
           setMessageReport("");
           setOpenReport(false);
           console.log("Success");
           toast.success("Report success!", {
-            position: "top-center",
+            position: "bottom-center",
             autoClose: 3000,
           });
         }
@@ -109,7 +109,7 @@ const ExchangeList = () => {
         console.log("Report error", error);
         setOpenReport(false);
         toast.success("Report fail!", {
-          position: "top-center",
+          position: "bottom-center",
           autoClose: 3000,
         });
       });

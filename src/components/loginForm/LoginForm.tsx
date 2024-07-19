@@ -41,26 +41,43 @@ const LoginForm = ({ setChangeForm, handleClose }: Props) => {
       });
       console.log(loginResponse);
       if (loginResponse.isSuccess) {
-        toast.success("Login successfully!", {
-          position: "top-center",
-          autoClose: 2000,
-          onClose: () => {
-            localStorage.clear();
-            localStorage.setItem("roleName", loginResponse.data.roleName);
-            localStorage.setItem("loggedIn", "true");
-            localStorage.setItem("avatar", loginResponse.data.avatar);
-            localStorage.setItem("feId", loginResponse.data.feId);
-            localStorage.setItem("userName", loginResponse.data.userName);
-            localStorage.setItem("jwtToken", loginResponse.data.jwtToken);
-            localStorage.setItem(
-              "refreshToken",
-              loginResponse.data.refreshToken
-            );
-            setIsLogged(true);
-            handleClose();
-            navigate("/exchange");
-          },
-        });
+        localStorage.clear();
+        localStorage.setItem("roleName", loginResponse.data.roleName);
+        localStorage.setItem("loggedIn", "true");
+        localStorage.setItem("avatar", loginResponse.data.avatar);
+        localStorage.setItem("feId", loginResponse.data.feId);
+        localStorage.setItem("userName", loginResponse.data.userName);
+        localStorage.setItem("jwtToken", loginResponse.data.jwtToken);
+        localStorage.setItem("refreshToken", loginResponse.data.refreshToken);
+        setIsLogged(true);
+        if (loginResponse.data.roleName === "Admin") {
+          toast.success("Login successfully!", {
+            position: "top-center",
+            autoClose: 2000,
+            onClose: () => {
+              handleClose();
+              navigate("/admin");
+            },
+          });
+        } else if (loginResponse.data.roleName === "Member") {
+          toast.success("Login successfully!", {
+            position: "top-center",
+            autoClose: 2000,
+            onClose: () => {
+              handleClose();
+              navigate("/exchange");
+            },
+          });
+        } else if (loginResponse.data.roleName === "Moderator") {
+          toast.success("Login successfully!", {
+            position: "top-center",
+            autoClose: 2000,
+            onClose: () => {
+              handleClose();
+              navigate("/admin/report");
+            },
+          });
+        }
       } else {
         toast.error("Invalid FeId or password", {
           position: "top-center",
@@ -124,7 +141,7 @@ const LoginForm = ({ setChangeForm, handleClose }: Props) => {
           </div>
         </div>
         <button
-          className={`mt-10 p-3 ${
+          className={`mt-10 p-3 w-[100%] ${
             feId && password
               ? "bg-orange-600"
               : "bg-orange-300 cursor-not-allowed "
