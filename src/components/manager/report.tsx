@@ -66,7 +66,7 @@ const Report = () => {
 
   useEffect(() => {
     fetchReportList();
-  }, []);
+  }, [report]);
 
   const handleProductView = async (productId: number) => {
     try {

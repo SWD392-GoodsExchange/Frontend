@@ -1,9 +1,10 @@
 import { Box, Grid, Paper } from "@mui/material";
-import Report from "../components/manager/report";
+
 import BackButton from "./back/backButton";
 import AdminNav from "../components/Admin/AdminNav";
 import AdminDashboard from "../components/Admin/AdminDashboard";
 import ManageMemberPage from "./Manager/manageMemberPage";
+import Report from "../components/manager/report";
 
 const ReportPage = () => {
   return (

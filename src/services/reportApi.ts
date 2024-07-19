@@ -3,7 +3,7 @@ import axiosClient from "./axiosClient";
 
 const reportApi = {
   getAllReport() {
-    const url = "/Report/processing";
+    const url = "/Reports/processing";
     return axiosClient.get(url);
   },
 
@@ -13,22 +13,22 @@ const reportApi = {
   },
 
   approveReport(reportId: number) {
-    const url = `/Report/approved/${reportId}`;
+    const url = `/Reports/approved/${reportId}`;
     return axiosClient.put(url);
   },
 
   rejectReport(reportId: number) {
-    const url = `/Report/rejected/${reportId}`;
+    const url = `/Reports/rejected/${reportId}`;
     return axiosClient.put(url);
   },
 
   getApprovedReport() {
-    const url = "/Report/approved";
+    const url = "/Reports/approved";
     return axiosClient.get(url);
   },
 
   getRejectedReport() {
-    const url = "/Report/rejected";
+    const url = "/Reports/rejected";
     return axiosClient.get(url);
   },
   totalReport() {

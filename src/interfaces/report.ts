@@ -1,5 +1,4 @@
 export interface ReportResponse {
-  updatedTime: Date;
   createdTime: Date;
   feId: number;
   message: string;
