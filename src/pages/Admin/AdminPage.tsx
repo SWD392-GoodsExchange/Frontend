@@ -3,6 +3,8 @@ import React from "react";
 import AdminDashboard from "../../components/Admin/AdminDashboard";
 import AdminNav from "../../components/Admin/AdminNav";
 import { useLocation } from "react-router-dom";
+import ReportPage from "../reportPage";
+import ManageMemberPage from "../Manager/manageMemberPage";
 
 type Props = {};
 
@@ -21,6 +23,8 @@ const AdminPage = (props: Props) => {
         </Grid>
         <Grid item xs={9}>
           {location.pathname === "/admin" && <AdminDashboard />}
+          {location.pathname === "/admin/report" && <ReportPage />}
+          {location.pathname === "/admin/manageMember" && <ManageMemberPage />}
         </Grid>
       </Grid>
     </div>

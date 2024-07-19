@@ -39,10 +39,10 @@ const AppRoutes = () => {
       <Route path="/my-profile/order-history" element={<OrderHistoryPage />} />
       <Route path="/Purchase/ShoppingCart" element={<ShoppingCart />} />
       <Route path="/Purchase/Bookmark" element={<ManageOrderPage />} />
-      <Route path="/manager/manageMember" element={<ManageMemberPage />} />
+      <Route path="/admin/manageMember" element={<ManageMemberPage />} />
       {/* Admin Route */}
       <Route path="/admin" element={<AdminPage />} />
-      <Route path="/manager/report" element={<ReportPage />} />
+      <Route path="/admin/report" element={<ReportPage />} />
       <Route
         path="/manager/productView/:productId"
         element={<ProductViewPage />}

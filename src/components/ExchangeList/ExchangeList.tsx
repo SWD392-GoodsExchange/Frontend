@@ -22,7 +22,7 @@ const ExchangeList = () => {
   const [products, setproducts] = useState<ProductResponse[]>();
   const navigate = useNavigate();
   const [bookmarkedList, setBookmarkedList] = useState<ProductResponse[]>();
-  const [openReport, setOpenReport] = React.useState(false);
+  const [openReport, setOpenReport] = useState(false);
   const [productIdReport, setProductIdReport] = useState<number>();
   const [messageReport, setMessageReport] = useState<string>();
   const [isSendReport, setIsSendReport] = useState<boolean>(false);
