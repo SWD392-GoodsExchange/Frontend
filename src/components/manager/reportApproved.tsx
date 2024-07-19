@@ -147,7 +147,7 @@ const ReportApproved = () => {
       >
         <Box>
           <TextField
-            label="🔎 Search by Username, Email, or Phone"
+            label="🔎 Search by FeId, Time, or Message"
             variant="outlined"
             size="small"
             onChange={handleSearchChange}
@@ -236,22 +236,6 @@ const ReportApproved = () => {
                       sx={{ backgroundColor: "ButtonFace", color: "black" }}
                     >
                       View
-                    </Button>
-                    <Button
-                      variant="contained"
-                      size="small"
-                      onClick={() => handleApprove(report.reportId)}
-                      sx={{ backgroundColor: "ButtonFace", color: "black" }}
-                    >
-                      Approve
-                    </Button>
-                    <Button
-                      variant="contained"
-                      size="small"
-                      onClick={() => handleReject(report.reportId)}
-                      sx={{ backgroundColor: "ButtonFace", color: "black" }}
-                    >
-                      Reject
                     </Button>
                   </Box>
                 </StyledTableCell>
