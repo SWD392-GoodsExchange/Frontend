@@ -219,7 +219,7 @@ const ManageMember = () => {
         </Box>
       </Box>
 
-      <TableContainer component={Paper} sx={{ maxHeight: "50vh" }}>
+      <TableContainer component={Paper} sx={{ maxHeight: "100vh" }}>
         <Table stickyHeader sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>

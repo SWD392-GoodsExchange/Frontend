@@ -3,9 +3,17 @@ import React from "react";
 import { CiSettings } from "react-icons/ci";
 import { IoIosInformationCircleOutline } from "react-icons/io";
 
-type Props = {};
+type Props = {
+  totalProduct: number | undefined;
+  totalMember: number | undefined;
+  totalReport: number | undefined;
+};
 
-const DashboardInformation = (props: Props) => {
+const DashboardInformation = ({
+  totalProduct,
+  totalMember,
+  totalReport,
+}: Props) => {
   return (
     <div className=" flex flex-col gap-10 w-[500px]">
       <p className=" flex justify-between font-bold items-center text-36">
@@ -20,7 +28,7 @@ const DashboardInformation = (props: Props) => {
               <IoIosInformationCircleOutline size={"22px"} />
             </p>
             <Divider />
-            <p className=" mt-2 text-24 font-semibold">27,6 M</p>
+            <p className=" mt-2 text-24 font-semibold">{totalProduct}</p>
           </div>
         </Tooltip>
         <Tooltip title="Total account in system">
@@ -30,7 +38,7 @@ const DashboardInformation = (props: Props) => {
               <IoIosInformationCircleOutline size={"22px"} />
             </p>
             <Divider />
-            <p className=" mt-2 text-24 font-semibold">2 M</p>
+            <p className=" mt-2 text-24 font-semibold">{totalMember}</p>
           </div>
         </Tooltip>
         <Tooltip title="Report quantity in system">
@@ -40,7 +48,7 @@ const DashboardInformation = (props: Props) => {
               <IoIosInformationCircleOutline size={"22px"} />
             </p>
             <Divider />
-            <p className=" mt-2 text-24 font-semibold">10 M</p>
+            <p className=" mt-2 text-24 font-semibold">{totalReport}</p>
           </div>
         </Tooltip>
       </div>

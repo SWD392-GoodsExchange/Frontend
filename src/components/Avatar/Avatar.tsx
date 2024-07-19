@@ -18,7 +18,7 @@ const Avatar = ({ memberInfor }: Props) => {
       <p className="font-semibold text-20 flex items-center gap-1">
         {memberInfor?.userName}
         <div className="p-1 bg-white rounded-full">
-          {memberInfor?.gender === "Male" ? (
+          {memberInfor?.gender.toLocaleLowerCase() === "male" ? (
             <IoIosMale color="#0D6EFD" size={"22px"} />
           ) : (
             <IoIosFemale color="#0D6EFD" size={"22px"} />

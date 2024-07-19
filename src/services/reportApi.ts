@@ -31,6 +31,10 @@ const reportApi = {
     const url = "/Report/rejected";
     return axiosClient.get(url);
   },
+  totalReport() {
+    const url = "/reports/totalReports";
+    return axiosClient.get(url);
+  },
 };
 
 export default reportApi;
