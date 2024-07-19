@@ -14,8 +14,8 @@ import {
   TableRow,
   TextField,
 } from "@mui/material";
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { ReportResponse } from "../../interfaces/report";
 import productApi from "../../services/productApi";
 import reportApi from "../../services/reportApi";
@@ -53,6 +53,10 @@ const Report = () => {
   const [filterStatus, setFilterStatus] = useState<string>("");
   const [page, setPage] = useState<number>(0);
   const [rowsPerPage, setRowsPerPage] = useState<number>(5);
+  const [activeButton, setActiveButton] = React.useState<string | null>(null);
+  const handleButtonClick = (button: string) => {
+    setActiveButton(button);
+  };
 
   const fetchReportList = async () => {
     const response = (await reportApi.getAllReport()).data.data;
@@ -79,6 +83,19 @@ const Report = () => {
   const handleView = (productId: number) => {
     navigate(`/manager/productView/${productId}`, {
       state: productId,
+    });
+  };
+
+  const handleApprove = async (reportId: number) => {
+    console.log("reportId:", reportId);
+    const response: any = (await reportApi.approveReport(reportId)).data;
+    console.log("response:", response);
+  };
+
+  const handleReject = (reportId: number) => {
+    console.log("reportIdReject:", reportId);
+    reportApi.rejectReport(reportId).then((response) => {
+      console.log("reportReject:", response);
     });
   };
 
@@ -138,6 +155,47 @@ const Report = () => {
             sx={{ marginRight: 2, width: "300px" }}
           />
         </Box>
+        <Box
+          sx={{
+            backgroundColor: "lightblue",
+            borderRadius: "40px",
+            marginRight: "15px",
+          }}
+        >
+          <Button
+            color="inherit"
+            component={Link}
+            to="/admin/report/approved"
+            sx={{
+              fontWeight: "bold",
+              color: activeButton === "approved" ? "grey" : "black",
+              width: "110px",
+              "&:hover": {
+                color: activeButton === "rejected" ? "black" : "grey",
+              },
+            }}
+            onClick={() => handleButtonClick("approved")}
+          >
+            Approved
+          </Button>
+          |
+          <Button
+            color="inherit"
+            component={Link}
+            to="/admin/report/rejected"
+            sx={{
+              fontWeight: "bold",
+              color: activeButton === "approved" ? "grey" : "black",
+              width: "110px",
+              "&:hover": {
+                color: activeButton === "rejected" ? "black" : "grey",
+              },
+            }}
+            onClick={() => handleButtonClick("rejected")}
+          >
+            Rejected
+          </Button>
+        </Box>
       </Box>
 
       <TableContainer component={Paper} sx={{ maxHeight: "50vh" }}>
@@ -164,15 +222,33 @@ const Report = () => {
                   {new Date(report.createdTime).toLocaleDateString()}
                 </StyledTableCell>
 
-                <StyledTableCell>
-                  <Button
-                    variant="contained"
-                    size="small"
-                    onClick={() => handleProductView(report.productId)}
-                    sx={{ backgroundColor: "ButtonFace", color: "black" }}
-                  >
-                    View
-                  </Button>
+                <StyledTableCell sx={{ width: "50px" }}>
+                  <Box sx={{ display: "flex", gap: 1 }}>
+                    <Button
+                      variant="contained"
+                      size="small"
+                      onClick={() => handleProductView(report.productId)}
+                      sx={{ backgroundColor: "ButtonFace", color: "black" }}
+                    >
+                      View
+                    </Button>
+                    <Button
+                      variant="contained"
+                      size="small"
+                      onClick={() => handleApprove(report.reportId)}
+                      sx={{ backgroundColor: "ButtonFace", color: "black" }}
+                    >
+                      Approve
+                    </Button>
+                    <Button
+                      variant="contained"
+                      size="small"
+                      onClick={() => handleReject(report.reportId)}
+                      sx={{ backgroundColor: "ButtonFace", color: "black" }}
+                    >
+                      Reject
+                    </Button>
+                  </Box>
                 </StyledTableCell>
               </StyledTableRow>
             ))}
