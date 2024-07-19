@@ -1,8 +1,7 @@
-import React from "react";
-import Avt from "../../assets/bear.png";
-import { useLocation, useNavigate } from "react-router-dom";
-import ExchangeImg from "../../assets/exchange.png";
 import { FiLogOut } from "react-icons/fi";
+import { useLocation, useNavigate } from "react-router-dom";
+import Avt from "../../assets/bear.png";
+import ExchangeImg from "../../assets/exchange.png";
 
 type Props = {};
 

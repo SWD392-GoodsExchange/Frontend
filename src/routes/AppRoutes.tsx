@@ -3,11 +3,14 @@ import { Route, Routes } from "react-router-dom";
 import ExchangeTicket from "../components/ExchangeList/ExchangeTicket";
 import ShoppingCart from "../components/Shopping/shoppingCart";
 import AdminPage from "../pages/Admin/AdminPage";
+
 import ExchangeRequestPage from "../pages/Exchange/ExchangeRequestPage";
 import GuestPage from "../pages/Guest/GuestPage";
 import HomePage from "../pages/HomePage";
+import ApprovedReportPage from "../pages/Manager/approvedReportPage";
 import ManageMemberPage from "../pages/Manager/manageMemberPage";
 import ProductViewPage from "../pages/Manager/productViewPage";
+import RejectReportPage from "../pages/Manager/rejectReportPage";
 import MemberInformation from "../pages/MyProfile/MemberInformation";
 import MyBookmark from "../pages/MyProfile/MyBookmark";
 import MyProduct from "../pages/MyProfile/MyProduct";
@@ -47,6 +50,8 @@ const AppRoutes = () => {
         path="/manager/productView/:productId"
         element={<ProductViewPage />}
       />
+      <Route path="/admin/report/approved" element={<ApprovedReportPage />} />
+      <Route path="/admin/report/rejected" element={<RejectReportPage />} />
     </Routes>
   );
 };
