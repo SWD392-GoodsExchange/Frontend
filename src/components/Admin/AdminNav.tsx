@@ -1,8 +1,7 @@
-import React from "react";
-import Avt from "../../assets/bear.png";
-import { useLocation, useNavigate } from "react-router-dom";
-import ExchangeImg from "../../assets/exchange.png";
 import { FiLogOut } from "react-icons/fi";
+import { useLocation, useNavigate } from "react-router-dom";
+import Avt from "../../assets/bear.png";
+import ExchangeImg from "../../assets/exchange.png";
 
 type Props = {};
 
@@ -36,21 +35,21 @@ const AdminNav = (props: Props) => {
           </li>
           <li
             className={`cursor-pointer ${
-              location.pathname == "/admin/report" && `font-bold underline`
+              location.pathname == "/admin/manageMember" &&
+              `font-bold underline`
             }`}
             onClick={() => {
-              navigate("/admin/report");
+              navigate("/admin/manageMember");
             }}
           >
             Manage Member
           </li>
           <li
             className={`cursor-pointer ${
-              location.pathname == "/admin/manageMember" &&
-              `font-bold underline`
+              location.pathname == "/admin/report" && `font-bold underline`
             }`}
             onClick={() => {
-              navigate("/admin/manageMember");
+              navigate("/admin/report");
             }}
           >
             Manage Report

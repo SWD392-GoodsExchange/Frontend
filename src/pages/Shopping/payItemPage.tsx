@@ -1,4 +1,4 @@
-import { Grid, Paper } from "@mui/material";
+import { Box, Grid, Paper } from "@mui/material";
 
 import PayItem from "../../components/Shopping/payItem";
 import BackButton from "../back/backButton";

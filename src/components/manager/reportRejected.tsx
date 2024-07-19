@@ -46,7 +46,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-const Report = () => {
+const ReportRejected = () => {
   const navigate = useNavigate();
   const [report, setReport] = useState<ReportResponse[]>([]);
   const [searchKeyword, setSearchKeyword] = useState<string>("");
@@ -59,7 +59,7 @@ const Report = () => {
   };
 
   const fetchReportList = async () => {
-    const response = (await reportApi.getAllReport()).data.data;
+    const response = (await reportApi.getRejectedReport()).data.data;
     console.log("report:", response);
     setReport(response);
   };
@@ -147,7 +147,7 @@ const Report = () => {
       >
         <Box>
           <TextField
-            label="🔎 Search by Username, Email, or Phone"
+            label="🔎 Search by FeId, Time, or Message"
             variant="outlined"
             size="small"
             onChange={handleSearchChange}
@@ -206,6 +206,7 @@ const Report = () => {
               <StyledTableCell>Fe ID</StyledTableCell>
               <StyledTableCell>Message</StyledTableCell>
               <StyledTableCell>Created Time</StyledTableCell>
+              <StyledTableCell>Updated Time</StyledTableCell>
               <StyledTableCell>Action</StyledTableCell>
             </TableRow>
           </TableHead>
@@ -222,6 +223,10 @@ const Report = () => {
                   {new Date(report.createdTime).toLocaleDateString()}
                 </StyledTableCell>
 
+                <StyledTableCell>
+                  {new Date(report.updatedTime).toLocaleDateString()}
+                </StyledTableCell>
+
                 <StyledTableCell sx={{ width: "50px" }}>
                   <Box sx={{ display: "flex", gap: 1 }}>
                     <Button
@@ -231,22 +236,6 @@ const Report = () => {
                       sx={{ backgroundColor: "ButtonFace", color: "black" }}
                     >
                       View
-                    </Button>
-                    <Button
-                      variant="contained"
-                      size="small"
-                      onClick={() => handleApprove(report.reportId)}
-                      sx={{ backgroundColor: "ButtonFace", color: "black" }}
-                    >
-                      Approve
-                    </Button>
-                    <Button
-                      variant="contained"
-                      size="small"
-                      onClick={() => handleReject(report.reportId)}
-                      sx={{ backgroundColor: "ButtonFace", color: "black" }}
-                    >
-                      Reject
                     </Button>
                   </Box>
                 </StyledTableCell>
@@ -269,4 +258,4 @@ const Report = () => {
   );
 };
 
-export default Report;
+export default ReportRejected;
