@@ -223,10 +223,6 @@ const ReportApproved = () => {
                   {new Date(report.createdTime).toLocaleDateString()}
                 </StyledTableCell>
 
-                <StyledTableCell>
-                  {new Date(report.updatedTime).toLocaleDateString()}
-                </StyledTableCell>
-
                 <StyledTableCell sx={{ width: "50px" }}>
                   <Box sx={{ display: "flex", gap: 1 }}>
                     <Button
