@@ -46,7 +46,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-const ReportApproved = () => {
+const ReportRejected = () => {
   const navigate = useNavigate();
   const [report, setReport] = useState<ReportResponse[]>([]);
   const [searchKeyword, setSearchKeyword] = useState<string>("");
@@ -59,7 +59,7 @@ const ReportApproved = () => {
   };
 
   const fetchReportList = async () => {
-    const response = (await reportApi.getApprovedReport()).data.data;
+    const response = (await reportApi.getRejectedReport()).data.data;
     console.log("report:", response);
     setReport(response);
   };
@@ -274,4 +274,4 @@ const ReportApproved = () => {
   );
 };
 
-export default ReportApproved;
+export default ReportRejected;

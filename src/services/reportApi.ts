@@ -21,6 +21,16 @@ const reportApi = {
     const url = `/Report/rejected/${reportId}`;
     return axiosClient.put(url);
   },
+
+  getApprovedReport() {
+    const url = "/Report/approved";
+    return axiosClient.get(url);
+  },
+
+  getRejectedReport() {
+    const url = "/Report/rejected";
+    return axiosClient.get(url);
+  },
 };
 
 export default reportApi;

@@ -1,8 +1,11 @@
 import { Route, Routes } from "react-router-dom";
 
 import ExchangeTicket from "../components/ExchangeList/ExchangeTicket";
+import ReportRejected from "../components/manager/reportRejected";
 import ShoppingCart from "../components/Shopping/shoppingCart";
 import AdminPage from "../pages/Admin/AdminPage";
+
+import ReportApproved from "../components/manager/reportApproved";
 import ExchangeRequestPage from "../pages/Exchange/ExchangeRequestPage";
 import GuestPage from "../pages/Guest/GuestPage";
 import HomePage from "../pages/HomePage";
@@ -39,14 +42,16 @@ const AppRoutes = () => {
       <Route path="/my-profile/order-history" element={<OrderHistoryPage />} />
       <Route path="/Purchase/ShoppingCart" element={<ShoppingCart />} />
       <Route path="/Purchase/Bookmark" element={<ManageOrderPage />} />
-      <Route path="/manager/manageMember" element={<ManageMemberPage />} />
+      <Route path="/admin/manageMember" element={<ManageMemberPage />} />
       {/* Admin Route */}
       <Route path="/admin" element={<AdminPage />} />
-      <Route path="/manager/report" element={<ReportPage />} />
+      <Route path="/admin/report" element={<ReportPage />} />
       <Route
         path="/manager/productView/:productId"
         element={<ProductViewPage />}
       />
+      <Route path="/admin/report/approved" element={<ReportApproved />} />
+      <Route path="/admin/report/rejected" element={<ReportRejected />} />
     </Routes>
   );
 };
