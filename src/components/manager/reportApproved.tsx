@@ -206,7 +206,6 @@ const ReportApproved = () => {
               <StyledTableCell>Fe ID</StyledTableCell>
               <StyledTableCell>Message</StyledTableCell>
               <StyledTableCell>Created Time</StyledTableCell>
-              <StyledTableCell>Updated Time</StyledTableCell>
               <StyledTableCell>Action</StyledTableCell>
             </TableRow>
           </TableHead>
@@ -221,10 +220,6 @@ const ReportApproved = () => {
 
                 <StyledTableCell>
                   {new Date(report.createdTime).toLocaleDateString()}
-                </StyledTableCell>
-
-                <StyledTableCell>
-                  {new Date(report.updatedTime).toLocaleDateString()}
                 </StyledTableCell>
 
                 <StyledTableCell sx={{ width: "50px" }}>
