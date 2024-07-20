@@ -206,7 +206,6 @@ const ReportRejected = () => {
               <StyledTableCell>Fe ID</StyledTableCell>
               <StyledTableCell>Message</StyledTableCell>
               <StyledTableCell>Created Time</StyledTableCell>
-              <StyledTableCell>Updated Time</StyledTableCell>
               <StyledTableCell>Action</StyledTableCell>
             </TableRow>
           </TableHead>

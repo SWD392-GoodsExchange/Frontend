@@ -26,7 +26,17 @@ export interface Orders {
   totalOrderDetails: number;
   type: string;
   status: string;
-  orderDetails: OrderDetail[];
+  orderDetails: OrderDetails[];
+}
+
+export interface OrdersHistory {
+  orderId: number;
+  createdTime: string;
+  totalAmount: number;
+  totalOrderDetails: number;
+  type: string;
+  status: string;
+  orderDetails: OrderDetails;
 }
 
 export interface Order {

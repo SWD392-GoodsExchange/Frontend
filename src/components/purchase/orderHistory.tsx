@@ -3,6 +3,7 @@ import {
   CardContent,
   Container,
   Divider,
+  Grid,
   List,
   Paper,
   Tab,
@@ -105,16 +106,45 @@ const OrderHistory = () => {
                   }}
                 >
                   <CardContent>
-                    <Typography variant="h6">
-                      Order ID: {orderItem.orderId}
-                    </Typography>
-                    <Typography variant="body1">
-                      Date:{" "}
-                      {new Date(orderItem.createdTime).toLocaleDateString()}
-                    </Typography>
-                    <Typography variant="body1">
-                      Total: ${orderItem.totalAmount}
-                    </Typography>
+                    {orderItem.orderDetails.map((detail) => (
+                      <Grid container key={detail.product.productId}>
+                        <Grid item xs={5}>
+                          <Typography variant="h6">
+                            Title: {detail.product.title}
+                          </Typography>
+                          <Typography variant="h7">
+                            Seller: {detail.product.userName}
+                          </Typography>
+                        </Grid>
+
+                        <Grid
+                          item
+                          xs={5}
+                          sx={{
+                            border: "black solid 1px",
+                            backgroundColor: "lightblue",
+                            borderRadius: "30px",
+                            paddingLeft: "70px",
+                          }}
+                        >
+                          <Typography variant="body1">
+                            Origin: {detail.product.origin}
+                          </Typography>
+                          <Typography variant="body1">
+                            Type: {orderItem.type}
+                          </Typography>
+                          <Typography variant="body1">
+                            Date:{" "}
+                            {new Date(
+                              orderItem.createdTime
+                            ).toLocaleDateString()}
+                          </Typography>
+                          <Typography variant="body1">
+                            Total: ${orderItem.totalAmount}
+                          </Typography>
+                        </Grid>
+                      </Grid>
+                    ))}
                   </CardContent>
                 </Card>
                 <Divider />
